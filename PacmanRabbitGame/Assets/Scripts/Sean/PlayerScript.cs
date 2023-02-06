@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test_Player : MonoBehaviour
+public class PlayerScript : MonoBehaviour
 {
     //Movement
     private CharacterController controller;
