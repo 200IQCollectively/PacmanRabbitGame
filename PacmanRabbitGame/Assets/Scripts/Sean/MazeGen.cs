@@ -2,7 +2,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Maze_Gen : MonoBehaviour
+public class MazeGen : MonoBehaviour
 {
     public GameObject wall;
     public bool[,] visited;

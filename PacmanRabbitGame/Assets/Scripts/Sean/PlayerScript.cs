@@ -16,6 +16,14 @@ public class PlayerScript : MonoBehaviour
     private Transform playerCamera;
     private float xRotationCamera = 0f;
 
+    //Score 
+    private ScoreScript score;
+
+    //Sound
+    private AudioSource source;
+    public AudioClip jump;
+    public AudioClip eatCarrot;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +75,7 @@ public class PlayerScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                source.PlayOneShot(jump);
             }
         }
 
@@ -77,9 +86,23 @@ public class PlayerScript : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Collectible")
+        {
+            score.SetScore(10);
+
+            source.PlayOneShot(eatCarrot);
+
+            Destroy(other.gameObject);
+        }
+    }
+
     private void GetComponents()
     {
         controller = GetComponent<CharacterController>();
         playerCamera = GameObject.Find("Camera").transform;
+        score = GetComponent<ScoreScript>();
+        source = GetComponent<AudioSource>();
     }
 }
