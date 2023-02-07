@@ -7,8 +7,8 @@ public class PlayerScript : MonoBehaviour
     //Movement
     private CharacterController controller;
     private Vector3 playerVelocity;
-    private float playerSpeed = 5.0f;
-    private float jumpHeight = 1f;
+    [SerializeField] private float playerSpeed = 5.0f;
+    [SerializeField] private float jumpHeight = 1f;
     private float gravity = -9.81f;
 
     //Camera Movement
@@ -24,6 +24,13 @@ public class PlayerScript : MonoBehaviour
     public AudioClip jump;
     public AudioClip eatCarrot;
 
+    //Teleport Stuff
+    public Transform EntranceHole1;
+    public Transform EntranceHole2;
+    public Transform ExitHole1;
+    public Transform ExitHole2;
+    private GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +44,27 @@ public class PlayerScript : MonoBehaviour
         MouseLook();
         Movement();
         Jump();
+
+        if(Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            transform.position = EntranceHole1.position;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            transform.position = ExitHole1.position;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            transform.position = EntranceHole2.position;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            transform.position = ExitHole2.position;
+        }
+
     }
 
     private void MouseLook()
@@ -96,6 +124,31 @@ public class PlayerScript : MonoBehaviour
 
             Destroy(other.gameObject);
         }
+
+        if (other.tag == "Hole")
+        {
+            if (other.name == "Hole Entrance1")
+            {
+                player.transform.position = new Vector3(0, 5, 0);
+
+                Debug.Log("Hole1");
+            }
+
+            if (other.name == "Hole Entrance2")
+            {
+                transform.position = ExitHole2.transform.position;
+            }
+
+            if (other.name == "HoleExit1")
+            {
+                transform.position = EntranceHole1.transform.position;
+            }
+
+            if (other.name == "HoleExit2")
+            {
+                transform.position = EntranceHole2.transform.position;
+            }
+        }
     }
 
     private void GetComponents()
@@ -104,5 +157,6 @@ public class PlayerScript : MonoBehaviour
         playerCamera = GameObject.Find("Camera").transform;
         score = GetComponent<ScoreScript>();
         source = GetComponent<AudioSource>();
+        player = gameObject;
     }
 }
