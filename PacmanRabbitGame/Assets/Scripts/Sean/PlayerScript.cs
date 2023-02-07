@@ -30,6 +30,7 @@ public class PlayerScript : MonoBehaviour
     public Transform ExitHole1;
     public Transform ExitHole2;
     private GameObject player;
+    private bool hasTeleported = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,22 +46,22 @@ public class PlayerScript : MonoBehaviour
         Movement();
         Jump();
 
-        if(Input.GetKeyDown(KeyCode.Keypad1))
+        if(Input.GetKey(KeyCode.Keypad1))
         {
             transform.position = EntranceHole1.position;
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad2))
+        if (Input.GetKey(KeyCode.Keypad2))
         {
             transform.position = ExitHole1.position;
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad3))
+        if (Input.GetKey(KeyCode.Keypad3))
         {
             transform.position = EntranceHole2.position;
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad4))
+        if (Input.GetKey(KeyCode.Keypad4))
         {
             transform.position = ExitHole2.position;
         }
@@ -125,26 +126,54 @@ public class PlayerScript : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if (other.tag == "Hole")
+        //if (other.tag == "Hole")
+        //{
+        //    if (other.name == "Hole Entrance1")
+        //    {
+        //        player.transform.position = new Vector3(0, 5, 0);
+
+        //        Debug.Log("Hole1");
+        //    }
+
+        //    if (other.name == "Hole Entrance2")
+        //    {
+        //        transform.position = ExitHole2.transform.position;
+        //    }
+
+        //    if (other.name == "HoleExit1")
+        //    {
+        //        transform.position = EntranceHole1.transform.position;
+        //    }
+
+        //    if (other.name == "HoleExit2")
+        //    {
+        //        transform.position = EntranceHole2.transform.position;
+        //    }
+        //}
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Hole")
         {
-            if (other.name == "Hole Entrance1")
+            if (collision.gameObject.name == "Hole Entrance1")
             {
                 player.transform.position = new Vector3(0, 5, 0);
 
                 Debug.Log("Hole1");
             }
 
-            if (other.name == "Hole Entrance2")
+            if (collision.gameObject.name == "Hole Entrance2")
             {
                 transform.position = ExitHole2.transform.position;
             }
 
-            if (other.name == "HoleExit1")
+            if (collision.gameObject.name == "HoleExit1")
             {
                 transform.position = EntranceHole1.transform.position;
             }
 
-            if (other.name == "HoleExit2")
+            if (collision.gameObject.name == "HoleExit2")
             {
                 transform.position = EntranceHole2.transform.position;
             }
@@ -158,5 +187,15 @@ public class PlayerScript : MonoBehaviour
         score = GetComponent<ScoreScript>();
         source = GetComponent<AudioSource>();
         player = gameObject;
+    }
+
+    public bool GetHasTeleported()
+    {
+        return hasTeleported;
+    }
+
+    public bool SetHasTeleported(bool yes)
+    {
+        return hasTeleported = yes;
     }
 }
