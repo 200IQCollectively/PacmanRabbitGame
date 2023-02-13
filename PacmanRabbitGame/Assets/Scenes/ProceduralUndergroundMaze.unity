@@ -688,6 +688,9 @@ MonoBehaviour:
   wall: {fileID: 5407817152406286739, guid: 7adf0846b8a6b0b4fa8e45d824873153, type: 3}
   width: 28
   height: 31
+  wallList: []
+  mazeList: []
+  score: {fileID: 7249431087744254280, guid: e05fb116d111fee49a64785466e33b1e, type: 3}
 --- !u!1 &1256170351
 GameObject:
   m_ObjectHideFlags: 0
