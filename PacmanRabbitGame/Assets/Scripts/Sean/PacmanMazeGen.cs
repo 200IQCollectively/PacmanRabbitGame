@@ -29,7 +29,6 @@ public class PacmanMazeGen : MonoBehaviour
         {
             for (int z = 0; z < height + 1; z++)
             {
-                int random = Random.Range(0, 2);
 
                 if (x == 0 || x == width || z == 0 || z == height)
                 {
@@ -43,7 +42,9 @@ public class PacmanMazeGen : MonoBehaviour
 
                 else
                 {
-                    if(random == 1)
+                    int random = Random.Range(0, 2);
+
+                    if (random == 1)
                     {
                         Node node = new Node(x, z, true);
                         nodes.Add(node);
