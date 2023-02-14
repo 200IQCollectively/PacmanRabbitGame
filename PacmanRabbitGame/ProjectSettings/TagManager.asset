@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Collectible
   - Hole
+  - wall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - wall
   - Water
   - UI
   - ground

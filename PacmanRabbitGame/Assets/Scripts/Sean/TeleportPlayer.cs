@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TeleportPlayer : MonoBehaviour
 {
@@ -9,33 +10,47 @@ public class TeleportPlayer : MonoBehaviour
     [SerializeField]
     private Transform teleportTarget;
 
-
+    public TextMeshProUGUI popup;
 
     //private void OnTriggerEnter(Collider other)
     //{
-    //    if(other.tag == "Player" && !player.GetComponent<PlayerScript>().GetHasTeleported())
+    //    if (other.tag == "Player")
     //    {
-    //        Debug.Log("sup");
-    //        player.GetComponent<PlayerScript>().SetHasTeleported(true);
-    //        player.transform.position = teleportTarget.transform.position;
-    //    }
+            
+    //        if (Input.GetKeyDown(KeyCode.E))
+    //        {
+    //            popup.text = "Press (E) to enter hole";
+    //            other.gameObject.transform.position = teleportTarget.position;
+    //            Debug.Log("made it");
 
+    //        }
+    //        Debug.Log("made it");
+    //    }
     //}
 
     //private void OnTriggerExit(Collider other)
     //{
-    //    if(other.tag == "Player")
+    //    if (other.tag == "Player")
     //    {
-
-    //        literaltimewaste();
-
+    //        popup.text = "";
     //    }
     //}
 
-    //IEnumerator literaltimewaste()
-    //{
-    //    yield return new WaitForSeconds(5f);
+    public void TpPlayer(GameObject p)
+    {
+        teleport(p);
+    }
 
-    //    player.GetComponent<PlayerScript>().SetHasTeleported(false);
-    //}
+    IEnumerator teleport(GameObject p)
+    {
+        p.SetActive(false);
+
+        yield return new WaitForSeconds(0.001f);
+
+        p.transform.position = new Vector3 (teleportTarget.position.x, teleportTarget.position.y, teleportTarget.position.z);
+
+        yield return new WaitForSeconds(0.001f);
+
+        p.SetActive(true);
+    }
 }

@@ -3,7 +3,9 @@ guid: 1c79999c2cd83ff4c96462285ebe2e79
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - jump: {fileID: 8300000, guid: 356bde826dd9e904fa3be5e75ed9ba16, type: 3}
+  - eatCarrot: {fileID: 8300000, guid: 8ba2278544d0bce4484867a788dc35da, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
