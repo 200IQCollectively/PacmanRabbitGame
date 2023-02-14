@@ -24,7 +24,6 @@ public class AItargetPlayer : MonoBehaviour
     void Update()
     {
         agent.SetDestination(TargetPostion.position);
-        Ray ray = new Ray(transform.position, transform.forward);
-
+        
     }
 }
