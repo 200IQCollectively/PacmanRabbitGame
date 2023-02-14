@@ -9,6 +9,7 @@ public class PacmanMazeGen : MonoBehaviour
     [Range(10, 50)] public int width = 28;
     [Range(10, 50)] public int height = 31;
 
+    //Must be public/ private serializefield or it doesn't work and no one knows why
     public List<Node> nodes;
     public List<Node> wallList;
     public List<Node> mazeList;
