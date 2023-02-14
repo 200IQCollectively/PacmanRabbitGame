@@ -11,31 +11,31 @@ public class TeleportPlayer : MonoBehaviour
 
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Player" && !player.GetComponent<PlayerScript>().GetHasTeleported())
-        {
-            Debug.Log("sup");
-            player.GetComponent<PlayerScript>().SetHasTeleported(true);
-            player.transform.position = teleportTarget.transform.position;
-        }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.tag == "Player" && !player.GetComponent<PlayerScript>().GetHasTeleported())
+    //    {
+    //        Debug.Log("sup");
+    //        player.GetComponent<PlayerScript>().SetHasTeleported(true);
+    //        player.transform.position = teleportTarget.transform.position;
+    //    }
 
-    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.tag == "Player")
-        {
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if(other.tag == "Player")
+    //    {
 
-            literaltimewaste();
+    //        literaltimewaste();
 
-        }
-    }
+    //    }
+    //}
 
-    IEnumerator literaltimewaste()
-    {
-        yield return new WaitForSeconds(5f);
+    //IEnumerator literaltimewaste()
+    //{
+    //    yield return new WaitForSeconds(5f);
 
-        player.GetComponent<PlayerScript>().SetHasTeleported(false);
-    }
+    //    player.GetComponent<PlayerScript>().SetHasTeleported(false);
+    //}
 }
