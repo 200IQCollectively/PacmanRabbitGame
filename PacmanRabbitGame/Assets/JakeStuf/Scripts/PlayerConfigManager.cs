@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerConfigManager : MonoBehaviour
 {
@@ -10,6 +11,16 @@ public class PlayerConfigManager : MonoBehaviour
 
     [SerializeField]
     private int MaxPlayers = 4;
+
+    [SerializeField]
+    private GameObject ReadyText1;
+
+    [SerializeField]
+    private GameObject ReadyText2;
+    [SerializeField]
+    private GameObject ReadyText3;
+    [SerializeField]
+    private GameObject ReadyText4;
 
     public static PlayerConfigManager Instance { get; private set; }
 
@@ -41,6 +52,24 @@ public class PlayerConfigManager : MonoBehaviour
         Debug.Log("Player Joined" + pi.playerIndex);
         pi.transform.SetParent(transform);
         playerConfigs.Add(new PlayerConfiguration(pi));
+
+        switch (pi.playerIndex)
+        {
+            case 0:
+                ReadyText1.GetComponent<Text>().text = "Ready";
+                break;
+            case 1:
+                ReadyText2.GetComponent<Text>().text = "Ready";
+                break;
+            case 2:
+                ReadyText3.GetComponent<Text>().text = "Ready";
+                break;
+            case 3:
+                ReadyText4.GetComponent<Text>().text = "Ready";
+                break;
+            default:
+                break;
+        }
     }
 
 }

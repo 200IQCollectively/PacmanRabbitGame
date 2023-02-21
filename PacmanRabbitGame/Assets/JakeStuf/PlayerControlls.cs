@@ -50,8 +50,8 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""79fcedd7-6413-45c1-9dae-fb64cb974258"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": ""Press"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Movement"",
