@@ -27,6 +27,8 @@ public class PlayerScript : MonoBehaviour
 
     //Teleport Stuff
     public TextMeshProUGUI popup;
+    public Vector3 teleportPos;
+    private bool teleportable;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +43,13 @@ public class PlayerScript : MonoBehaviour
         MouseLook();
         Movement();
         Jump();
+
+        if (Input.GetKeyDown(KeyCode.E) && teleportable)
+        {
+            transform.position = teleportPos;
+
+            teleportable = false;
+        }
     }
 
     private void MouseLook()
@@ -105,14 +114,9 @@ public class PlayerScript : MonoBehaviour
         {
             popup.text = "Press 'E' to Enter";
 
-            Vector3 teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
+            teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                transform.position = teleportPos;
-
-                Debug.Log("E Press");
-            }
+            teleportable = true;
         }
     }
 
@@ -121,6 +125,8 @@ public class PlayerScript : MonoBehaviour
         if (other.tag == "Hole")
         {
             popup.text = "";
+
+            teleportable = false;
         }
     }
 
