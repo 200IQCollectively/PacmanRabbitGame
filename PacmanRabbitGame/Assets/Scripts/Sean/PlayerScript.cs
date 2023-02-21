@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
     //Movement
     private CharacterController controller;
     private Vector3 playerVelocity;
-    private float playerSpeed = 5.0f;
-    private float jumpHeight = 1f;
+    [SerializeField] private float playerSpeed = 5.0f;
+    [SerializeField] private float jumpHeight = 1f;
     private float gravity = -9.81f;
 
     //Camera Movement
@@ -24,6 +25,11 @@ public class PlayerScript : MonoBehaviour
     public AudioClip jump;
     public AudioClip eatCarrot;
 
+    //Teleport Stuff
+    public TextMeshProUGUI popup;
+    public Vector3 teleportPos;
+    private bool teleportable;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +43,13 @@ public class PlayerScript : MonoBehaviour
         MouseLook();
         Movement();
         Jump();
+
+        if (Input.GetKeyDown(KeyCode.E) && teleportable)
+        {
+            transform.position = teleportPos;
+
+            teleportable = false;
+        }
     }
 
     private void MouseLook()
@@ -88,13 +101,32 @@ public class PlayerScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Collectible")
+        if (other.tag == "Collectible")
         {
             score.SetScore(10);
 
             source.PlayOneShot(eatCarrot);
 
             Destroy(other.gameObject);
+        }
+
+        if (other.tag == "Hole")
+        {
+            popup.text = "Press 'E' to Enter";
+
+            teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
+
+            teleportable = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Hole")
+        {
+            popup.text = "";
+
+            teleportable = false;
         }
     }
 
