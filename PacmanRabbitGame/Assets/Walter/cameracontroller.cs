@@ -6,6 +6,7 @@ public class cameracontroller : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] private float mousesensitivity;
+    private Vector3 movdirection;
     private Transform parent;
     void Start()
     {
@@ -20,7 +21,8 @@ public class cameracontroller : MonoBehaviour
     }
     private void Rotate()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mousesensitivity * Time.deltaTime;
-        parent.Rotate(Vector3.up, mouseX);
+       // float mouseX = Input.GetAxis("Mouse X") * mousesensitivity * Time.deltaTime;
+        float moveX = Input.GetAxis("Horizontal");
+     parent.Rotate(Vector3.up, moveX);
     }
 }
