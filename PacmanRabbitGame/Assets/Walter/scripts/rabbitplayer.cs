@@ -6,10 +6,10 @@ public class rabbitplayer : MonoBehaviour
 {
     [SerializeField] GameObject dustCloud;
 
-
+    public foxcollider foxy;
     private Vector3 movedirection;
     private Vector3 velocity;
-    private CharacterController controller;
+    public CharacterController controller;
     private Animator anim;
     private float verticalvelocity;
     private float jumpforce=10.0f;
@@ -23,6 +23,7 @@ public class rabbitplayer : MonoBehaviour
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -34,6 +35,13 @@ public class rabbitplayer : MonoBehaviour
     void Update()
     {
         Move();
+    }
+    public void death()
+    {
+        anim.SetTrigger("hasfallen");
+        this.enabled = false;
+        controller.enabled = false;
+        foxy.killrabbitanimation();
     }
 
     private void Move()
@@ -50,12 +58,15 @@ public class rabbitplayer : MonoBehaviour
         if (isGrounded)
         {
             //verticalvelocity = -gravity * Time.deltaTime;
-        
+            anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+
             if (direction.magnitude >= 0.1f)
             {
 
                 if (Input.GetKey(KeyCode.Space))
                 {
+                   
+                    // anim.SetTrigger("jumping");
                     verticalvelocity = jumpforce;
                     Vector3 movevector = new Vector3(0, verticalvelocity, 0);
                     controller.Move(movevector * Time.deltaTime);
@@ -82,12 +93,14 @@ public class rabbitplayer : MonoBehaviour
     private void Idle()
     {
         anim.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+        anim.SetFloat("Wolfmotion", 0, 0.1f, Time.deltaTime);
     }
 
     private void Run()
     {
         
         anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+        anim.SetFloat("Wolfmotion", 0.5f, 0.1f, Time.deltaTime);
     }
     public void Eat()
     {
@@ -102,7 +115,7 @@ public class rabbitplayer : MonoBehaviour
         //deathSequence.enabled = false;
         //deathSequence.spriteRenderer.enabled = false;
         //movement.ResetState();
-       // gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     public void DeathSequence()

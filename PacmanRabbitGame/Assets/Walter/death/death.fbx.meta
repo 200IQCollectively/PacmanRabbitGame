@@ -5,10 +5,10 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: -2463781497245029270
-    second: metarig|metarigAction.001
+    second: metarig|rabbitfall
   - first:
       74: -3773528098017054933
-    second: metarig.001|metarig.001Action
+    second: metarig.001|wolfattack
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -39,7 +39,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: metarig|metarigAction.001
+      name: metarig|rabbitfall
       takeName: metarig|metarigAction.001
       internalID: 0
       firstFrame: 0
@@ -50,7 +50,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -68,7 +68,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig.001|metarig.001Action
+      name: metarig.001|wolfattack
       takeName: metarig.001|metarig.001Action
       internalID: 0
       firstFrame: 0
