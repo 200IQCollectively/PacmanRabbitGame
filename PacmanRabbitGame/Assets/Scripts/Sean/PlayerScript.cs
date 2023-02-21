@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -25,12 +26,7 @@ public class PlayerScript : MonoBehaviour
     public AudioClip eatCarrot;
 
     //Teleport Stuff
-    public Transform EntranceHole1;
-    public Transform EntranceHole2;
-    public Transform ExitHole1;
-    public Transform ExitHole2;
-    private GameObject player;
-    private bool hasTeleported = false;
+    public TextMeshProUGUI popup;
 
     // Start is called before the first frame update
     void Start()
@@ -45,27 +41,6 @@ public class PlayerScript : MonoBehaviour
         MouseLook();
         Movement();
         Jump();
-
-        if(Input.GetKey(KeyCode.Keypad1))
-        {
-            transform.position = EntranceHole1.position;
-        }
-
-        if (Input.GetKey(KeyCode.Keypad2))
-        {
-            transform.position = ExitHole1.position;
-        }
-
-        if (Input.GetKey(KeyCode.Keypad3))
-        {
-            transform.position = EntranceHole2.position;
-        }
-
-        if (Input.GetKey(KeyCode.Keypad4))
-        {
-            transform.position = ExitHole2.position;
-        }
-
     }
 
     private void MouseLook()
@@ -117,7 +92,7 @@ public class PlayerScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Collectible")
+        if (other.tag == "Collectible")
         {
             score.SetScore(10);
 
@@ -126,57 +101,26 @@ public class PlayerScript : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        //if (other.tag == "Hole")
-        //{
-        //    if (other.name == "Hole Entrance1")
-        //    {
-        //        player.transform.position = new Vector3(0, 5, 0);
+        if (other.tag == "Hole")
+        {
+            popup.text = "Press 'E' to Enter";
 
-        //        Debug.Log("Hole1");
-        //    }
+            Vector3 teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
 
-        //    if (other.name == "Hole Entrance2")
-        //    {
-        //        transform.position = ExitHole2.transform.position;
-        //    }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                transform.position = teleportPos;
 
-        //    if (other.name == "HoleExit1")
-        //    {
-        //        transform.position = EntranceHole1.transform.position;
-        //    }
-
-        //    if (other.name == "HoleExit2")
-        //    {
-        //        transform.position = EntranceHole2.transform.position;
-        //    }
-        //}
+                Debug.Log("E Press");
+            }
+        }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if(collision.gameObject.tag == "Hole")
+        if (other.tag == "Hole")
         {
-            if (collision.gameObject.name == "Hole Entrance1")
-            {
-                player.transform.position = new Vector3(0, 5, 0);
-
-                Debug.Log("Hole1");
-            }
-
-            if (collision.gameObject.name == "Hole Entrance2")
-            {
-                transform.position = ExitHole2.transform.position;
-            }
-
-            if (collision.gameObject.name == "HoleExit1")
-            {
-                transform.position = EntranceHole1.transform.position;
-            }
-
-            if (collision.gameObject.name == "HoleExit2")
-            {
-                transform.position = EntranceHole2.transform.position;
-            }
+            popup.text = "";
         }
     }
 
@@ -186,16 +130,5 @@ public class PlayerScript : MonoBehaviour
         playerCamera = GameObject.Find("Camera").transform;
         score = GetComponent<ScoreScript>();
         source = GetComponent<AudioSource>();
-        player = gameObject;
-    }
-
-    public bool GetHasTeleported()
-    {
-        return hasTeleported;
-    }
-
-    public bool SetHasTeleported(bool yes)
-    {
-        return hasTeleported = yes;
     }
 }
