@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -30,6 +31,11 @@ public class PlayerScript : MonoBehaviour
     public Vector3 teleportPos;
     private bool teleportable;
 
+    //New input stuff
+
+    [SerializeField]
+    private InputActionReference INP_movement,INP_look,INP_jump,INP_teleport;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +50,7 @@ public class PlayerScript : MonoBehaviour
         Movement();
         Jump();
 
-        if (Input.GetKeyDown(KeyCode.E) && teleportable)
+        if (INP_teleport.action.IsPressed() && teleportable)
         {
             transform.position = teleportPos;
 
@@ -54,22 +60,23 @@ public class PlayerScript : MonoBehaviour
 
     private void MouseLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-        xRotationCamera -= mouseY;
+        //float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        Vector2 look = INP_look.action.ReadValue<Vector2>();
+        xRotationCamera -= look.y;
         xRotationCamera = Mathf.Clamp(xRotationCamera, -90f, 90f);
 
         playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
-        gameObject.transform.Rotate(Vector3.up * mouseX);
+        gameObject.transform.Rotate(Vector3.up * look.x);
     }
 
     private void Movement()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
+        //float x = Input.GetAxis("Horizontal");
+        //float z = Input.GetAxis("Vertical");
+        Vector2 movement = INP_movement.action.ReadValue<Vector2>();
+        Vector3 move = transform.right * movement.x + transform.forward * movement.y;
+        
         controller.Move(move * Time.deltaTime * playerSpeed);
     }
 
@@ -85,7 +92,12 @@ public class PlayerScript : MonoBehaviour
 
         if (controller.isGrounded)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            /*if (Input.GetKeyDown(KeyCode.Space))
+            {
+                playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                source.PlayOneShot(jump);
+            */
+            if (INP_jump.action.IsPressed())
             {
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 source.PlayOneShot(jump);
