@@ -8,8 +8,8 @@ public class PlayerScript : MonoBehaviour
     //Movement
     private CharacterController controller;
     private Vector3 playerVelocity;
-    [SerializeField] private float playerSpeed = 10.0f;
-    [SerializeField] private float jumpHeight = 5f;
+    [SerializeField] private float playerSpeed = 5.0f;
+    [SerializeField] private float jumpHeight = 1f;
     private float gravity = -9.81f;
 
     //Camera Movement
@@ -25,7 +25,10 @@ public class PlayerScript : MonoBehaviour
     public AudioClip jump;
     public AudioClip eatCarrot;
 
+    //Teleport Stuff
     public TextMeshProUGUI popup;
+    public Vector3 teleportPos;
+    private bool teleportable;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +43,13 @@ public class PlayerScript : MonoBehaviour
         MouseLook();
         Movement();
         Jump();
-        
+
+        if (Input.GetKeyDown(KeyCode.E) && teleportable)
+        {
+            transform.position = teleportPos;
+
+            teleportable = false;
+        }
     }
 
     private void MouseLook()
@@ -92,7 +101,7 @@ public class PlayerScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Collectible")
+        if (other.tag == "Collectible")
         {
             score.SetScore(10);
 
@@ -101,20 +110,13 @@ public class PlayerScript : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if(other.tag == "Hole")
+        if (other.tag == "Hole")
         {
-            popup.text = "Press (E) to enter hole";
+            popup.text = "Press 'E' to Enter";
 
-            if (Input.GetButtonDown("Hole"))
-            {
-                popup.text = "Press (E) to enter hole";
-                other.GetComponent<TeleportPlayer>().TpPlayer(gameObject);
+            teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
 
-                Debug.Log("made it");
-
-            }
-            Debug.Log("Hit me ");
-
+            teleportable = true;
         }
     }
 
@@ -123,6 +125,8 @@ public class PlayerScript : MonoBehaviour
         if (other.tag == "Hole")
         {
             popup.text = "";
+
+            teleportable = false;
         }
     }
 
