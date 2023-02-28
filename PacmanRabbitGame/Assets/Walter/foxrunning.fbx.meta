@@ -11,22 +11,22 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Eye
-    second: {fileID: 2100000, guid: 706bc228ef73f0e498a63eebb4f77497, type: 2}
+    second: {fileID: 2100000, guid: 9db385e17ea7f5c44b6dd29de8d44d87, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: FOX
-    second: {fileID: 2100000, guid: c5f1bb4548ed08749aca12141a4f8781, type: 2}
+    second: {fileID: 2100000, guid: 3838bb681ee5148439ad5c0598ac775c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: NOSE
-    second: {fileID: 2100000, guid: c5f1bb4548ed08749aca12141a4f8781, type: 2}
+    second: {fileID: 2100000, guid: 3838bb681ee5148439ad5c0598ac775c, type: 2}
   materials:
     materialImportMode: 1
-    materialName: 1
+    materialName: 0
     materialSearch: 0
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

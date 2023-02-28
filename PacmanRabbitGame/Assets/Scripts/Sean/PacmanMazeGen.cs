@@ -10,9 +10,9 @@ public class PacmanMazeGen : MonoBehaviour
     [Range(10, 50)] public int height = 31;
 
     //Must be public/ private serializefield or it doesn't work and no one knows why
-    public List<Node> nodes;
-    public List<Node> wallList;
-    public List<Node> mazeList;
+    public List<WallNode> nodes;
+    public List<WallNode> wallList;
+    public List<WallNode> mazeList;
     public List<GameObject> mazeWallList;
 
     public GameObject score;
@@ -32,7 +32,7 @@ public class PacmanMazeGen : MonoBehaviour
 
                 if (x == 0 || x == width || z == 0 || z == height)
                 {
-                    Node node = new Node(x, z, true);
+                    WallNode node = new WallNode(x, z, true);
                     nodes.Add(node);
                     var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
                     wallObj.name = "Node[" + x + ", " + z + "]";
@@ -46,7 +46,7 @@ public class PacmanMazeGen : MonoBehaviour
 
                     if (random == 1)
                     {
-                        Node node = new Node(x, z, true);
+                        WallNode node = new WallNode(x, z, true);
                         nodes.Add(node);
                         var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
                         wallObj.name = "Node[" + x + ", " + z + "]";
@@ -57,7 +57,7 @@ public class PacmanMazeGen : MonoBehaviour
 
                     else
                     {
-                        Node node = new Node(x, z, false);
+                        WallNode node = new WallNode(x, z, false);
                         nodes.Add(node);
                         var scoreObj = Instantiate(score, new Vector3(x, 1.5f, z), Quaternion.identity);
                         scoreObj.name = "Node[" + x + ", " + z + "]";
