@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class rabbitplayer : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class rabbitplayer : MonoBehaviour
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
+    [SerializeField]
+    private InputActionReference Movement;
 
     void Start()
     {
@@ -51,9 +54,10 @@ public class rabbitplayer : MonoBehaviour
         {
             velocity.y = -2f;
         }
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        //float horizontal = Input.GetAxisRaw("Horizontal");
+        //float vertical = Input.GetAxisRaw("Vertical");
+        //Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        Vector3 direction = Movement.action.ReadValue<Vector3>();
 
         if (isGrounded)
         {
