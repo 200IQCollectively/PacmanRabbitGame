@@ -5,6 +5,7 @@ using UnityEngine;
 public class PacmanMazeGen : MonoBehaviour
 {
     public GameObject wall;
+    public GameObject walls;
 
     [Range(10, 50)] public int width = 28;
     [Range(10, 50)] public int height = 31;
@@ -13,6 +14,7 @@ public class PacmanMazeGen : MonoBehaviour
     public int[,] maze;
 
     public GameObject score;
+    public GameObject scores;
 
     // Start is called before the first frame update
     private void Start()
@@ -44,7 +46,7 @@ public class PacmanMazeGen : MonoBehaviour
 
                     var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
                     wallObj.name = "Wall" + "[" + x + ", " + z + "]";
-                    wallObj.transform.SetParent(gameObject.transform);
+                    wallObj.transform.SetParent(walls.transform);
                 }
             }
         }
@@ -56,20 +58,20 @@ public class PacmanMazeGen : MonoBehaviour
     {
         if(x > 0 || x < width || z > 0 || z < height)
         {
-            int random = Random.Range(0, 2);
+            int random = Random.Range(0, 10);
 
             if (random == 1)
             {
                 var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
                 wallObj.name = "Wall" + "[" + x + ", " + z + "]";
-                wallObj.transform.SetParent(gameObject.transform);
+                wallObj.transform.SetParent(walls.transform);
             }
 
             else
             {
                 var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
                 scoreObj.name = "Score" + "[" + x + ", " + z + "]";
-                scoreObj.transform.SetParent(gameObject.transform);
+                scoreObj.transform.SetParent(scores.transform);
             }
         }
     }
@@ -93,19 +95,5 @@ public class PacmanMazeGen : MonoBehaviour
                 }
             }
         }
-    }
-
-}
-
-
-struct TileCoordinate
-{
-    public int tileX;
-    public int tileZ;
-
-    public TileCoordinate(int x, int z)
-    {
-        tileX = x;
-        tileZ = z;
     }
 }
