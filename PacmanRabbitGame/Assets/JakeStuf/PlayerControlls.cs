@@ -70,6 +70,182 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerInGame"",
+            ""id"": ""2a96fb6b-adc8-42ba-9f50-ede7f3219642"",
+            ""actions"": [
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""13c1c36f-a04d-4f38-8303-9d2728c85ed7"",
+                    ""expectedControlType"": ""Stick"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""6b2a1350-374a-4fbe-be14-6974236ff800"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""37cf52ed-7cc3-451c-8376-136ed75b3c0c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Teleport"",
+                    ""type"": ""Button"",
+                    ""id"": ""7333d8c6-3538-4b97-80c5-93928d2e7b9c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c3089f46-2981-485e-bfce-fa6ccc2d7465"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""c729058b-da68-4d39-ba77-b274b486e665"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""cf4f083b-2d41-45a7-b96d-35b825566e82"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""04ed1ae3-e0b9-41f9-993a-fd9c9c8d3a8a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a6174f67-c195-463d-8b4b-fbffa7f28e14"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""6c6426b0-cfba-4353-b32a-2e288e456e23"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4fec582-62a2-49d3-b0db-fce6b2a682db"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad83f659-a157-470c-ba3a-8657c6b49564"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb62cead-f9c9-4b1e-8e64-317de7183f52"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60273096-2eda-4fdc-8f2a-529007e56d0f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e95ea9d-9f09-4bdb-92da-893707260778"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Teleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7cdf9a39-5e63-4426-9015-c94c79f69760"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Teleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -78,6 +254,12 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
         m_PlayerMovement_Movement = m_PlayerMovement.FindAction("Movement", throwIfNotFound: true);
         m_PlayerMovement_Select = m_PlayerMovement.FindAction("Select", throwIfNotFound: true);
+        // PlayerInGame
+        m_PlayerInGame = asset.FindActionMap("PlayerInGame", throwIfNotFound: true);
+        m_PlayerInGame_Movement = m_PlayerInGame.FindAction("Movement", throwIfNotFound: true);
+        m_PlayerInGame_Look = m_PlayerInGame.FindAction("Look", throwIfNotFound: true);
+        m_PlayerInGame_Jump = m_PlayerInGame.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerInGame_Teleport = m_PlayerInGame.FindAction("Teleport", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -174,9 +356,73 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         }
     }
     public PlayerMovementActions @PlayerMovement => new PlayerMovementActions(this);
+
+    // PlayerInGame
+    private readonly InputActionMap m_PlayerInGame;
+    private IPlayerInGameActions m_PlayerInGameActionsCallbackInterface;
+    private readonly InputAction m_PlayerInGame_Movement;
+    private readonly InputAction m_PlayerInGame_Look;
+    private readonly InputAction m_PlayerInGame_Jump;
+    private readonly InputAction m_PlayerInGame_Teleport;
+    public struct PlayerInGameActions
+    {
+        private @PlayerControlls m_Wrapper;
+        public PlayerInGameActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_PlayerInGame_Movement;
+        public InputAction @Look => m_Wrapper.m_PlayerInGame_Look;
+        public InputAction @Jump => m_Wrapper.m_PlayerInGame_Jump;
+        public InputAction @Teleport => m_Wrapper.m_PlayerInGame_Teleport;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerInGame; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerInGameActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerInGameActions instance)
+        {
+            if (m_Wrapper.m_PlayerInGameActionsCallbackInterface != null)
+            {
+                @Movement.started -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnMovement;
+                @Look.started -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnLook;
+                @Look.performed -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnLook;
+                @Look.canceled -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnLook;
+                @Jump.started -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnJump;
+                @Teleport.started -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnTeleport;
+                @Teleport.performed -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnTeleport;
+                @Teleport.canceled -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnTeleport;
+            }
+            m_Wrapper.m_PlayerInGameActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
+                @Look.started += instance.OnLook;
+                @Look.performed += instance.OnLook;
+                @Look.canceled += instance.OnLook;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @Teleport.started += instance.OnTeleport;
+                @Teleport.performed += instance.OnTeleport;
+                @Teleport.canceled += instance.OnTeleport;
+            }
+        }
+    }
+    public PlayerInGameActions @PlayerInGame => new PlayerInGameActions(this);
     public interface IPlayerMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+    }
+    public interface IPlayerInGameActions
+    {
+        void OnMovement(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnTeleport(InputAction.CallbackContext context);
     }
 }
