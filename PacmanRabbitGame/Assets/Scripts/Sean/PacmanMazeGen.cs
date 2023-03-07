@@ -10,10 +10,7 @@ public class PacmanMazeGen : MonoBehaviour
     [Range(10, 50)] public int height = 31;
 
     //Must be public/ private serializefield or it doesn't work and no one knows why
-    public List<WallNode> nodes;
-    public List<WallNode> wallList;
-    public List<WallNode> mazeList;
-    public List<GameObject> mazeWallList;
+    public int[,] maze;
 
     public GameObject score;
 
@@ -25,46 +22,90 @@ public class PacmanMazeGen : MonoBehaviour
 
     private void GenerateMazeLayout()
     {
-        for (int x = 0; x < width + 1; x++)
-        {
-            for (int z = 0; z < height + 1; z++)
-            {
+        maze = new int[width, height];
 
-                if (x == 0 || x == width || z == 0 || z == height)
+        int wallBorderSize = 1;
+        int[,] wallBorder = new int[width + wallBorderSize * 2, height + wallBorderSize * 2];
+
+        for(int x = 0; x < wallBorder.GetLength(0); x++)
+        {
+            for(int z = 0; z < wallBorder.GetLength(1); z++)
+            {
+                if (x >= wallBorderSize && x < width + wallBorderSize && z >= wallBorderSize && z < height + wallBorderSize)
                 {
-                    WallNode node = new WallNode(x, z, true);
-                    nodes.Add(node);
-                    var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
-                    wallObj.name = "Node[" + x + ", " + z + "]";
-                    wallObj.transform.SetParent(gameObject.transform);
-                    wallList.Add(node);
+                    wallBorder[x, z] = maze[x - wallBorderSize, z - wallBorderSize];
+
+                    FillMaze(x, z);
                 }
 
                 else
                 {
-                    int random = Random.Range(0, 2);
+                    wallBorder[x, z] = 1;
 
-                    if (random == 1)
-                    {
-                        WallNode node = new WallNode(x, z, true);
-                        nodes.Add(node);
-                        var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
-                        wallObj.name = "Node[" + x + ", " + z + "]";
-                        wallObj.transform.SetParent(gameObject.transform);
-                        mazeList.Add(node);
-                        mazeWallList.Add(wallObj);
-                    }
-
-                    else
-                    {
-                        WallNode node = new WallNode(x, z, false);
-                        nodes.Add(node);
-                        var scoreObj = Instantiate(score, new Vector3(x, 1.5f, z), Quaternion.identity);
-                        scoreObj.name = "Node[" + x + ", " + z + "]";
-                        scoreObj.transform.SetParent(gameObject.transform);
-                    }            
-                }       
+                    var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
+                    wallObj.name = "Wall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(gameObject.transform);
+                }
             }
         }
+
+        
+    }
+
+    private void FillMaze(int x, int z)
+    {
+        if(x > 0 || x < width || z > 0 || z < height)
+        {
+            int random = Random.Range(0, 2);
+
+            if (random == 1)
+            {
+                var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
+                wallObj.name = "Wall" + "[" + x + ", " + z + "]";
+                wallObj.transform.SetParent(gameObject.transform);
+            }
+
+            else
+            {
+                var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
+                scoreObj.name = "Score" + "[" + x + ", " + z + "]";
+                scoreObj.transform.SetParent(gameObject.transform);
+            }
+        }
+    }
+
+   private bool isXConnecting(int x, int nX)
+    {
+        return x + 1 == nX || x - 1 == nX; 
+    }
+
+    private void GetNeighbouringWalls(int x, int z)
+    {
+        int connectingWalls = 0;
+
+        for(int nX = x - 1; nX <= x + 1; nX++)
+        {
+            for(int nZ = z - 1; nZ <= z + 1; nZ++)
+            {
+                if(isXConnecting(x, nX))
+                {
+
+                }
+            }
+        }
+    }
+
+}
+
+
+struct TileCoordinate
+{
+    public int tileX;
+    public int tileZ;
+
+    public TileCoordinate(int x, int z)
+    {
+        tileX = x;
+        tileZ = z;
     }
 }

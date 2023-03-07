@@ -504,11 +504,7 @@ MonoBehaviour:
   wall: {fileID: 5407817152406286739, guid: 7adf0846b8a6b0b4fa8e45d824873153, type: 3}
   width: 28
   height: 31
-  nodes: []
-  wallList: []
-  mazeList: []
-  mazeWallList: []
-  score: {fileID: 7249431087744254280, guid: e05fb116d111fee49a64785466e33b1e, type: 3}
+  score: {fileID: 165025401746929230, guid: 6c81e37707ca89042b726ff68318928b, type: 3}
 --- !u!1 &1431381844
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,7 +818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4495844719893339509, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4563968156090135441, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
       propertyPath: INP_jump
