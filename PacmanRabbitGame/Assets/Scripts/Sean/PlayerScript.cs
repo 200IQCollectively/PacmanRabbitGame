@@ -28,7 +28,7 @@ public class PlayerScript : MonoBehaviour
 
     //Teleport Stuff
     public TextMeshProUGUI popup;
-    public Vector3 teleportPos;
+    private Vector3 teleportPos;
     private bool teleportable;
 
     //New input stuff
@@ -76,7 +76,7 @@ public class PlayerScript : MonoBehaviour
 
         if (INP_teleport.action.IsPressed() && teleportable)
         {
-            transform.position = teleportPos;
+            transform.position = new Vector3(teleportPos.x, teleportPos.y + 1, teleportPos.z);
 
             teleportable = false;
         }
