@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -30,13 +31,42 @@ public class PlayerScript : MonoBehaviour
     public Vector3 teleportPos;
     private bool teleportable;
 
+    //New input stuff
+
+    [SerializeField]
+    private InputActionReference INP_movement,INP_look,INP_jump,INP_teleport;
+    private Gamepad gamepad = Gamepad.current;
+    private Keyboard keyboard = Keyboard.current;
+    private Mouse mouse = Mouse.current;
+
     // Start is called before the first frame update
     void Start()
     {
+        
+
+        if (gamepad != null)
+        {
+            // Player is using a gamepad
+            Debug.Log("using gamepad");
+        }
+
+        if (keyboard != null)
+        {
+            // Player is using a keyboard
+            Debug.Log("using keyboard");
+        }
+
+        if (mouse != null)
+        {
+            // Player is using a mouse
+       
+
+            Debug.Log("using mouse");
+        }
         Cursor.lockState = CursorLockMode.Locked;
         GetComponents();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -44,7 +74,7 @@ public class PlayerScript : MonoBehaviour
         Movement();
         Jump();
 
-        if (Input.GetKeyDown(KeyCode.E) && teleportable)
+        if (INP_teleport.action.IsPressed() && teleportable)
         {
             transform.position = teleportPos;
 
@@ -54,22 +84,37 @@ public class PlayerScript : MonoBehaviour
 
     private void MouseLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        Vector2 look = new Vector2();
+        if (mouse != null)
+        {
+            //float mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
+            //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            Debug.Log(mouse.position.ReadValue());
+            float mouseX = (mouse.position.x.ReadValue() - (Screen.width/2)) * mouseSensitivity * Time.deltaTime;
+            float mouseY = (mouse.position.y.ReadValue() - (Screen.height/2))* mouseSensitivity * Time.deltaTime;
+            look = new Vector2(mouseX, mouseY);
 
-        xRotationCamera -= mouseY;
+            playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
+        }
+        
+        look = INP_look.action.ReadValue<Vector2>();
+
+        
+        
+        xRotationCamera -= look.y;
         xRotationCamera = Mathf.Clamp(xRotationCamera, -90f, 90f);
 
         playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
-        gameObject.transform.Rotate(Vector3.up * mouseX);
+        gameObject.transform.Rotate(Vector3.up * look.x);
     }
 
     private void Movement()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
+        //float x = Input.GetAxis("Horizontal");
+        //float z = Input.GetAxis("Vertical");
+        Vector2 movement = INP_movement.action.ReadValue<Vector2>();
+        Vector3 move = transform.right * movement.x + transform.forward * movement.y;
+        
         controller.Move(move * Time.deltaTime * playerSpeed);
     }
 
@@ -85,7 +130,12 @@ public class PlayerScript : MonoBehaviour
 
         if (controller.isGrounded)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            /*if (Input.GetKeyDown(KeyCode.Space))
+            {
+                playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                source.PlayOneShot(jump);
+            */
+            if (INP_jump.action.IsPressed())
             {
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 source.PlayOneShot(jump);
