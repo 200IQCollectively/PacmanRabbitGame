@@ -43,6 +43,8 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GetComponents();
+
         anim = GetComponentInChildren<Animator>();
 
         if (gamepad != null)
@@ -65,7 +67,7 @@ public class PlayerScript : MonoBehaviour
             Debug.Log("using mouse");
         }
         Cursor.lockState = CursorLockMode.Locked;
-        GetComponents();
+        
     }
     
     // Update is called once per frame
@@ -90,7 +92,7 @@ public class PlayerScript : MonoBehaviour
         {
             //float mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
             //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-            Debug.Log(mouse.position.ReadValue());
+            //Debug.Log(mouse.position.ReadValue());
             float mouseX = (mouse.position.x.ReadValue() - (Screen.width/2)) * mouseSensitivity * Time.deltaTime;
             float mouseY = (mouse.position.y.ReadValue() - (Screen.height/2))* mouseSensitivity * Time.deltaTime;
             look = new Vector2(mouseX, mouseY);
@@ -117,7 +119,7 @@ public class PlayerScript : MonoBehaviour
         Vector3 move = transform.right * movement.x + transform.forward * movement.y;
         if(movement==new Vector2(0,0))
         {
-            Debug.Log("still");
+            //Debug.Log("still");
             anim.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
         }
         else
@@ -164,7 +166,7 @@ public class PlayerScript : MonoBehaviour
         if (other.tag == "Collectible")
         {
             score.SetScore(10);
-
+            
             source.PlayOneShot(eatCarrot);
 
             Destroy(other.gameObject);
@@ -194,7 +196,7 @@ public class PlayerScript : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         playerCamera = GameObject.Find("Camera").transform;
-        score = GetComponent<ScoreScript>();
         source = GetComponent<AudioSource>();
+        score = GetComponent<ScoreScript>();
     }
 }
