@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PacmanMazeGen : MonoBehaviour
 {
     public GameObject wall;
     public GameObject walls;
+
+    public NavMeshSurface floor;
 
     [Range(10, 50)] public int width = 28;
     [Range(10, 50)] public int height = 31;
@@ -19,6 +22,8 @@ public class PacmanMazeGen : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        floor = gameObject.transform.Find("Plane").GetComponent<NavMeshSurface>();
+
         GenerateMazeLayout();
     }
 
@@ -51,7 +56,7 @@ public class PacmanMazeGen : MonoBehaviour
             }
         }
 
-        
+        floor.BuildNavMesh();
     }
 
     private void FillMaze(int x, int z)
