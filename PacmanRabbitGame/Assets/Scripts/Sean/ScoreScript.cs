@@ -23,18 +23,16 @@ public class ScoreScript : MonoBehaviour
         return score;
     }
 
-    public int SetScore(int increase)
+    public void SetScore(int increase)
     {
         score += increase;
 
         scoreText.text = "Score: " + score;
-
-        return score;
     }
 
     private void GetComponents()
     {
-        canvas = GameObject.Find("Canvas");
+        canvas = GameObject.Find("MainCanvas");
         scoreText = canvas.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>();
     }
 }

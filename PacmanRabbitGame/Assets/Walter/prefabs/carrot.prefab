@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5470742913120309714}
-  - component: {fileID: 3406163757502167445}
-  - component: {fileID: 3113762600671193950}
   - component: {fileID: 8436380309451324355}
   m_Layer: 8
   m_Name: carrot
@@ -35,32 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 1.76, z: 90}
---- !u!65 &3406163757502167445
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1778769192631187190}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.91, y: 6.22, z: 1}
-  m_Center: {x: -0.32, y: 2.85, z: -0.25}
---- !u!114 &3113762600671193950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1778769192631187190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fd9ca866dcb09845a62d99317b8e3ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  points: 10
 --- !u!95 &8436380309451324355
 Animator:
   serializedVersion: 4
