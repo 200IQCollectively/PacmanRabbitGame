@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerScript : MonoBehaviour
 {
     //Movement
+    private Animator anim;
     private CharacterController controller;
     private Vector3 playerVelocity;
     [SerializeField] private float playerSpeed = 5.0f;
@@ -14,7 +15,7 @@ public class PlayerScript : MonoBehaviour
     private float gravity = -9.81f;
 
     //Camera Movement
-    private float mouseSensitivity = 1000f;
+    private float mouseSensitivity = 0.5f;
     private Transform playerCamera;
     private float xRotationCamera = 0f;
 
@@ -42,7 +43,7 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = GetComponentInChildren<Animator>();
 
         if (gamepad != null)
         {
@@ -74,7 +75,7 @@ public class PlayerScript : MonoBehaviour
         Movement();
         Jump();
 
-        if (INP_teleport.action.IsPressed() && teleportable)
+        if (INP_teleport.action.WasPerformedThisFrame() && teleportable)
         {
             transform.position = new Vector3(teleportPos.x, teleportPos.y + 1, teleportPos.z);
 
@@ -114,6 +115,15 @@ public class PlayerScript : MonoBehaviour
         //float z = Input.GetAxis("Vertical");
         Vector2 movement = INP_movement.action.ReadValue<Vector2>();
         Vector3 move = transform.right * movement.x + transform.forward * movement.y;
+        if(movement==new Vector2(0,0))
+        {
+            Debug.Log("still");
+            anim.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+        }
+        else
+        {
+            anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+        }
         
         controller.Move(move * Time.deltaTime * playerSpeed);
     }
@@ -135,7 +145,7 @@ public class PlayerScript : MonoBehaviour
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 source.PlayOneShot(jump);
             */
-            if (INP_jump.action.IsPressed())
+            if (INP_jump.action.WasPerformedThisFrame())
             {
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 source.PlayOneShot(jump);
