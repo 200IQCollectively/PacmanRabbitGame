@@ -8,9 +8,9 @@ public class PlayerScript : MonoBehaviour
 {
     //Movement
     private Animator anim;
-    private CharacterController controller;
+    public CharacterController controller;
     private Vector3 playerVelocity;
-    [SerializeField] private float playerSpeed = 5.0f;
+    public float playerSpeed = 5.0f;
     [SerializeField] private float jumpHeight = 1f;
     private float gravity = -9.81f;
 
