@@ -19,6 +19,16 @@ public class PacmanMazeGen : MonoBehaviour
     public GameObject score;
     public GameObject scores;
 
+    public GameObject spawner;
+    public GameObject twoByFour;
+    public GameObject threeByOne;
+    public GameObject lWall;
+    public GameObject tWall;
+
+    private Vector3 xScale, zScale;
+
+    public LayerMask layer = 7;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -31,52 +41,77 @@ public class PacmanMazeGen : MonoBehaviour
     {
         maze = new int[width, height];
 
-        int wallBorderSize = 1;
-        int[,] wallBorder = new int[width + wallBorderSize * 2, height + wallBorderSize * 2];
-
-        for(int x = 0; x < wallBorder.GetLength(0); x++)
+        for (int x = 0; x < maze.GetLength(0) + 1; x++)
         {
-            for(int z = 0; z < wallBorder.GetLength(1); z++)
+            for(int z = 0; z < maze.GetLength(1) + 1; z++)
             {
-                if (x >= wallBorderSize && x < width + wallBorderSize && z >= wallBorderSize && z < height + wallBorderSize)
+
+                //Check if bottom or top of maze and instantiate walls scaled to size for performance
+
+                //if(x == maze.GetLength(0) / 2 && z == 0 || x == maze.GetLength(0) / 2 && z == maze.GetLength(1))
+                //{
+
+                //}
+
+
+                if (x == 0 || x == maze.GetLength(0) || z == 0 || z == maze.GetLength(1))
                 {
-                    wallBorder[x, z] = maze[x - wallBorderSize, z - wallBorderSize];
-
-                    FillMaze(x, z);
-                }
-
-                else
-                {
-                    wallBorder[x, z] = 1;
-
                     var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
                     wallObj.name = "Wall" + "[" + x + ", " + z + "]";
                     wallObj.transform.SetParent(walls.transform);
                 }
+
+                if (x == maze.GetLength(0) / 2 && z == maze.GetLength(1) / 2)
+                {
+                    var spawnObj = Instantiate(spawner, new Vector3(x, 0.5f, z), Quaternion.Euler(0f, 180f, 0f));
+                    spawnObj.name = "Spawner" + "[" + x + ", " + z + "]";
+                    spawnObj.transform.SetParent(walls.transform);
+                }
             }
         }
+
+        FillMaze(maze);
 
         floor.BuildNavMesh();
     }
 
-    private void FillMaze(int x, int z)
+    private void FillMaze(int[,] size)
     {
-        if(x > 0 || x < width || z > 0 || z < height)
+        for(int x = 0; x < size.GetLength(0); x++)
         {
-            int random = Random.Range(0, 10);
-
-            if (random == 1)
+            for(int z = 0; z < size.GetLength(1); z++)
             {
-                var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
-                wallObj.name = "Wall" + "[" + x + ", " + z + "]";
-                wallObj.transform.SetParent(walls.transform);
-            }
+                //Spawn Score Stuff
+                if (!Physics.CheckBox(new Vector3(x, 3, z), new Vector3(0.5f, 1.5f, 0.5f), Quaternion.identity, layer))
+                {
+                    Debug.Log("Not Colliding");
+                    var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
+                    scoreObj.name = "Score" + "[" + x + ", " + z + "]";
+                    scoreObj.transform.SetParent(scores.transform);
+                }
 
-            else
-            {
-                var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
-                scoreObj.name = "Score" + "[" + x + ", " + z + "]";
-                scoreObj.transform.SetParent(scores.transform);
+                else
+                {
+                    Debug.Log("Colliding");
+                }
+                
+
+                //Spawn Obstacles
+                int random = Random.Range(0, 4);
+
+                switch(random)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
