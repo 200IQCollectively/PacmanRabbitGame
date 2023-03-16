@@ -198,5 +198,6 @@ public class PlayerScript : MonoBehaviour
         playerCamera = GameObject.Find("Camera").transform;
         source = GetComponent<AudioSource>();
         score = GetComponent<ScoreScript>();
+        popup = GameObject.Find("MainCanvas").transform.Find("PopupText").GetComponent<TextMeshProUGUI>();
     }
 }

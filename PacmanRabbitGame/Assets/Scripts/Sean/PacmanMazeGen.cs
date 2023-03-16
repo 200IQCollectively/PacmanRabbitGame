@@ -29,6 +29,8 @@ public class PacmanMazeGen : MonoBehaviour
 
     public LayerMask layer = 7;
 
+    public GameObject Player;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -66,6 +68,8 @@ public class PacmanMazeGen : MonoBehaviour
                     var spawnObj = Instantiate(spawner, new Vector3(x, 0.5f, z), Quaternion.Euler(0f, 180f, 0f));
                     spawnObj.name = "Spawner" + "[" + x + ", " + z + "]";
                     spawnObj.transform.SetParent(walls.transform);
+
+                    Instantiate(Player, new Vector3(x, 1.5f, z - 4f), Quaternion.identity);
                 }
             }
         }
@@ -77,43 +81,82 @@ public class PacmanMazeGen : MonoBehaviour
 
     private void FillMaze(int[,] size)
     {
-        for(int x = 0; x < size.GetLength(0); x++)
+        for(int x = 0; x < size.GetLength(0) + 1; x++)
         {
-            for(int z = 0; z < size.GetLength(1); z++)
+            for(int z = 0; z < size.GetLength(1) + 1; z++)
             {
-                //Spawn Score Stuff
-                if (!Physics.CheckBox(new Vector3(x, 3, z), new Vector3(0.5f, 1.5f, 0.5f), Quaternion.identity, layer))
-                {
-                    Debug.Log("Not Colliding");
-                    var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
-                    scoreObj.name = "Score" + "[" + x + ", " + z + "]";
-                    scoreObj.transform.SetParent(scores.transform);
-                }
-
-                else
-                {
-                    Debug.Log("Colliding");
-                }
-                
-
                 //Spawn Obstacles
                 int random = Random.Range(0, 4);
 
-                switch(random)
+                switch (random)
                 {
                     case 0:
+
+                        if(!Physics.CheckBox(new Vector3(x + 0.5f, 1, z + 1.5f), new Vector3(2.5f, 1.5f, 3.5f), Quaternion.identity, layer))
+                        {
+                            var wallObj = Instantiate(twoByFour, new Vector3(x, 0.5f, z), Quaternion.identity);
+                            wallObj.name = "2x4" + "[" + x + ", " + z + "]";
+                            wallObj.transform.SetParent(walls.transform);
+                        }
+
                         break;
+
                     case 1:
+
+                        if (!Physics.CheckBox(new Vector3(x + 1f, 1, z), new Vector3(3f, 1.5f, 1.5f), Quaternion.identity, layer))
+                        {
+                            var wallObj = Instantiate(threeByOne, new Vector3(x, 0.5f, z), Quaternion.identity);
+                            wallObj.name = "v3x1" + "[" + x + ", " + z + "]";
+                            wallObj.transform.SetParent(walls.transform);
+                        }
+
                         break;
+
                     case 2:
+
+                        if (!Physics.CheckBox(new Vector3(x + 1f, 1, z + 0.5f), new Vector3(2.5f, 1.5f, 2f), Quaternion.identity, layer))
+                        {
+                            var wallObj = Instantiate(lWall, new Vector3(x, 0.5f, z), Quaternion.identity);
+                            wallObj.name = "lWall" + "[" + x + ", " + z + "]";
+                            wallObj.transform.SetParent(walls.transform);
+                        }
+
                         break;
+
                     case 3:
+
+                        if (!Physics.CheckBox(new Vector3(x, 1, z + 1.5f), new Vector3(4.5f, 1.5f, 3f), Quaternion.identity, layer))
+                        {
+                            var wallObj = Instantiate(tWall, new Vector3(x, 0.5f, z), Quaternion.identity);
+                            wallObj.name = "tWall" + "[" + x + ", " + z + "]";
+                            wallObj.transform.SetParent(walls.transform);
+                        }
+
                         break;
+
                     default:
                         break;
                 }
             }
         }
+
+        AddScoreObjects(maze);
+    }
+
+    private void AddScoreObjects(int[,] size)
+    {
+        for(int x = 0; x < size.GetLength(0); x++)
+        {
+            for(int z = 0; z < size.GetLength(1); z++)
+            {
+                if (!Physics.CheckBox(new Vector3(x, 1, z), new Vector3(0.4f, 0.5f, 0.4f), Quaternion.identity, layer))
+                {
+                    var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
+                    scoreObj.name = "Score" + "[" + x + ", " + z + "]";
+                    scoreObj.transform.SetParent(scores.transform);
+                }
+            }
+        } 
     }
 
    private bool isXConnecting(int x, int nX)
