@@ -27,11 +27,6 @@ public class PlayerScript : MonoBehaviour
     public AudioClip jump;
     public AudioClip eatCarrot;
 
-    //Teleport Stuff
-    public TextMeshProUGUI popup;
-    private Vector3 teleportPos;
-    private bool teleportable;
-
     //New input stuff
 
     [SerializeField]
@@ -39,6 +34,8 @@ public class PlayerScript : MonoBehaviour
     private Gamepad gamepad = Gamepad.current;
     private Keyboard keyboard = Keyboard.current;
     private Mouse mouse = Mouse.current;
+
+    private GameHandler game;
 
     // Start is called before the first frame update
     void Start()
@@ -76,13 +73,6 @@ public class PlayerScript : MonoBehaviour
         MouseLook();
         Movement();
         Jump();
-
-        if (INP_teleport.action.WasPerformedThisFrame() && teleportable)
-        {
-            transform.position = new Vector3(teleportPos.x, teleportPos.y + 1, teleportPos.z);
-
-            teleportable = false;
-        }
     }
 
     private void MouseLook()
@@ -169,26 +159,9 @@ public class PlayerScript : MonoBehaviour
             
             source.PlayOneShot(eatCarrot);
 
+            game.SetCarrotAmount(-1);
+
             Destroy(other.gameObject);
-        }
-
-        if (other.tag == "Hole")
-        {
-            popup.text = "Press 'E' to Enter";
-
-            teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
-
-            teleportable = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Hole")
-        {
-            popup.text = "";
-
-            teleportable = false;
         }
     }
 
@@ -198,6 +171,6 @@ public class PlayerScript : MonoBehaviour
         playerCamera = GameObject.Find("Camera").transform;
         source = GetComponent<AudioSource>();
         score = GetComponent<ScoreScript>();
-        popup = GameObject.Find("MainCanvas").transform.Find("PopupText").GetComponent<TextMeshProUGUI>();
+        game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 }

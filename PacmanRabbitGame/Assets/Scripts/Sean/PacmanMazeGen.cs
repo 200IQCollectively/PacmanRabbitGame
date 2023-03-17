@@ -10,8 +10,8 @@ public class PacmanMazeGen : MonoBehaviour
 
     public NavMeshSurface floor;
 
-    [Range(10, 50)] public int width = 28;
-    [Range(10, 50)] public int height = 31;
+    private int width = 28;
+    private int height = 31;
 
     //Must be public/ private serializefield or it doesn't work and no one knows why
     public int[,] maze;
@@ -31,17 +31,24 @@ public class PacmanMazeGen : MonoBehaviour
 
     public GameObject Player;
 
+    public GameHandler game;
+
     // Start is called before the first frame update
     private void Start()
     {
         floor = gameObject.transform.Find("Plane").GetComponent<NavMeshSurface>();
 
-        GenerateMazeLayout();
+        game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 
-    private void GenerateMazeLayout()
+    public void GenerateMazeLayout()
     {
-        maze = new int[width, height];
+        ClearMaze();
+
+        width = Random.Range(20, 51);
+        height = Random.Range(20, 51);
+
+        maze = new int[20, 20];
 
         for (int x = 0; x < maze.GetLength(0) + 1; x++)
         {
@@ -69,7 +76,16 @@ public class PacmanMazeGen : MonoBehaviour
                     spawnObj.name = "Spawner" + "[" + x + ", " + z + "]";
                     spawnObj.transform.SetParent(walls.transform);
 
-                    Instantiate(Player, new Vector3(x, 1.5f, z - 4f), Quaternion.identity);
+
+                    if(GameObject.Find("TestPlayer(Clone)") == null)
+                    {
+                        Instantiate(Player, new Vector3(x, 1.5f, z - 4f), Quaternion.identity);
+                    }
+
+                    else
+                    {
+                        GameObject.Find("TestPlayer(Clone)").gameObject.transform.position = new Vector3(x, 1.5f, z - 4f);
+                    }
                 }
             }
         }
@@ -77,6 +93,14 @@ public class PacmanMazeGen : MonoBehaviour
         FillMaze(maze);
 
         floor.BuildNavMesh();
+    }
+
+    private void ClearMaze()
+    {
+        foreach (Transform children in walls.transform)
+        {
+            Destroy(children.gameObject);
+        }
     }
 
     private void FillMaze(int[,] size)
@@ -247,29 +271,10 @@ public class PacmanMazeGen : MonoBehaviour
                     var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
                     scoreObj.name = "Score" + "[" + x + ", " + z + "]";
                     scoreObj.transform.SetParent(scores.transform);
+
+                    game.SetCarrotAmount(1);
                 }
             }
         } 
-    }
-
-   private bool isXConnecting(int x, int nX)
-    {
-        return x + 1 == nX || x - 1 == nX; 
-    }
-
-    private void GetNeighbouringWalls(int x, int z)
-    {
-        int connectingWalls = 0;
-
-        for(int nX = x - 1; nX <= x + 1; nX++)
-        {
-            for(int nZ = z - 1; nZ <= z + 1; nZ++)
-            {
-                if(isXConnecting(x, nX))
-                {
-
-                }
-            }
-        }
     }
 }
