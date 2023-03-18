@@ -29,5 +29,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/LukeHodgetts/Maps/NewLevel2.unity
     guid: 834131112d501a746866e0c4939ea088
+  - enabled: 1
+    path: Assets/LukeHodgetts/Maps/NewLevel3.unity
+    guid: a897364d2a80eaf4bb3941aa90f58a40
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 727f9214ca6b1dd498e5180aaae22ef0, type: 2}
