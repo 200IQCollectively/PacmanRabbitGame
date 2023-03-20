@@ -15,7 +15,7 @@ public class GameHandler : MonoBehaviour
     {
         maze = GameObject.Find("MazePlane").GetComponent<PacmanMazeGen>();
 
-        maze.GenerateMazeLayout();
+        StartCoroutine(maze.DelayMazeGen());
     }
 
     public void SetCarrotAmount(int amount)
@@ -34,7 +34,7 @@ public class GameHandler : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        maze.GenerateMazeLayout();
+        StartCoroutine(maze.DelayMazeGen());
 
         fadeObj.SetActive(false);
     }

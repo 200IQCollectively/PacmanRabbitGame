@@ -41,10 +41,8 @@ public class PacmanMazeGen : MonoBehaviour
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 
-    public void GenerateMazeLayout()
+    private void GenerateMazeLayout()
     {
-        ClearMaze();
-
         width = Random.Range(20, 51);
         height = Random.Range(20, 51);
 
@@ -276,5 +274,14 @@ public class PacmanMazeGen : MonoBehaviour
                 }
             }
         } 
+    }
+
+    public IEnumerator DelayMazeGen()
+    {
+        ClearMaze();
+
+        yield return new WaitForSeconds(0.1f);
+
+        GenerateMazeLayout();
     }
 }
