@@ -38,7 +38,7 @@ public class PlayerScript : MonoBehaviour
     private GameHandler game;
 
     private bool canMove = true;
-    private bool canJump = false;
+    public bool canJump = false;
 
     // Start is called before the first frame update
     void Start()
