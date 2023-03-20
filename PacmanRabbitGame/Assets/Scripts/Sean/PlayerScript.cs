@@ -78,19 +78,23 @@ public class PlayerScript : MonoBehaviour
     private void MouseLook()
     {
         Vector2 look = new Vector2();
-        if (mouse != null)
-        {
-            //float mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
-            //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-            //Debug.Log(mouse.position.ReadValue());
-            float mouseX = (mouse.position.x.ReadValue() - (Screen.width/2)) * mouseSensitivity * Time.deltaTime;
-            float mouseY = (mouse.position.y.ReadValue() - (Screen.height/2))* mouseSensitivity * Time.deltaTime;
-            look = new Vector2(mouseX, mouseY);
+        //if (mouse != null)
+        //{
+        //    //float mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
+        //    //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        //    //Debug.Log(mouse.position.ReadValue());
+        //    float mouseX = (mouse.position.x.ReadValue() - (Screen.width/2)) * mouseSensitivity * Time.deltaTime;
+        //    float mouseY = (mouse.position.y.ReadValue() - (Screen.height/2))* mouseSensitivity * Time.deltaTime;
+        //    look = new Vector2(mouseX, mouseY);
 
-            playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
-        }
+        //    playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
+        //}
         
-        look = INP_look.action.ReadValue<Vector2>();
+        
+             look = INP_look.action.ReadValue<Vector2>();
+        
+        
+       
 
         
         
