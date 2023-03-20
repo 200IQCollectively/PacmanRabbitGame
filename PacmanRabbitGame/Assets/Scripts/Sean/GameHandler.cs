@@ -28,6 +28,11 @@ public class GameHandler : MonoBehaviour
         }
     }
 
+    public int GetCarrotAmount()
+    {
+        return amountOfCarrots;
+    }
+
     IEnumerator NextLevel()
     {
         fadeObj.SetActive(true);

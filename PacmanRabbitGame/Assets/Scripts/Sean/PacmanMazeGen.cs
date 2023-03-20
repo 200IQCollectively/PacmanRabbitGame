@@ -77,12 +77,12 @@ public class PacmanMazeGen : MonoBehaviour
 
                     if(GameObject.Find("TestPlayer(Clone)") == null)
                     {
-                        Instantiate(Player, new Vector3(x, 1.5f, z - 4f), Quaternion.identity);
+                        Instantiate(Player, new Vector3(x, 1.5f, z - 3.5f), Quaternion.identity);
                     }
 
                     else
                     {
-                        GameObject.Find("TestPlayer(Clone)").gameObject.transform.position = new Vector3(x, 1.5f, z - 4f);
+                        GameObject.Find("TestPlayer(Clone)").gameObject.transform.position = new Vector3(x, 1.5f, z - 3.5f);
                     }
                 }
             }
