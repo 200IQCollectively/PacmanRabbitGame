@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
-  playerSpeed: 10
+  playerSpeed: 5
   jumpHeight: 2.5
   jump: {fileID: 8300000, guid: 356bde826dd9e904fa3be5e75ed9ba16, type: 3}
   eatCarrot: {fileID: 8300000, guid: 8ba2278544d0bce4484867a788dc35da, type: 3}
@@ -296,7 +296,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 2a96fb6b-adc8-42ba-9f50-ede7f3219642
+  m_DefaultActionMap: PlayerInGame
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1001 &8365869000211145802

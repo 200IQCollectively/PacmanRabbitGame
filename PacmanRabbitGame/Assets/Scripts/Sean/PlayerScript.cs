@@ -37,6 +37,9 @@ public class PlayerScript : MonoBehaviour
 
     private GameHandler game;
 
+    private bool canMove = true;
+    private bool canJump = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,9 +73,16 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MouseLook();
-        Movement();
-        Jump();
+        if(canMove)
+        {
+            MouseLook();
+            Movement();
+
+            if(canJump)
+            {
+                Jump();
+            }  
+        }
     }
 
     private void MouseLook()
@@ -167,6 +177,16 @@ public class PlayerScript : MonoBehaviour
 
             Destroy(other.gameObject);
         }
+    }
+
+    public void SetCanMove(bool value)
+    {
+        canMove = value;
+    }
+
+    public void SetCanJump(bool value)
+    {
+        canJump = value;
     }
 
     private void GetComponents()

@@ -10,6 +10,8 @@ public class GameHandler : MonoBehaviour
 
     public GameObject fadeObj;
 
+    public PlayerScript player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,13 +35,22 @@ public class GameHandler : MonoBehaviour
         return amountOfCarrots;
     }
 
+    public void SetPlayer(PlayerScript play)
+    {
+        player = play;
+    }
+
     IEnumerator NextLevel()
     {
         fadeObj.SetActive(true);
 
+        player.SetCanMove(false);
+
         yield return new WaitForSeconds(3f);
 
         StartCoroutine(maze.DelayMazeGen());
+
+        player.SetCanMove(true);
 
         fadeObj.SetActive(false);
     }

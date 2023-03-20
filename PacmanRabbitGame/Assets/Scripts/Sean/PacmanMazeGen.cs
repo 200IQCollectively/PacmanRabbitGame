@@ -46,7 +46,7 @@ public class PacmanMazeGen : MonoBehaviour
         width = Random.Range(20, 51);
         height = Random.Range(20, 51);
 
-        maze = new int[20, 20];
+        maze = new int[width, height];
 
         for (int x = 0; x < maze.GetLength(0) + 1; x++)
         {
@@ -77,7 +77,9 @@ public class PacmanMazeGen : MonoBehaviour
 
                     if(GameObject.Find("TestPlayer(Clone)") == null)
                     {
-                        Instantiate(Player, new Vector3(x, 1.5f, z - 3.5f), Quaternion.identity);
+                        var play = Instantiate(Player, new Vector3(x, 1.5f, z - 3.5f), Quaternion.identity);
+
+                        game.SetPlayer(play.GetComponent<PlayerScript>());
                     }
 
                     else
