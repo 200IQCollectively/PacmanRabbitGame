@@ -34,7 +34,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (enemies.Count != 4 && timer <= 0)
         {
-            var fox = Instantiate(enemy, new Vector3(gameObject.transform.position.x, 0.5f, gameObject.transform.position.z + 4), Quaternion.identity);
+            var fox = Instantiate(enemy, new Vector3(gameObject.transform.position.x, 0f, gameObject.transform.position.z + 4), Quaternion.identity);
 
             enemies.Add(fox);
 
