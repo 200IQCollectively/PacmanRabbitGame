@@ -46,7 +46,7 @@ public class GameHandler : MonoBehaviour
 
         player.SetCanMove(false);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
 
         StartCoroutine(maze.DelayMazeGen());
 
