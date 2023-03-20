@@ -27,11 +27,6 @@ public class PlayerScript : MonoBehaviour
     public AudioClip jump;
     public AudioClip eatCarrot;
 
-    //Teleport Stuff
-    public TextMeshProUGUI popup;
-    private Vector3 teleportPos;
-    private bool teleportable;
-
     //New input stuff
 
     [SerializeField]
@@ -39,6 +34,11 @@ public class PlayerScript : MonoBehaviour
     private Gamepad gamepad = Gamepad.current;
     private Keyboard keyboard = Keyboard.current;
     private Mouse mouse = Mouse.current;
+
+    private GameHandler game;
+
+    private bool canMove = true;
+    public bool canJump = false;
 
     // Start is called before the first frame update
     void Start()
@@ -73,34 +73,38 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MouseLook();
-        Movement();
-        Jump();
-
-        if (INP_teleport.action.WasPerformedThisFrame() && teleportable)
+        if(canMove)
         {
-            transform.position = new Vector3(teleportPos.x, teleportPos.y + 1, teleportPos.z);
+            MouseLook();
+            Movement();
 
-            teleportable = false;
+            if(canJump)
+            {
+                Jump();
+            }  
         }
     }
 
     private void MouseLook()
     {
         Vector2 look = new Vector2();
-        if (mouse != null)
-        {
-            //float mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
-            //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-            //Debug.Log(mouse.position.ReadValue());
-            float mouseX = (mouse.position.x.ReadValue() - (Screen.width/2)) * mouseSensitivity * Time.deltaTime;
-            float mouseY = (mouse.position.y.ReadValue() - (Screen.height/2))* mouseSensitivity * Time.deltaTime;
-            look = new Vector2(mouseX, mouseY);
+        //if (mouse != null)
+        //{
+        //    //float mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
+        //    //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        //    //Debug.Log(mouse.position.ReadValue());
+        //    float mouseX = (mouse.position.x.ReadValue() - (Screen.width/2)) * mouseSensitivity * Time.deltaTime;
+        //    float mouseY = (mouse.position.y.ReadValue() - (Screen.height/2))* mouseSensitivity * Time.deltaTime;
+        //    look = new Vector2(mouseX, mouseY);
 
-            playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
-        }
+        //    playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
+        //}
         
-        look = INP_look.action.ReadValue<Vector2>();
+        
+             look = INP_look.action.ReadValue<Vector2>();
+        
+        
+       
 
         
         
@@ -169,27 +173,20 @@ public class PlayerScript : MonoBehaviour
             
             source.PlayOneShot(eatCarrot);
 
+            game.SetCarrotAmount(-1);
+
             Destroy(other.gameObject);
-        }
-
-        if (other.tag == "Hole")
-        {
-            popup.text = "Press 'E' to Enter";
-
-            teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
-
-            teleportable = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void SetCanMove(bool value)
     {
-        if (other.tag == "Hole")
-        {
-            popup.text = "";
+        canMove = value;
+    }
 
-            teleportable = false;
-        }
+    public void SetCanJump(bool value)
+    {
+        canJump = value;
     }
 
     private void GetComponents()
@@ -198,5 +195,6 @@ public class PlayerScript : MonoBehaviour
         playerCamera = GameObject.Find("Camera").transform;
         source = GetComponent<AudioSource>();
         score = GetComponent<ScoreScript>();
+        game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 }
