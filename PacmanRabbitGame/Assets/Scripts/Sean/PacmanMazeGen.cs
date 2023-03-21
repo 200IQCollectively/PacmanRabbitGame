@@ -41,7 +41,7 @@ public class PacmanMazeGen : MonoBehaviour
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 
-    private void GenerateMazeLayout()
+    public void GenerateMazeLayout()
     {
         width = Random.Range(20, 51);
         height = Random.Range(20, 51);
@@ -103,7 +103,7 @@ public class PacmanMazeGen : MonoBehaviour
         }
     }
 
-    private void FillMaze(int[,] size)
+    public void FillMaze(int[,] size)
     {
         for(int x = 0; x < size.GetLength(0) + 1; x++)
         {
