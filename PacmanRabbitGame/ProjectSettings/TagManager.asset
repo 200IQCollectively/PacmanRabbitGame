@@ -13,16 +13,18 @@ TagManager:
   - whitefox
   - subplayer
   - enemies
+  - Hole
+  - AI
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - score
   - Water
   - UI
   - ground
-  - 
-  - 
+  - Wall
+  - Minimap
   - 
   - 
   - 
