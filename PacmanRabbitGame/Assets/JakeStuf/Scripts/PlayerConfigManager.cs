@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class PlayerConfigManager : MonoBehaviour
 {
     private List<PlayerConfiguration> playerConfigs;
+    public List<PlayerInput> players = new List<PlayerInput>();
 
     [SerializeField]
     private int MaxPlayers = 4;
@@ -52,6 +53,7 @@ public class PlayerConfigManager : MonoBehaviour
         Debug.Log("Player Joined" + pi.playerIndex);
         pi.transform.SetParent(transform);
         playerConfigs.Add(new PlayerConfiguration(pi));
+        players.Add(pi);
 
         switch (pi.playerIndex)
         {

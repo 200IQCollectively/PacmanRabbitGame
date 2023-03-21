@@ -2866,7 +2866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7910056219849263446, guid: a508f2ac32be9ad48830e49b1f6fbd95, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: SampleScene
+      value: JakesTester
       objectReference: {fileID: 0}
     - target: {fileID: 7910056219849263446, guid: a508f2ac32be9ad48830e49b1f6fbd95, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

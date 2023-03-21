@@ -16,8 +16,17 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        playerInputManager = this.GetComponent<PlayerInputManager>();
+        playerInputManager = FindObjectOfType<PlayerInputManager>();
+        playerInputManager.playerPrefab = PlayerPrefabs[0];
+        players = PlayerConfigManager.Instance.players;
+        playerInputManager.playerPrefab = PlayerPrefabs[players.Count];
         
+        foreach (PlayerInput player in players)
+        {
+            Transform playerParent = players[player.playerIndex].transform;
+            playerParent.position = startingPoints[player.playerIndex].position;
+            playerInputManager.playerPrefab = PlayerPrefabs[player.playerIndex];
+        }
     }
 
     private void OnEnable()
@@ -32,6 +41,6 @@ public class PlayerManager : MonoBehaviour
 
         Transform playerParent = player.transform;
         playerParent.position = startingPoints[players.Count - 1].position;
-        playerInputManager.playerPrefab = PlayerPrefabs[players.Count];
+        playerInputManager.playerPrefab = PlayerPrefabs[players.Count-1];
     }
 }
