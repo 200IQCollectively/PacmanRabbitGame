@@ -15,7 +15,7 @@ public class PlayerScript : MonoBehaviour
     private float gravity = -9.81f;
 
     //Camera Movement
-    private float mouseSensitivity = 0.5f;
+    private float mouseSensitivity = 3f;
     private Transform playerCamera;
     private float xRotationCamera = 0f;
 
@@ -29,11 +29,14 @@ public class PlayerScript : MonoBehaviour
 
     //New input stuff
 
-    [SerializeField]
-    private InputActionReference INP_movement,INP_look,INP_jump,INP_teleport;
+    //[SerializeField]
+    //private InputActionReference INP_movement,INP_look,INP_jump,INP_teleport;
     private Gamepad gamepad = Gamepad.current;
     private Keyboard keyboard = Keyboard.current;
     private Mouse mouse = Mouse.current;
+    private InputActionAsset inputAsset;
+    private InputActionMap playerInputMap;
+    private InputAction INP_movement, INP_look, INP_jump, INP_teleport;
 
     private GameHandler game;
 
@@ -43,6 +46,14 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //input setup
+        inputAsset = this.GetComponent<PlayerInput>().actions;
+        playerInputMap = inputAsset.FindActionMap("PlayerInGame");
+        INP_movement = playerInputMap.FindAction("Movement");
+        INP_look = playerInputMap.FindAction("Look");
+        INP_jump = playerInputMap.FindAction("Jump");
+        INP_teleport = playerInputMap.FindAction("Teleport");
+
         GetComponents();
 
         anim = GetComponentInChildren<Animator>();
@@ -101,15 +112,11 @@ public class PlayerScript : MonoBehaviour
         //}
         
         
-             look = INP_look.action.ReadValue<Vector2>();
-        
-        
-       
+        look = INP_look.ReadValue<Vector2>();
+        look = look * mouseSensitivity;
 
-        
-        
         xRotationCamera -= look.y;
-        xRotationCamera = Mathf.Clamp(xRotationCamera, -90f, 90f);
+        xRotationCamera = Mathf.Clamp(xRotationCamera, -30f, 0f);
 
         playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
         gameObject.transform.Rotate(Vector3.up * look.x);
@@ -117,9 +124,10 @@ public class PlayerScript : MonoBehaviour
 
     private void Movement()
     {
+        Vector2 movement = new Vector2();
         //float x = Input.GetAxis("Horizontal");
         //float z = Input.GetAxis("Vertical");
-        Vector2 movement = INP_movement.action.ReadValue<Vector2>();
+        movement = INP_movement.ReadValue<Vector2>();
         Vector3 move = transform.right * movement.x + transform.forward * movement.y;
         if(movement==new Vector2(0,0))
         {
@@ -151,7 +159,7 @@ public class PlayerScript : MonoBehaviour
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 source.PlayOneShot(jump);
             */
-            if (INP_jump.action.WasPerformedThisFrame())
+            if (INP_jump.WasPerformedThisFrame())
             {
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 source.PlayOneShot(jump);
@@ -193,8 +201,8 @@ public class PlayerScript : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         playerCamera = GameObject.Find("Camera").transform;
-        source = GetComponent<AudioSource>();
+        //source = GetComponent<AudioSource>();
         score = GetComponent<ScoreScript>();
-        game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+        //game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 }
