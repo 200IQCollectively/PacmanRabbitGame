@@ -25,6 +25,8 @@ public class PacmanMazeGen : MonoBehaviour
     public GameObject lWall;
     public GameObject tWall;
 
+    public GameObject hole;
+
     private Vector3 xScale, zScale;
 
     public LayerMask layer = 7;
@@ -41,7 +43,7 @@ public class PacmanMazeGen : MonoBehaviour
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 
-    public void GenerateMazeLayout()
+    private void GenerateMazeLayout()
     {
         width = Random.Range(20, 51);
         height = Random.Range(20, 51);
@@ -68,6 +70,24 @@ public class PacmanMazeGen : MonoBehaviour
                     wallObj.transform.SetParent(walls.transform);
                 }
 
+                if(x == 1 && z == maze.GetLength(1) / 2)
+                {
+                    var holeObj = Instantiate(hole, new Vector3(x - 1, 2.5f, z), Quaternion.Euler(0, 0, -90));
+                    holeObj.name = "LeftHole";
+                    holeObj.transform.SetParent(walls.transform);
+
+                    GameObject.Find("OutsideFloor").transform.Find("OLeftHole").GetComponent<TeleportPlayer>().teleportTarget = holeObj.transform.Find("TeleportPoint").transform;
+                }
+
+                if (x == maze.GetLength(0) - 1 && z == maze.GetLength(1) / 2)
+                {
+                    var holeObj = Instantiate(hole, new Vector3(x + 1, 0.5f, z), Quaternion.Euler(0, 0, 90));
+                    holeObj.name = "RightHole";
+                    holeObj.transform.SetParent(walls.transform);
+
+                    GameObject.Find("OutsideFloor").transform.Find("ORightHole").GetComponent<TeleportPlayer>().teleportTarget = holeObj.transform.Find("TeleportPoint").transform;
+                }
+
                 if (x == maze.GetLength(0) / 2 && z == maze.GetLength(1) / 2)
                 {
                     var spawnObj = Instantiate(spawner, new Vector3(x, 0.5f, z), Quaternion.Euler(0f, 180f, 0f));
@@ -90,9 +110,7 @@ public class PacmanMazeGen : MonoBehaviour
             }
         }
 
-        FillMaze(maze);
-
-        floor.BuildNavMesh();
+        StartCoroutine(delayMazeGen());
     }
 
     private void ClearMaze()
@@ -103,7 +121,16 @@ public class PacmanMazeGen : MonoBehaviour
         }
     }
 
-    public void FillMaze(int[,] size)
+    IEnumerator delayMazeGen()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        FillMaze(maze);
+
+        floor.BuildNavMesh();
+    }
+
+    private void FillMaze(int[,] size)
     {
         for(int x = 0; x < size.GetLength(0) + 1; x++)
         {

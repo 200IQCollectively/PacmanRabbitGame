@@ -15,7 +15,7 @@ public class PlayerScript : MonoBehaviour
     private float gravity = -9.81f;
 
     //Camera Movement
-    private float mouseSensitivity = 0.5f;
+    private float mouseSensitivity = 0.8f;
     private Transform playerCamera;
     private float xRotationCamera = 0f;
 
@@ -38,7 +38,12 @@ public class PlayerScript : MonoBehaviour
     private GameHandler game;
 
     private bool canMove = true;
-    private bool canJump = false;
+    public bool canJump = false;
+
+    //Teleport Stuff
+    public TextMeshProUGUI popup;
+    private Vector3 teleportPos;
+    private bool teleportable;
 
     // Start is called before the first frame update
     void Start()
@@ -81,7 +86,16 @@ public class PlayerScript : MonoBehaviour
             if(canJump)
             {
                 Jump();
-            }  
+            }
+
+            if (INP_teleport.action.WasPerformedThisFrame() && teleportable)
+            {
+                transform.position = new Vector3(teleportPos.x, teleportPos.y + 1, teleportPos.z);
+
+                teleportable = false;
+
+                canJump = !canJump;
+            }
         }
     }
 
@@ -109,7 +123,7 @@ public class PlayerScript : MonoBehaviour
         
         
         xRotationCamera -= look.y;
-        xRotationCamera = Mathf.Clamp(xRotationCamera, -90f, 90f);
+        xRotationCamera = Mathf.Clamp(xRotationCamera, -10f, 25f);
 
         playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
         gameObject.transform.Rotate(Vector3.up * look.x);
@@ -130,12 +144,7 @@ public class PlayerScript : MonoBehaviour
         {
             anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
         }
-        
-        controller.Move(move * Time.deltaTime * playerSpeed);
-    }
 
-    private void Jump()
-    {
         if (controller.isGrounded && playerVelocity.y <= 0)
         {
             playerVelocity.y = -2f;
@@ -144,6 +153,11 @@ public class PlayerScript : MonoBehaviour
         playerVelocity.y += gravity * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
+        controller.Move(move * Time.deltaTime * playerSpeed);
+    }
+
+    private void Jump()
+    {
         if (controller.isGrounded)
         {
             /*if (Input.GetKeyDown(KeyCode.Space))
@@ -169,13 +183,32 @@ public class PlayerScript : MonoBehaviour
     {
         if (other.tag == "Collectible")
         {
-            score.SetScore(10);
+            score.SetScore(5);
             
             source.PlayOneShot(eatCarrot);
 
             game.SetCarrotAmount(-1);
 
             Destroy(other.gameObject);
+        }
+
+        if(other.tag == "Hole")
+        {
+            teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
+
+            teleportable = true;
+
+            popup.text = "Press 'E' to Enter";
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "Hole")
+        {
+            teleportable = false;
+
+            popup.text = "";
         }
     }
 
@@ -196,5 +229,6 @@ public class PlayerScript : MonoBehaviour
         source = GetComponent<AudioSource>();
         score = GetComponent<ScoreScript>();
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+        popup = GameObject.Find("MainCanvas").transform.Find("PopupText").GetComponent<TextMeshProUGUI>();
     }
 }
