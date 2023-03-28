@@ -8,6 +8,9 @@ using UnityEngine.UI;
 public class PlayerConfigManager : MonoBehaviour
 {
     private List<PlayerConfiguration> playerConfigs;
+    public List<PlayerInput> players = new List<PlayerInput>();
+    //public GameObject foxplayer = new GameObject();
+   
 
     [SerializeField]
     private int MaxPlayers = 4;
@@ -52,11 +55,13 @@ public class PlayerConfigManager : MonoBehaviour
         Debug.Log("Player Joined" + pi.playerIndex);
         pi.transform.SetParent(transform);
         playerConfigs.Add(new PlayerConfiguration(pi));
+        players.Add(pi);
 
         switch (pi.playerIndex)
         {
             case 0:
                 ReadyText1.GetComponent<Text>().text = "Ready";
+
                 break;
             case 1:
                 ReadyText2.GetComponent<Text>().text = "Ready";

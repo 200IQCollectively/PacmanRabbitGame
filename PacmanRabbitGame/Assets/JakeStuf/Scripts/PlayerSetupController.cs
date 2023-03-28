@@ -27,7 +27,7 @@ public class PlayerSetupController : MonoBehaviour
 
     public void ReadyPlayer()
     {
-        PlayerConfigManager.Instance.ReadyPlayer(PlayerIndex);
+        //PlayerConfigManager.Instance.ReadyPlayer(PlayerIndex);
         readyPanel1.gameObject.SetActive(true);
     }
 
