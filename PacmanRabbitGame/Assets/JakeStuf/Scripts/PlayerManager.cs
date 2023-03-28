@@ -19,26 +19,32 @@ public class PlayerManager : MonoBehaviour
         playerInputManager = FindObjectOfType<PlayerInputManager>();
         playerInputManager.playerPrefab = PlayerPrefabs[0];
         players = PlayerConfigManager.Instance.players;
+        
+        
+    }
+    public void SpawnPlayers()
+    {
         List<GameObject> playerObjects = new List<GameObject>();
-        print(players.Count);
-
+        print(startingPoints.Count);
         foreach (PlayerInput player in players)
         {
 
             GameObject playerObject = new GameObject();
             Transform playerParent = players[player.playerIndex].transform;
-            playerParent.position = startingPoints[player.playerIndex].position;
-            
+
+
             print(player.playerIndex);
-            
+
             if (player.playerIndex == 0)
             {
                 
-                playerObject = Instantiate(PlayerPrefabs[0], playerParent.position,Quaternion.identity);
-                
+                playerParent.position = startingPoints[0].position;
+                playerObject = Instantiate(PlayerPrefabs[0], playerParent.position, Quaternion.identity);
+                Debug.Log("player spawned");
             }
             else
             {
+                playerParent.position = startingPoints[1].position;
                 playerObject = Instantiate(PlayerPrefabs[1], playerParent.position, Quaternion.identity);
 
             }
@@ -51,10 +57,10 @@ public class PlayerManager : MonoBehaviour
         {
 
             case 2:
-                
+
                 foreach (GameObject playerobj in playerObjects)
                 {
-                    if(temp == 0)
+                    if (temp == 0)
                     {
                         playerobj.transform.GetComponentInChildren<Camera>().rect = new Rect(0, 0, 0.5f, 1);
                     }
@@ -69,7 +75,7 @@ public class PlayerManager : MonoBehaviour
             case 3:
                 foreach (GameObject playerobj in playerObjects)
                 {
-                    
+
                     switch (temp)
                     {
                         case 1:
@@ -137,4 +143,17 @@ public class PlayerManager : MonoBehaviour
         playerParent.position = startingPoints[players.Count - 1].position;
         playerInputManager.playerPrefab = PlayerPrefabs[players.Count-1];
     }
+
+    public void AddSpawnPosition(Transform position)
+    {
+        startingPoints.Add(position);
+    }
+
+    public IEnumerator DelaySpawning()
+    {
+
+        yield return new WaitForSeconds(0.5f);
+
+    }
+
 }

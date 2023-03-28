@@ -40,13 +40,21 @@ public class AiLocomotion : MonoBehaviour
     { 
        
         targetPosition = GetRandomNavMeshPosition();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        Debug.Log("tryna find player");
+        //player = GameObject.FindGameObjectWithTag("Player").transform;
 
     }
 
 
     private void Update()
     {
+        if (player == null) 
+        {
+            if (player = GameObject.FindGameObjectWithTag("Player").transform)
+            {
+
+            }
+        }
         if (navAgent.remainingDistance <= navAgent.stoppingDistance)
         {
             targetPosition = GetRandomNavMeshPosition();

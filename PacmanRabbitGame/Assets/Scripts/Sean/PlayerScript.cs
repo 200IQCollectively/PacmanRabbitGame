@@ -118,10 +118,10 @@ public class PlayerScript : MonoBehaviour
         look = INP_look.ReadValue<Vector2>();
         look = look * mouseSensitivity;
 
-        xRotationCamera -= look.y;
+        xRotationCamera -= look.x;
         xRotationCamera = Mathf.Clamp(xRotationCamera, -30f, 0f);
 
-        playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
+        //playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
         gameObject.transform.Rotate(Vector3.up * look.x);
     }
 
@@ -180,9 +180,9 @@ public class PlayerScript : MonoBehaviour
     {
         if (other.tag == "Collectible")
         {
-            score.SetScore(10);
+            //score.SetScore(10);
             
-            source.PlayOneShot(eatCarrot);
+            //source.PlayOneShot(eatCarrot);
 
             game.SetCarrotAmount(-1);
 

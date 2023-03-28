@@ -35,9 +35,12 @@ public class PacmanMazeGen : MonoBehaviour
 
     public GameHandler game;
 
+    private PlayerManager playerManager;
+
     // Start is called before the first frame update
     private void Start()
     {
+        playerManager = FindObjectOfType<PlayerManager>();
         floor = gameObject.transform.Find("Plane").GetComponent<NavMeshSurface>();
 
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
@@ -94,18 +97,22 @@ public class PacmanMazeGen : MonoBehaviour
                     spawnObj.name = "Spawner" + "[" + x + ", " + z + "]";
                     spawnObj.transform.SetParent(walls.transform);
 
+                    GameObject playertrans = new GameObject();
+                    playertrans.transform.position = new Vector3(x, 1.5f, z - 3.5f);
+                    playerManager.AddSpawnPosition(playertrans.transform);
+                    playerManager.AddSpawnPosition(spawnObj.transform);
+                    playerManager.SpawnPlayers();
+                    //if (GameObject.Find("TestPlayer(Clone)") == null)
+                    //{
+                    //    var play = Instantiate(Player, new Vector3(x, 1.5f, z - 3.5f), Quaternion.identity);
 
-                    if(GameObject.Find("TestPlayer(Clone)") == null)
-                    {
-                        var play = Instantiate(Player, new Vector3(x, 1.5f, z - 3.5f), Quaternion.identity);
+                    //    game.SetPlayer(play.GetComponent<PlayerScript>());
+                    //}
 
-                        game.SetPlayer(play.GetComponent<PlayerScript>());
-                    }
-
-                    else
-                    {
-                        GameObject.Find("TestPlayer(Clone)").gameObject.transform.position = new Vector3(x, 1.5f, z - 3.5f);
-                    }
+                    //else
+                    //{
+                    //    GameObject.Find("TestPlayer(Clone)").gameObject.transform.position = new Vector3(x, 1.5f, z - 3.5f);
+                    //}
                 }
             }
         }
