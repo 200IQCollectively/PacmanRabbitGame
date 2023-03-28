@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,9 @@ public class AiLocomotion : MonoBehaviour
     private NavMeshAgent Navagent;
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private float health;
+
    
 
    
@@ -33,6 +37,7 @@ public class AiLocomotion : MonoBehaviour
         StartCoroutine(FollowTarget());
 
     }
+
 
     private void Update()
     {
