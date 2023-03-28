@@ -267,7 +267,7 @@ PrefabInstance:
     - target: {fileID: 7137217778416292316, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
       propertyPath: _data._json
       value: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"Scene
-        Name","value":{"$content":"Extras","$type":"System.String"},"typeHandle":{"Identification":"System.String,
+        Name","value":{"$content":"EndlessRunner","$type":"System.String"},"typeHandle":{"Identification":"System.String,
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"UI
         Spawn","value":{"$content":0,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.GameObject,
         UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"Unlock
