@@ -37,6 +37,7 @@ public class PlayerScript : MonoBehaviour
     private InputActionAsset inputAsset;
     private InputActionMap playerInputMap;
     private InputAction INP_movement, INP_look, INP_jump, INP_teleport;
+    private PlayerInput playerInput;
 
     private GameHandler game;
 
@@ -47,13 +48,15 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         //input setup
-        inputAsset = this.GetComponent<PlayerInput>().actions;
+        playerInput = GetComponentInChildren<PlayerInput>();
+        inputAsset = playerInput.actions;
         playerInputMap = inputAsset.FindActionMap("PlayerInGame");
         INP_movement = playerInputMap.FindAction("Movement");
         INP_look = playerInputMap.FindAction("Look");
         INP_jump = playerInputMap.FindAction("Jump");
         INP_teleport = playerInputMap.FindAction("Teleport");
 
+        playerInput.camera = GetComponentInChildren<Camera>();
         GetComponents();
 
         anim = GetComponentInChildren<Animator>();

@@ -55,7 +55,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Testerfox
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2437249490677481652, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
 --- !u!4 &7210056131281285686 stripped
 Transform:

@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/JakeStuf/MainMenu.unity
     guid: 96f168308b6baec4082f60ca6fffdc66
   - enabled: 1
     path: Assets/Scenes/ProceduralUndergroundMaze.unity
