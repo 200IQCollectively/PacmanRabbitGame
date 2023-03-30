@@ -12,9 +12,13 @@ public class EnemySpawner : MonoBehaviour
 
     public GameHandler game;
 
+    private Transform teleportPoint;
+
     private void Start()
     {
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+
+        teleportPoint = transform.Find("EnemyTeleportPoint").gameObject.transform;
     }
 
     // Update is called once per frame
@@ -34,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (enemies.Count != 4 && timer <= 0)
         {
-            var fox = Instantiate(enemy, new Vector3(gameObject.transform.position.x, 0f, gameObject.transform.position.z + 4), Quaternion.identity);
+            var fox = Instantiate(enemy, new Vector3(teleportPoint.position.x, teleportPoint.position.y, teleportPoint.position.z), Quaternion.identity);
 
             enemies.Add(fox);
 

@@ -94,17 +94,18 @@ public class PacmanMazeGen : MonoBehaviour
                     spawnObj.name = "Spawner" + "[" + x + ", " + z + "]";
                     spawnObj.transform.SetParent(walls.transform);
 
+                    Transform spawnPoint = spawnObj.transform.Find("PlayerSpawnPoint").gameObject.transform;
 
-                    if(GameObject.Find("TestPlayer(Clone)") == null)
+                    if (GameObject.Find("TestPlayer(Clone)") == null)
                     {
-                        var play = Instantiate(Player, new Vector3(x, 1.5f, z - 3.5f), Quaternion.identity);
+                        var play = Instantiate(Player, new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), Quaternion.identity);
 
                         game.SetPlayer(play.GetComponent<PlayerScript>());
                     }
 
                     else
                     {
-                        GameObject.Find("TestPlayer(Clone)").gameObject.transform.position = new Vector3(x, 1.5f, z - 3.5f);
+                        GameObject.Find("TestPlayer(Clone)").gameObject.transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
                     }
                 }
             }
