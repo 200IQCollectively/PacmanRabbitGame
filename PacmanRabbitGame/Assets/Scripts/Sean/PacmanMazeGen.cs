@@ -18,6 +18,7 @@ public class PacmanMazeGen : MonoBehaviour
 
     public GameObject score;
     public GameObject scores;
+    public List<GameObject> scoreList;
 
     public GameObject spawner;
     public GameObject twoByFour;
@@ -34,6 +35,10 @@ public class PacmanMazeGen : MonoBehaviour
     public GameObject Player;
 
     public GameHandler game;
+
+    public GameObject PowerUpObj;
+    private int currentPowerUpAmount;
+    private int powerUpAmount = 4;
 
     // Start is called before the first frame update
     private void Start()
@@ -300,10 +305,30 @@ public class PacmanMazeGen : MonoBehaviour
                     scoreObj.name = "Score" + "[" + x + ", " + z + "]";
                     scoreObj.transform.SetParent(scores.transform);
 
+                    scoreList.Add(scoreObj);
+
                     game.SetCarrotAmount(1);
                 }
             }
-        } 
+        }
+
+        AddPowerUps();
+    }
+
+    private void AddPowerUps()
+    {
+        for(int i = 0; i < scoreList.Count; i++)
+        {
+            int random = Random.Range(0, 100);
+
+            if (random <= 5 && currentPowerUpAmount < powerUpAmount)
+            {
+                Instantiate(PowerUpObj, new Vector3(scoreList[i].gameObject.transform.position.x, 1, scoreList[i].gameObject.transform.position.z), Quaternion.identity);
+                currentPowerUpAmount += 1;
+                Destroy(scoreList[i].gameObject);
+                game.SetCarrotAmount(-1);
+            }
+        }
     }
 
     public IEnumerator DelayMazeGen()
