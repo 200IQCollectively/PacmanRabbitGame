@@ -123,52 +123,20 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &499407673
+--- !u!1001 &33781586
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 386215984925037596, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 925779878516655392, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_PressedColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 925779878516655392, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_PressedColor.g
-      value: 0.96250045
-      objectReference: {fileID: 0}
-    - target: {fileID: 925779878516655392, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_PressedColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 925779878516655392, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.b
-      value: 0.13105197
-      objectReference: {fileID: 0}
-    - target: {fileID: 925779878516655392, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.8524196
-      objectReference: {fileID: 0}
-    - target: {fileID: 925779878516655392, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.8962264
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108044505096790132, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 2613400831201712089, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2613400831201712089, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -203.28671
+      value: 284.6038
       objectReference: {fileID: 0}
     - target: {fileID: 2613400831201712089, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
       propertyPath: m_LocalPosition.y
@@ -176,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2613400831201712089, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2391.271
+      value: -13.007324
       objectReference: {fileID: 0}
     - target: {fileID: 2613400831201712089, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
       propertyPath: m_LocalRotation.w
@@ -206,113 +174,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3121444905981547356, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3529768248917699993, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_text
-      value: Carrot Hunt
-      objectReference: {fileID: 0}
-    - target: {fileID: 3894550000091600373, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3920150544819974584, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324554311200095823, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_PressedColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324554311200095823, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_PressedColor.g
-      value: 0.96250045
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324554311200095823, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_PressedColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324554311200095823, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.b
-      value: 0.13105197
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324554311200095823, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.8524196
-      objectReference: {fileID: 0}
-    - target: {fileID: 4324554311200095823, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.8962264
-      objectReference: {fileID: 0}
-    - target: {fileID: 6102327017858334448, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: _data._json
-      value: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"Objective","value":{"$content":"Find
-        all the Carrots!","$type":"System.String"},"typeHandle":{"Identification":"System.String,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"Difficulty","value":{"$content":"Easy","$type":"System.String"},"typeHandle":{"Identification":"System.String,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"Target","value":{"$content":100,"$type":"System.Int32"},"typeHandle":{"Identification":"System.Int32,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"Scene
-        Name","value":{"$content":"PacManScene","$type":"System.String"},"typeHandle":{"Identification":"System.String,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6102327017858334448, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: _data._objectReferences.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6776828584279836794, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
       propertyPath: m_Name
-      value: MainMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 7137217778416292316, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: _data._json
-      value: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"Scene
-        Name","value":{"$content":"EndlessRunner","$type":"System.String"},"typeHandle":{"Identification":"System.String,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"UI
-        Spawn","value":{"$content":0,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.GameObject,
-        UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"Unlock
-        Requirement","value":{"$content":"None","$type":"System.String"},"typeHandle":{"Identification":"System.String,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7137217778416292316, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: _data._objectReferences.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7137217778416292316, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: _data._objectReferences.Array.data[0]
-      value: 
-      objectReference: {fileID: 6776828584279836794, guid: 8ab6a51706acd88499c7d6c765485e9c, type: 3}
-    - target: {fileID: 7370293003181723317, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7370293003181723317, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 320
-      objectReference: {fileID: 0}
-    - target: {fileID: 7370293003181723317, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 7370293003181723317, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 45.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8191342236084521729, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: _data._objectReferences.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: fa41073001c9ee744a9a5fff846f79e9, type: 2}
-    - target: {fileID: 8391920070997540625, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8391920070997540625, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8391920070997540625, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}
-      propertyPath: m_Color.r
-      value: 1
+      value: MainMenuLH
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4368eb6ef1766d7419abe39b150d7654, type: 3}

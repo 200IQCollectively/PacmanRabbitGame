@@ -1002,6 +1002,7 @@ MonoBehaviour:
   floor: {fileID: 1980350652}
   score: {fileID: 165025401746929230, guid: 6c81e37707ca89042b726ff68318928b, type: 3}
   scores: {fileID: 1837188824}
+  scoreList: []
   spawner: {fileID: 2010763200733086557, guid: 389149f137a08884a9c0e2e3220cd3c2, type: 3}
   twoByFour: {fileID: 7469928282095526596, guid: 3a722a5ece9b247489394eeaae150880, type: 3}
   threeByOne: {fileID: 3378988192004932386, guid: cad80ea78da2034418aee042969677af, type: 3}
@@ -1013,6 +1014,7 @@ MonoBehaviour:
     m_Bits: 128
   Player: {fileID: 7713104738643049935, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
   game: {fileID: 303701149}
+  PowerUpObj: {fileID: 839915037231723315, guid: 05d90cb35630822479063d832fa75da3, type: 3}
 --- !u!1001 &459034049
 PrefabInstance:
   m_ObjectHideFlags: 0
