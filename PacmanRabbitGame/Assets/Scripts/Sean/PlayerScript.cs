@@ -45,6 +45,10 @@ public class PlayerScript : MonoBehaviour
     private Vector3 teleportPos;
     private bool teleportable;
 
+    //Minimap
+    private GameObject minimap;
+    private bool isInside = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,6 +99,10 @@ public class PlayerScript : MonoBehaviour
                 teleportable = false;
 
                 canJump = !canJump;
+
+                isInside = !isInside;
+
+                minimap.SetActive(isInside);
             }
         }
     }
@@ -230,5 +238,7 @@ public class PlayerScript : MonoBehaviour
         score = GetComponent<ScoreScript>();
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
         popup = GameObject.Find("MainCanvas").transform.Find("PopupText").GetComponent<TextMeshProUGUI>();
+
+        minimap = GameObject.Find("MainCanvas").transform.Find("Minimap").gameObject;
     }
 }

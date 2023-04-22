@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-//fix the mazegen to randomise through all possible nodes and layouts, make the outside walls one big game object wall, each level gets bigger, minimap
+//fix the mazegen to randomise through all possible nodes and layouts
 
 public class PacmanMazeGen : MonoBehaviour
 {
@@ -30,7 +30,8 @@ public class PacmanMazeGen : MonoBehaviour
 
     public GameObject hole;
 
-    private Vector3 xScale, zScale;
+    private Vector3 xScale;
+    private Vector3 zScale;
 
     public LayerMask layer = 7;
 
@@ -40,7 +41,6 @@ public class PacmanMazeGen : MonoBehaviour
 
     public GameObject PowerUpObj;
 
-
     //Level Stuff
     private int level = 1;
     private int minWidth = 20;
@@ -49,14 +49,14 @@ public class PacmanMazeGen : MonoBehaviour
     private int maxHeight;
 
     //Minimap
-    private GameObject minimap;
-    private int minimapHeight = 20;
+    private Camera minimap;
+    private int minimapSize = 10;
 
     // Start is called before the first frame update
     private void Start()
     {
         floor = gameObject.transform.Find("Plane").GetComponent<NavMeshSurface>();
-        minimap = GameObject.Find("MinimapCamera");
+        minimap = GameObject.Find("MinimapCamera").GetComponent<Camera>();
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 
@@ -73,37 +73,39 @@ public class PacmanMazeGen : MonoBehaviour
             case 2:
                 maxWidth = 25;
                 maxHeight = 25;
-                minimapHeight = 25;
+                minimapSize = 13;
                 break;
             case 3:
                 minWidth = 25;
                 maxWidth = 30;
                 minHeight = 25;
                 maxHeight = 30;
-                minimapHeight = 30;
+                minimapSize = 15;
                 break;
             case 4:
                 minWidth = 30;
                 maxWidth = 40;
                 minHeight = 30;
                 maxHeight = 40;
-                minimapHeight = 35;
+                minimapSize = 20;
                 break;
             case 5:
                 minWidth = 35;
                 maxWidth = 45;
                 minHeight = 35;
                 maxHeight = 45;
-                minimapHeight = 40;
+                minimapSize = 23;
                 break;
             default:
-                minWidth = 20;
+                minWidth = 35;
                 maxWidth = 50;
-                minHeight = 20;
+                minHeight = 35;
                 maxHeight = 50;
-                minimapHeight = 45;
+                minimapSize = 25;
                 break;
         }
+
+        minimap.orthographicSize = minimapSize;
 
         width = Random.Range(minWidth, maxWidth);
         height = Random.Range(minHeight, maxHeight);
@@ -116,19 +118,25 @@ public class PacmanMazeGen : MonoBehaviour
             {
 
                 //Check if bottom or top of maze and instantiate walls scaled to size for performance
-
-                //if(x == maze.GetLength(0) / 2 && z == 0 || x == maze.GetLength(0) / 2 && z == maze.GetLength(1))
-                //{
-
-                //}
-
-
-                if (x == 0 || x == maze.GetLength(0) || z == 0 || z == maze.GetLength(1))
+                if (x == maze.GetLength(0) / 2 && z == 0 || x == maze.GetLength(0) / 2 && z == maze.GetLength(1))
                 {
+                    xScale = new Vector3(100, 1, 1);
                     var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
+                    wallObj.transform.localScale = xScale;
                     wallObj.name = "Wall" + "[" + x + ", " + z + "]";
                     wallObj.transform.SetParent(walls.transform);
                 }
+
+                else if(x == 0 && z == maze.GetLength(1) / 2 || x == maze.GetLength(0) && z == maze.GetLength(1) / 2)
+                {
+                    zScale = new Vector3(1, 1, 100);
+                    var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
+                    wallObj.transform.localScale = zScale;
+                    wallObj.name = "Wall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                //Spawn Holes, Spawner, and Player
 
                 if(x == 1 && z == maze.GetLength(1) / 2)
                 {
@@ -156,7 +164,7 @@ public class PacmanMazeGen : MonoBehaviour
 
                     Transform spawnPoint = spawnObj.transform.Find("PlayerSpawnPoint").gameObject.transform;
 
-                    minimap.transform.position = new Vector3(x, minimapHeight, z);
+                    minimap.transform.position = new Vector3(x, minimapSize, z);
 
                     if (GameObject.Find("TestPlayer(Clone)") == null)
                     {

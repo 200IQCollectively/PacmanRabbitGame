@@ -140,7 +140,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   playerSpeed: 5
   jumpHeight: 2.5
-  jump: {fileID: 8300000, guid: 356bde826dd9e904fa3be5e75ed9ba16, type: 3}
+  jump: {fileID: 8300000, guid: f609baffd2b96824298a7a0785a25423, type: 3}
   eatCarrot: {fileID: 8300000, guid: 18d84a88dedc50e41aac0df2b3a0b503, type: 3}
   INP_movement: {fileID: -1221012143096282376, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
   INP_look: {fileID: 3792282978716876253, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
