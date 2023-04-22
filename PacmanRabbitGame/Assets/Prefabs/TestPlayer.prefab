@@ -141,11 +141,13 @@ MonoBehaviour:
   playerSpeed: 5
   jumpHeight: 2.5
   jump: {fileID: 8300000, guid: 356bde826dd9e904fa3be5e75ed9ba16, type: 3}
-  eatCarrot: {fileID: 8300000, guid: 8ba2278544d0bce4484867a788dc35da, type: 3}
+  eatCarrot: {fileID: 8300000, guid: 18d84a88dedc50e41aac0df2b3a0b503, type: 3}
   INP_movement: {fileID: -1221012143096282376, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
   INP_look: {fileID: 3792282978716876253, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
   INP_jump: {fileID: 9156035156302276046, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
   INP_teleport: {fileID: 7647784609420064309, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
+  canJump: 0
+  popup: {fileID: 0}
 --- !u!82 &5062994567464887743
 AudioSource:
   m_ObjectHideFlags: 0
@@ -158,7 +160,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

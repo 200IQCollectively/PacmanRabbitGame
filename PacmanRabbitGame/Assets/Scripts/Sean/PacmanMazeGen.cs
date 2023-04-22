@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//fix the mazegen to randomise through all possible nodes and layouts, make the outside walls one big game object wall, each level gets bigger, minimap
+
 public class PacmanMazeGen : MonoBehaviour
 {
     public GameObject wall;
@@ -37,21 +39,74 @@ public class PacmanMazeGen : MonoBehaviour
     public GameHandler game;
 
     public GameObject PowerUpObj;
-    private int currentPowerUpAmount;
-    private int powerUpAmount = 4;
+
+
+    //Level Stuff
+    private int level = 1;
+    private int minWidth = 20;
+    private int maxWidth;
+    private int minHeight = 20;
+    private int maxHeight;
+
+    //Minimap
+    private GameObject minimap;
+    private int minimapHeight = 20;
 
     // Start is called before the first frame update
     private void Start()
     {
         floor = gameObject.transform.Find("Plane").GetComponent<NavMeshSurface>();
-
+        minimap = GameObject.Find("MinimapCamera");
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 
     private void GenerateMazeLayout()
     {
-        width = Random.Range(20, 51);
-        height = Random.Range(20, 51);
+        switch(level)
+        {
+            case 0:
+                break;
+            case 1:
+                maxWidth = 20;
+                maxHeight = 20;
+                break;
+            case 2:
+                maxWidth = 25;
+                maxHeight = 25;
+                minimapHeight = 25;
+                break;
+            case 3:
+                minWidth = 25;
+                maxWidth = 30;
+                minHeight = 25;
+                maxHeight = 30;
+                minimapHeight = 30;
+                break;
+            case 4:
+                minWidth = 30;
+                maxWidth = 40;
+                minHeight = 30;
+                maxHeight = 40;
+                minimapHeight = 35;
+                break;
+            case 5:
+                minWidth = 35;
+                maxWidth = 45;
+                minHeight = 35;
+                maxHeight = 45;
+                minimapHeight = 40;
+                break;
+            default:
+                minWidth = 20;
+                maxWidth = 50;
+                minHeight = 20;
+                maxHeight = 50;
+                minimapHeight = 45;
+                break;
+        }
+
+        width = Random.Range(minWidth, maxWidth);
+        height = Random.Range(minHeight, maxHeight);
 
         maze = new int[width, height];
 
@@ -100,6 +155,8 @@ public class PacmanMazeGen : MonoBehaviour
                     spawnObj.transform.SetParent(walls.transform);
 
                     Transform spawnPoint = spawnObj.transform.Find("PlayerSpawnPoint").gameObject.transform;
+
+                    minimap.transform.position = new Vector3(x, minimapHeight, z);
 
                     if (GameObject.Find("TestPlayer(Clone)") == null)
                     {
@@ -301,34 +358,31 @@ public class PacmanMazeGen : MonoBehaviour
             {
                 if (!Physics.CheckBox(new Vector3(x, 1, z), new Vector3(0.4f, 0.5f, 0.4f), Quaternion.identity, layer))
                 {
-                    var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
-                    scoreObj.name = "Score" + "[" + x + ", " + z + "]";
-                    scoreObj.transform.SetParent(scores.transform);
+                    if(x == 1 && z == 1 || x == width - 1 && z == 1 || x == 1 && z == height - 1 || x == width - 1 && z == height - 1)
+                    {
+                        AddPowerUps(x, z);
+                    }
 
-                    scoreList.Add(scoreObj);
+                    else
+                    {
+                        var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
+                        scoreObj.name = "Score" + "[" + x + ", " + z + "]";
+                        scoreObj.transform.SetParent(scores.transform);
+
+                        scoreList.Add(scoreObj);
+                    }
 
                     game.SetCarrotAmount(1);
                 }
             }
-        }
-
-        AddPowerUps();
+        } 
     }
 
-    private void AddPowerUps()
+    private void AddPowerUps(int x, int z)
     {
-        for(int i = 0; i < scoreList.Count; i++)
-        {
-            int random = Random.Range(0, 100);
-
-            if (random <= 5 && currentPowerUpAmount < powerUpAmount)
-            {
-                Instantiate(PowerUpObj, new Vector3(scoreList[i].gameObject.transform.position.x, 1, scoreList[i].gameObject.transform.position.z), Quaternion.identity);
-                currentPowerUpAmount += 1;
-                Destroy(scoreList[i].gameObject);
-                game.SetCarrotAmount(-1);
-            }
-        }
+        var scoreObj = Instantiate(PowerUpObj, new Vector3(x, 1, z), Quaternion.identity);
+        scoreObj.name = "PowerUp" + "[" + x + ", " + z + "]";
+        scoreObj.transform.SetParent(scores.transform);
     }
 
     public IEnumerator DelayMazeGen()
@@ -338,5 +392,15 @@ public class PacmanMazeGen : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         GenerateMazeLayout();
+    }
+
+    public int GetLevel()
+    {
+        return level;
+    }
+
+    public int SetLevel()
+    {
+        return level += 1;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameHandler : MonoBehaviour
 {
@@ -44,7 +45,11 @@ public class GameHandler : MonoBehaviour
     {
         fadeObj.SetActive(true);
 
+        fadeObj.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Level " + maze.GetLevel() + " Complete!";
+
         player.SetCanMove(false);
+
+        maze.SetLevel();
 
         yield return new WaitForSeconds(4f);
 
