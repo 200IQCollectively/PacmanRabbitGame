@@ -35,10 +35,11 @@ public class PlayerScript : MonoBehaviour
     private Keyboard keyboard = Keyboard.current;
     private Mouse mouse = Mouse.current;
 
+    //Game Stuff
     private GameHandler game;
-
     private bool canMove = true;
     public bool canJump = false;
+    private int lives = 3;
 
     //Teleport Stuff
     public TextMeshProUGUI popup;
@@ -124,11 +125,6 @@ public class PlayerScript : MonoBehaviour
         
         
              look = INP_look.action.ReadValue<Vector2>();
-        
-        
-       
-
-        
         
         xRotationCamera -= look.y;
         xRotationCamera = Mathf.Clamp(xRotationCamera, -10f, 25f);
@@ -228,6 +224,11 @@ public class PlayerScript : MonoBehaviour
     public void SetCanJump(bool value)
     {
         canJump = value;
+    }
+
+    public ScoreScript GetScoreScript()
+    {
+        return score;
     }
 
     private void GetComponents()

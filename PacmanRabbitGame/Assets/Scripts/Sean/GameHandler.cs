@@ -6,12 +6,13 @@ using TMPro;
 public class GameHandler : MonoBehaviour
 {
     private PacmanMazeGen maze;
-
     private int amountOfCarrots;
-
     public GameObject fadeObj;
-
     public PlayerScript player;
+
+    //Leaderboard stuff
+    private int[] leaderboardScore = new int[10];
+    private string[] leaderboardNames = new string[10];
 
     // Start is called before the first frame update
     void Start()
@@ -58,5 +59,15 @@ public class GameHandler : MonoBehaviour
         player.SetCanMove(true);
 
         fadeObj.SetActive(false);
+    }
+
+    public void AddHighScore(string name, int score)
+    {
+        
+    }
+
+    private void DisplayLeaderboard()
+    {
+
     }
 }
