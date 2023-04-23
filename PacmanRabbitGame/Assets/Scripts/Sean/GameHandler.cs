@@ -11,6 +11,7 @@ public class GameHandler : MonoBehaviour
     public PlayerScript player;
 
     //Leaderboard stuff
+    private GameObject leaderboard;
     private int[] leaderboardScore = new int[10];
     private string[] leaderboardNames = new string[10];
 

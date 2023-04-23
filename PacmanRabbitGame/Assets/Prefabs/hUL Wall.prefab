@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8669291782719951154}
   m_Layer: 7
-  m_Name: L Wall
+  m_Name: hUL Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
