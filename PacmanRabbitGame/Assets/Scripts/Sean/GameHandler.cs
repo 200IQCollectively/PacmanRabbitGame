@@ -12,15 +12,23 @@ public class GameHandler : MonoBehaviour
 
     //Leaderboard stuff
     private GameObject leaderboard;
-    private int[] leaderboardScore = new int[10];
-    private string[] leaderboardNames = new string[10];
+    private GameObject leaderboardEntries;
+    public GameObject entry;
 
     // Start is called before the first frame update
     void Start()
     {
         maze = GameObject.Find("MazePlane").GetComponent<PacmanMazeGen>();
 
+        leaderboard = GameObject.Find("MainCanvas").transform.Find("Leaderboard").gameObject;
+        leaderboardEntries = leaderboard.transform.Find("LeaderboardEntries").gameObject;
+        
         StartCoroutine(maze.DelayMazeGen());
+
+        for (int i = 0; i < 10; i++)
+        {
+            AddHighScore(0, "DEEZNUTZ");
+        }
     }
 
     public void SetCarrotAmount(int amount)
@@ -62,13 +70,15 @@ public class GameHandler : MonoBehaviour
         fadeObj.SetActive(false);
     }
 
-    public void AddHighScore(string name, int score)
+    public void AddHighScore(int score, string name)
     {
-        
+        var obj = Instantiate(entry, transform.position, Quaternion.identity);
+        obj.transform.SetParent(leaderboardEntries.transform);
+        //obj.GetComponent<Entry>().SetNamePositionScore(score, name);
     }
 
-    private void DisplayLeaderboard()
+    public void EndGame()
     {
-
+        leaderboard.SetActive(true);
     }
 }

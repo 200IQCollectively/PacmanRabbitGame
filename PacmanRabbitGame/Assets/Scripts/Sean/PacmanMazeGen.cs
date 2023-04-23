@@ -171,6 +171,7 @@ public class PacmanMazeGen : MonoBehaviour
                     {
                         var play = Instantiate(Player, new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), Quaternion.identity);
 
+                        Player.GetComponent<PlayerScript>().SetSpawn(spawnPoint);
                         game.SetPlayer(play.GetComponent<PlayerScript>());
                     }
 

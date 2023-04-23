@@ -40,6 +40,7 @@ public class PlayerScript : MonoBehaviour
     private bool canMove = true;
     public bool canJump = false;
     private int lives = 3;
+    private Transform spawn;
 
     //Teleport Stuff
     public TextMeshProUGUI popup;
@@ -229,6 +230,28 @@ public class PlayerScript : MonoBehaviour
     public ScoreScript GetScoreScript()
     {
         return score;
+    }
+
+    public Transform SetSpawn(Transform _spawn)
+    {
+        return spawn = _spawn;
+    }
+
+    public void PlayerDied()
+    {
+        canMove = false;
+        lives -= 1;
+
+        if(lives <= 0)
+        {
+            game.EndGame();
+        }
+
+        else
+        {
+            transform.position = spawn.position;
+            canMove = true;
+        }
     }
 
     private void GetComponents()
