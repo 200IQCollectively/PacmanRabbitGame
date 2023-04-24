@@ -98,9 +98,9 @@ public class PacmanMazeGen : MonoBehaviour
                 minimapSize = 23;
                 break;
             default:
-                minWidth = 35;
+                minWidth = 20;
                 maxWidth = 50;
-                minHeight = 35;
+                minHeight = 20;
                 maxHeight = 50;
                 minimapSize = 25;
                 break;
