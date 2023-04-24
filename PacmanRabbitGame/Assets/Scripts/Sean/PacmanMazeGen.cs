@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//fix the mazegen to randomise through all possible nodes and layouts
+
 public class PacmanMazeGen : MonoBehaviour
 {
     public GameObject wall;
@@ -20,15 +22,17 @@ public class PacmanMazeGen : MonoBehaviour
     public GameObject scores;
     public List<GameObject> scoreList;
 
-    public GameObject spawner;
-    public GameObject twoByFour;
-    public GameObject threeByOne;
-    public GameObject lWall;
-    public GameObject tWall;
 
+    //MazeGen stuff
+    public List<GameObject> wallTypes;
+    public List<GameObject> checkedList;
+    private bool notSpawned = false;
+
+    public GameObject spawner;
     public GameObject hole;
 
-    private Vector3 xScale, zScale;
+    private Vector3 xScale;
+    private Vector3 zScale;
 
     public LayerMask layer = 7;
 
@@ -37,21 +41,75 @@ public class PacmanMazeGen : MonoBehaviour
     public GameHandler game;
 
     public GameObject PowerUpObj;
-    private int currentPowerUpAmount;
-    private int powerUpAmount = 4;
+
+    //Level Stuff
+    private int level = 1;
+    private int minWidth = 20;
+    private int maxWidth;
+    private int minHeight = 20;
+    private int maxHeight;
+
+    //Minimap
+    private Camera minimap;
+    private int minimapSize = 10;
 
     // Start is called before the first frame update
     private void Start()
     {
         floor = gameObject.transform.Find("Plane").GetComponent<NavMeshSurface>();
-
+        minimap = GameObject.Find("MinimapCamera").GetComponent<Camera>();
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 
     private void GenerateMazeLayout()
     {
-        width = Random.Range(20, 51);
-        height = Random.Range(20, 51);
+        switch(level)
+        {
+            case 0:
+                break;
+            case 1:
+                maxWidth = 20;
+                maxHeight = 20;
+                break;
+            case 2:
+                maxWidth = 25;
+                maxHeight = 25;
+                minimapSize = 13;
+                break;
+            case 3:
+                minWidth = 25;
+                maxWidth = 30;
+                minHeight = 25;
+                maxHeight = 30;
+                minimapSize = 15;
+                break;
+            case 4:
+                minWidth = 30;
+                maxWidth = 40;
+                minHeight = 30;
+                maxHeight = 40;
+                minimapSize = 20;
+                break;
+            case 5:
+                minWidth = 35;
+                maxWidth = 45;
+                minHeight = 35;
+                maxHeight = 45;
+                minimapSize = 23;
+                break;
+            default:
+                minWidth = 20;
+                maxWidth = 50;
+                minHeight = 20;
+                maxHeight = 50;
+                minimapSize = 25;
+                break;
+        }
+
+        minimap.orthographicSize = minimapSize;
+
+        width = Random.Range(minWidth, maxWidth);
+        height = Random.Range(minHeight, maxHeight);
 
         maze = new int[width, height];
 
@@ -61,19 +119,25 @@ public class PacmanMazeGen : MonoBehaviour
             {
 
                 //Check if bottom or top of maze and instantiate walls scaled to size for performance
-
-                //if(x == maze.GetLength(0) / 2 && z == 0 || x == maze.GetLength(0) / 2 && z == maze.GetLength(1))
-                //{
-
-                //}
-
-
-                if (x == 0 || x == maze.GetLength(0) || z == 0 || z == maze.GetLength(1))
+                if (x == maze.GetLength(0) / 2 && z == 0 || x == maze.GetLength(0) / 2 && z == maze.GetLength(1))
                 {
+                    xScale = new Vector3(100, 1, 1);
                     var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
+                    wallObj.transform.localScale = xScale;
                     wallObj.name = "Wall" + "[" + x + ", " + z + "]";
                     wallObj.transform.SetParent(walls.transform);
                 }
+
+                else if(x == 0 && z == maze.GetLength(1) / 2 || x == maze.GetLength(0) && z == maze.GetLength(1) / 2)
+                {
+                    zScale = new Vector3(1, 1, 100);
+                    var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
+                    wallObj.transform.localScale = zScale;
+                    wallObj.name = "Wall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                //Spawn Holes, Spawner, and Player
 
                 if(x == 1 && z == maze.GetLength(1) / 2)
                 {
@@ -101,10 +165,13 @@ public class PacmanMazeGen : MonoBehaviour
 
                     Transform spawnPoint = spawnObj.transform.Find("PlayerSpawnPoint").gameObject.transform;
 
+                    minimap.transform.position = new Vector3(x, minimapSize, z);
+
                     if (GameObject.Find("TestPlayer(Clone)") == null)
                     {
                         var play = Instantiate(Player, new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), Quaternion.identity);
 
+                        Player.GetComponent<PlayerScript>().SetSpawn(spawnPoint);
                         game.SetPlayer(play.GetComponent<PlayerScript>());
                     }
 
@@ -142,9 +209,252 @@ public class PacmanMazeGen : MonoBehaviour
         {
             for(int z = 0; z < size.GetLength(1) + 1; z++)
             {
-                //Spawn Obstacles
-                int random = Random.Range(0, 12);
+                checkedList.Clear();
+                notSpawned = false;
 
+                RandomFill(x, z);
+
+                if(notSpawned)
+                {
+                    LoopThroughShapes(x, z);
+                }
+            }
+        }
+
+        AddScoreObjects(maze);
+    }
+
+    private void RandomFill(int x, int z)
+    {
+        //Spawn Obstacles
+        int random = Random.Range(0, 12);
+
+        switch (random)
+        {
+            //Horizontal Shapes
+            case 0:
+
+                if (!Physics.CheckBox(new Vector3(x + 1.5f, 1, z - 0.5f), new Vector3(3f, 1.5f, 2f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
+                    wallObj.name = "2x4" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            case 1:
+
+                if (!Physics.CheckBox(new Vector3(x + 1f, 1, z), new Vector3(3f, 1.5f, 1.5f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.identity);
+                    wallObj.name = "h3x1" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            case 2:
+
+                if (!Physics.CheckBox(new Vector3(x + 1f, 1, z + 0.5f), new Vector3(2.5f, 1.5f, 2f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.identity);
+                    wallObj.name = "lWall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            case 3:
+
+                if (!Physics.CheckBox(new Vector3(x - 1f, 1, z - 0.5f), new Vector3(2.5f, 1.5f, 2f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 180f, 0));
+                    wallObj.name = "lWall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            case 4:
+
+                if (!Physics.CheckBox(new Vector3(x, 1, z + 1f), new Vector3(3.5f, 1.5f, 3f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.identity);
+                    wallObj.name = "tWall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            case 5:
+
+                if (!Physics.CheckBox(new Vector3(x, 1, z - 1f), new Vector3(3.5f, 1.5f, 3f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 180f, 0));
+                    wallObj.name = "tWall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            //Vertical
+            case 6:
+
+                if (!Physics.CheckBox(new Vector3(x + 0.5f, 1, z + 1.5f), new Vector3(2f, 1.5f, 3f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.identity);
+                    wallObj.name = "2x4" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            case 7:
+
+                if (!Physics.CheckBox(new Vector3(x, 1, z - 1f), new Vector3(1.5f, 1.5f, 3f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
+                    wallObj.name = "v3x1" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            case 8:
+
+                if (!Physics.CheckBox(new Vector3(x - 0.5f, 1, z + 1f), new Vector3(2.5f, 1.5f, 2.5f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 270f, 0));
+                    wallObj.name = "lWall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            case 9:
+
+                if (!Physics.CheckBox(new Vector3(x + 0.5f, 1, z - 1f), new Vector3(2.5f, 1.5f, 2.5f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
+                    wallObj.name = "lWall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            case 10:
+
+                if (!Physics.CheckBox(new Vector3(x - 1f, 1, z), new Vector3(3f, 1.5f, 4f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 270f, 0));
+                    wallObj.name = "tWall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            case 11:
+
+                if (!Physics.CheckBox(new Vector3(x + 1f, 1, z), new Vector3(3f, 1.5f, 4f), Quaternion.identity, layer))
+                {
+                    var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
+                    wallObj.name = "tWall" + "[" + x + ", " + z + "]";
+                    wallObj.transform.SetParent(walls.transform);
+                }
+
+                else
+                {
+                    checkedList.Add(wallTypes[random].gameObject);
+                    notSpawned = true;
+                }
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void LoopThroughShapes(int x, int z)
+    {
+        for(int i = 0; i < checkedList.Count; i++)
+        {
+            int random = Random.Range(0, 12);
+
+            if (wallTypes[random].gameObject == checkedList[i].gameObject)
+            {
+                break;
+            }
+
+            else
+            {
                 switch (random)
                 {
                     //Horizontal Shapes
@@ -152,9 +462,14 @@ public class PacmanMazeGen : MonoBehaviour
 
                         if (!Physics.CheckBox(new Vector3(x + 1.5f, 1, z - 0.5f), new Vector3(3f, 1.5f, 2f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(twoByFour, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
                             wallObj.name = "2x4" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
@@ -163,101 +478,143 @@ public class PacmanMazeGen : MonoBehaviour
 
                         if (!Physics.CheckBox(new Vector3(x + 1f, 1, z), new Vector3(3f, 1.5f, 1.5f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(threeByOne, new Vector3(x, 0.5f, z), Quaternion.identity);
-                            wallObj.name = "v3x1" + "[" + x + ", " + z + "]";
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.identity);
+                            wallObj.name = "h3x1" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
 
-                    //Vertical Shapes
                     case 2:
 
-                        if (!Physics.CheckBox(new Vector3(x + 0.5f, 1, z + 1.5f), new Vector3(2f, 1.5f, 3f), Quaternion.identity, layer))
+                        if (!Physics.CheckBox(new Vector3(x + 1f, 1, z + 0.5f), new Vector3(2.5f, 1.5f, 2f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(twoByFour, new Vector3(x, 0.5f, z), Quaternion.identity);
-                            wallObj.name = "2x4" + "[" + x + ", " + z + "]";
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.identity);
+                            wallObj.name = "lWall" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
 
                     case 3:
 
-                        if (!Physics.CheckBox(new Vector3(x, 1, z - 1f), new Vector3(1.5f, 1.5f, 3f), Quaternion.identity, layer))
+                        if (!Physics.CheckBox(new Vector3(x - 1f, 1, z - 0.5f), new Vector3(2.5f, 1.5f, 2f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(threeByOne, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
-                            wallObj.name = "v3x1" + "[" + x + ", " + z + "]";
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 180f, 0));
+                            wallObj.name = "lWall" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
 
-
-                    //L Shapes - Horizontal + Up, Horizontal + Down, Vertical + Left, Vertical + Right
                     case 4:
 
-                        if (!Physics.CheckBox(new Vector3(x + 1f, 1, z + 0.5f), new Vector3(2.5f, 1.5f, 2f), Quaternion.identity, layer))
+                        if (!Physics.CheckBox(new Vector3(x, 1, z + 1f), new Vector3(3.5f, 1.5f, 3f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(lWall, new Vector3(x, 0.5f, z), Quaternion.identity);
-                            wallObj.name = "lWall" + "[" + x + ", " + z + "]";
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.identity);
+                            wallObj.name = "tWall" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
 
                     case 5:
 
-                        if (!Physics.CheckBox(new Vector3(x - 1f, 1, z - 0.5f), new Vector3(2.5f, 1.5f, 2f), Quaternion.identity, layer))
+                        if (!Physics.CheckBox(new Vector3(x, 1, z - 1f), new Vector3(3.5f, 1.5f, 3f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(lWall, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 180f, 0));
-                            wallObj.name = "lWall" + "[" + x + ", " + z + "]";
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 180f, 0));
+                            wallObj.name = "tWall" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
 
+                    //Vertical
                     case 6:
 
-                        if (!Physics.CheckBox(new Vector3(x - 0.5f, 1, z + 1f), new Vector3(2.5f, 1.5f, 2.5f), Quaternion.identity, layer))
+                        if (!Physics.CheckBox(new Vector3(x + 0.5f, 1, z + 1.5f), new Vector3(2f, 1.5f, 3f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(lWall, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 270f, 0));
-                            wallObj.name = "lWall" + "[" + x + ", " + z + "]";
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.identity);
+                            wallObj.name = "2x4" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
 
                     case 7:
 
-                        if (!Physics.CheckBox(new Vector3(x + 0.5f, 1, z - 1f), new Vector3(2.5f, 1.5f, 2.5f), Quaternion.identity, layer))
+                        if (!Physics.CheckBox(new Vector3(x, 1, z - 1f), new Vector3(1.5f, 1.5f, 3f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(lWall, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
-                            wallObj.name = "lWall" + "[" + x + ", " + z + "]";
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
+                            wallObj.name = "v3x1" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
 
-                    //T Shapes - Horizontal + Up, Horizontal + Down, Vertical + Left, Vertical + Right
                     case 8:
 
-                        if (!Physics.CheckBox(new Vector3(x, 1, z + 1f), new Vector3(3.5f, 1.5f, 3f), Quaternion.identity, layer))
+                        if (!Physics.CheckBox(new Vector3(x - 0.5f, 1, z + 1f), new Vector3(2.5f, 1.5f, 2.5f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(tWall, new Vector3(x, 0.5f, z), Quaternion.identity);
-                            wallObj.name = "tWall" + "[" + x + ", " + z + "]";
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 270f, 0));
+                            wallObj.name = "lWall" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
 
                     case 9:
 
-                        if (!Physics.CheckBox(new Vector3(x, 1, z - 1f), new Vector3(3.5f, 1.5f, 3f), Quaternion.identity, layer))
+                        if (!Physics.CheckBox(new Vector3(x + 0.5f, 1, z - 1f), new Vector3(2.5f, 1.5f, 2.5f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(tWall, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 180f, 0));
-                            wallObj.name = "tWall" + "[" + x + ", " + z + "]";
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
+                            wallObj.name = "lWall" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
@@ -266,9 +623,14 @@ public class PacmanMazeGen : MonoBehaviour
 
                         if (!Physics.CheckBox(new Vector3(x - 1f, 1, z), new Vector3(3f, 1.5f, 4f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(tWall, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 270f, 0));
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 270f, 0));
                             wallObj.name = "tWall" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
@@ -277,9 +639,14 @@ public class PacmanMazeGen : MonoBehaviour
 
                         if (!Physics.CheckBox(new Vector3(x + 1f, 1, z), new Vector3(3f, 1.5f, 4f), Quaternion.identity, layer))
                         {
-                            var wallObj = Instantiate(tWall, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
+                            var wallObj = Instantiate(wallTypes[random].gameObject, new Vector3(x, 0.5f, z), Quaternion.Euler(0, 90f, 0));
                             wallObj.name = "tWall" + "[" + x + ", " + z + "]";
                             wallObj.transform.SetParent(walls.transform);
+                        }
+
+                        else
+                        {
+                            checkedList.Add(wallTypes[random]);
                         }
 
                         break;
@@ -289,8 +656,7 @@ public class PacmanMazeGen : MonoBehaviour
                 }
             }
         }
-
-        AddScoreObjects(maze);
+        
     }
 
     private void AddScoreObjects(int[,] size)
@@ -301,34 +667,31 @@ public class PacmanMazeGen : MonoBehaviour
             {
                 if (!Physics.CheckBox(new Vector3(x, 1, z), new Vector3(0.4f, 0.5f, 0.4f), Quaternion.identity, layer))
                 {
-                    var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
-                    scoreObj.name = "Score" + "[" + x + ", " + z + "]";
-                    scoreObj.transform.SetParent(scores.transform);
+                    if(x == 1 && z == 1 || x == width - 1 && z == 1 || x == 1 && z == height - 1 || x == width - 1 && z == height - 1)
+                    {
+                        AddPowerUps(x, z);
+                    }
 
-                    scoreList.Add(scoreObj);
+                    else
+                    {
+                        var scoreObj = Instantiate(score, new Vector3(x, 1, z), Quaternion.identity);
+                        scoreObj.name = "Score" + "[" + x + ", " + z + "]";
+                        scoreObj.transform.SetParent(scores.transform);
+
+                        scoreList.Add(scoreObj);
+                    }
 
                     game.SetCarrotAmount(1);
                 }
             }
-        }
-
-        AddPowerUps();
+        } 
     }
 
-    private void AddPowerUps()
+    private void AddPowerUps(int x, int z)
     {
-        for(int i = 0; i < scoreList.Count; i++)
-        {
-            int random = Random.Range(0, 100);
-
-            if (random <= 5 && currentPowerUpAmount < powerUpAmount)
-            {
-                Instantiate(PowerUpObj, new Vector3(scoreList[i].gameObject.transform.position.x, 1, scoreList[i].gameObject.transform.position.z), Quaternion.identity);
-                currentPowerUpAmount += 1;
-                Destroy(scoreList[i].gameObject);
-                game.SetCarrotAmount(-1);
-            }
-        }
+        var scoreObj = Instantiate(PowerUpObj, new Vector3(x, 1, z), Quaternion.identity);
+        scoreObj.name = "PowerUp" + "[" + x + ", " + z + "]";
+        scoreObj.transform.SetParent(scores.transform);
     }
 
     public IEnumerator DelayMazeGen()
@@ -338,5 +701,15 @@ public class PacmanMazeGen : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         GenerateMazeLayout();
+    }
+
+    public int GetLevel()
+    {
+        return level;
+    }
+
+    public int SetLevel()
+    {
+        return level += 1;
     }
 }
