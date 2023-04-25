@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 50508882572089876}
   - component: {fileID: 5103985334135760125}
   - component: {fileID: 1848347744732263584}
+  - component: {fileID: 1295800830391013596}
   m_Layer: 0
   m_Name: PowerUp
   m_TagString: powerupcollectible
@@ -58,16 +59,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 839915037231723315}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: baa796ae1ae173a4084284f4785015de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   engage: {fileID: 7654001485361959723, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
   bomber: {fileID: 3579609904937446886, guid: fb47085aaf91f9e498313758a6980036, type: 3}
-  parental: {fileID: 5232448880589334017, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
+  parental: {fileID: 190630328255907645, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
   changer: []
   lider: []
+  particleObject: {fileID: 0}
+--- !u!65 &1295800830391013596
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839915037231723315}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1.21, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.52, z: 0}
 --- !u!1 &3990887872752049664
 GameObject:
   m_ObjectHideFlags: 0

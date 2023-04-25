@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class poweredup : MonoBehaviour
+public class convert : MonoBehaviour
 {
     bool anth = true;
     public PlayerScript engage;
     private runaway away;
-    public bomb bomber;
+    //public bomb bomber;
     bool rant = false;
     public parent parental;
     public changematerial[] changer;
@@ -21,17 +21,14 @@ public class poweredup : MonoBehaviour
 
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player" || other.gameObject.tag == "whitefox")
-        {
-          //  PlayerManager.numberOfCoins += 5;
+   public void UpdatePlayer()
+   {
             gameObject.SetActive(false);
-            parental.rabbitonly(rant);
-            parental.explosioneffect(anth);
+            parental.rabbitonly(false);
+            parental.explosioneffect(true);
             //bomber.begins();
-           parental.whitewolfonly(anth);
-           parental.explosioneffect(rant);
+           parental.whitewolfonly(true);
+           parental.explosioneffect(false);
 
            // engage.speed = 100;
             for (int i = 0; i < lider.Length; i++)
@@ -44,7 +41,7 @@ public class poweredup : MonoBehaviour
             }
 
             Invoke("backtodefaults", 5.0f);
-        }
+        
     }
 
 
@@ -52,9 +49,9 @@ public class poweredup : MonoBehaviour
     {
 
         Invoke("rest", 0.1f);
-        parental.whitewolfonly(rant);
-        parental.explosioneffect(rant);
-        parental.rabbitonly(anth);
+        parental.whitewolfonly(false);
+        parental.explosioneffect(false);
+        parental.rabbitonly(true);
         Invoke("restdone", 0.1f);
        // engage.speed = 60;
         parental.explosioneffect(anth);

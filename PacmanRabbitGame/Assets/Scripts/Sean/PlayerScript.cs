@@ -8,6 +8,8 @@ public class PlayerScript : MonoBehaviour
 {
     //Movement
     private Animator anim;
+    public parent parental;
+    public convert converter;
     public CharacterController controller;
     private Vector3 playerVelocity;
     public float playerSpeed = 5.0f;
@@ -197,6 +199,19 @@ public class PlayerScript : MonoBehaviour
             Destroy(other.gameObject);
         }
 
+        if (other.tag == "powerupcollectible")
+        {
+            UpdatePlayer();
+           converter.UpdatePlayer();
+            score.SetScore(5);
+            
+            source.PlayOneShot(eatCarrot);
+
+            game.SetCarrotAmount(-1);
+
+            Destroy(other.gameObject);
+        }
+
         if(other.tag == "Hole")
         {
             teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
@@ -265,4 +280,45 @@ public class PlayerScript : MonoBehaviour
 
         minimap = GameObject.Find("MainCanvas").transform.Find("Minimap").gameObject;
     }
+
+ public void UpdatePlayer()
+   {
+            //gameObject.SetActive(false);
+            parental.explosioneffect(false);
+            parental.rabbitonly(false);
+            parental.explosioneffect(true);
+           parental.whitewolfonly(true);
+          
+
+          
+            Invoke("backtodefaults", 5.0f);
+        
+    }
+
+
+    public void backtodefaults()
+    {
+
+        //Invoke("rest", 0.1f);
+        parental.whitewolfonly(false);
+        parental.explosioneffect(false);
+        parental.rabbitonly(true);
+       // Invoke("restdone", 0.1f);
+       // engage.speed = 60;
+        parental.explosioneffect(true);
+        
+    }
+    public void rest()
+    {
+       // engage.controller.enabled = false;
+    }
+    public void restdone()
+    {
+        //engage.controller.enabled = true;
+    }
+
+
+
+
+
 }
