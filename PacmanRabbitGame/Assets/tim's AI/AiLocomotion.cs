@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,25 +7,29 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent), typeof(AgentLinkMover))]
 public class AiLocomotion : MonoBehaviour
 {
-    public Transform Target;
+   private NavMeshAgent navAgent;
+    Transform player;
+
     public float UpdateSpeed = 0.1f; // how often to calculate path based on targets position.
-    private NavMeshAgent Navagent;
     [SerializeField]
     private Animator animator;
     [SerializeField]
     private float health;
+    private float distanceThreshold = 20.0f;
+    public float minRandomDistance = 5f; // Minimum distance the AI must travel before selecting a new random position
+    public float maxRandomDistance = 10f;// Minimum distance the AI must travel before selecting a new random position
 
-   
+    private Vector3 targetPosition;
 
-   
 
 
 
     private void Awake()
     {
-        Navagent = GetComponent<NavMeshAgent>();
+        navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-             
+            
+        
 
     }
 
@@ -33,30 +37,62 @@ public class AiLocomotion : MonoBehaviour
 
 
     private void Start()
-    {
-        StartCoroutine(FollowTarget());
+    { 
+       
+        targetPosition = GetRandomNavMeshPosition();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
 
     }
 
 
     private void Update()
     {
-        animator.SetFloat("Move", Navagent.velocity.magnitude);
-
+        if (navAgent.remainingDistance <= navAgent.stoppingDistance)
+        {
+            targetPosition = GetRandomNavMeshPosition();
+        }
+       
 
     }
+   
 
-    private IEnumerator FollowTarget()
+    private Vector3 GetRandomNavMeshPosition()
     {
-        WaitForSeconds Wait = new WaitForSeconds(UpdateSpeed);
+        // Generate a random point within the max distance from the AI
+        Vector3 randomOffset = Random.insideUnitSphere * maxRandomDistance;
+        randomOffset.y = 0f;
+        Vector3 randomPosition = transform.position + randomOffset;
 
-        while(enabled)
+        // Find the closest point on the NavMesh to the random position
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPosition, out hit, maxRandomDistance, NavMesh.AllAreas))
         {
-            Navagent.SetDestination(Target.transform.position);
+            return hit.position;
+        }
 
-            yield return Wait;
+        // If we couldn't find a valid position, just return the AI's current position
+        return transform.position;
+    }
+
+
+    void FixedUpdate()
+    {
+        // Move the AI towards the target position
+        navAgent.SetDestination(targetPosition);
+    }
+
+
+
+
+    public void OnDrawGizmos()
+    {
+        if (GameObject.Find("TestPlayer(Clone)")!=null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, targetPosition);
 
         }
     }
 
+   
 }

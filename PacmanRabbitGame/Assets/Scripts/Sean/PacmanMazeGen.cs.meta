@@ -5,7 +5,19 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - wall: {fileID: 5407817152406286739, guid: 7adf0846b8a6b0b4fa8e45d824873153, type: 3}
-  - score: {fileID: 7249431087744254280, guid: e05fb116d111fee49a64785466e33b1e, type: 3}
+  - walls: {instanceID: 0}
+  - floor: {instanceID: 0}
+  - score: {fileID: 165025401746929230, guid: 6c81e37707ca89042b726ff68318928b, type: 3}
+  - scores: {instanceID: 0}
+  - spawner: {fileID: 2010763200733086557, guid: 389149f137a08884a9c0e2e3220cd3c2, type: 3}
+  - twoByFour: {fileID: 7469928282095526596, guid: 3a722a5ece9b247489394eeaae150880, type: 3}
+  - threeByOne: {fileID: 3378988192004932386, guid: cad80ea78da2034418aee042969677af, type: 3}
+  - lWall: {fileID: 7194545272969230920, guid: be7977fcb717c524ebac99a40b2ef043, type: 3}
+  - tWall: {fileID: 8638375480508540941, guid: f91f24bbf39bbd148be01de24a0a4110, type: 3}
+  - hole: {instanceID: 0}
+  - Player: {fileID: 7713104738643049935, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
+  - game: {instanceID: 0}
+  - PowerUpObj: {fileID: 839915037231723315, guid: 05d90cb35630822479063d832fa75da3, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
