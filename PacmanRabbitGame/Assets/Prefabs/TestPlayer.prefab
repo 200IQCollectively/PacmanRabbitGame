@@ -98,9 +98,6 @@ GameObject:
   - component: {fileID: 6025181278291983639}
   - component: {fileID: 6155858939954041034}
   - component: {fileID: -2437249490677481652}
-  - component: {fileID: 2037063624853234832}
-  - component: {fileID: 5359517480184019620}
-  - component: {fileID: 3056631576208674323}
   m_Layer: 0
   m_Name: TestPlayer
   m_TagString: Player
@@ -140,14 +137,9 @@ MonoBehaviour:
   controller: {fileID: 0}
   playerSpeed: 5
   jumpHeight: 2.5
-  jump: {fileID: 8300000, guid: f609baffd2b96824298a7a0785a25423, type: 3}
-  eatCarrot: {fileID: 8300000, guid: 18d84a88dedc50e41aac0df2b3a0b503, type: 3}
-  INP_movement: {fileID: -1221012143096282376, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
-  INP_look: {fileID: 3792282978716876253, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
-  INP_jump: {fileID: 9156035156302276046, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
-  INP_teleport: {fileID: 7647784609420064309, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
+  jump: {fileID: 8300000, guid: 356bde826dd9e904fa3be5e75ed9ba16, type: 3}
+  eatCarrot: {fileID: 8300000, guid: 8ba2278544d0bce4484867a788dc35da, type: 3}
   canJump: 0
-  popup: {fileID: 0}
 --- !u!82 &5062994567464887743
 AudioSource:
   m_ObjectHideFlags: 0
@@ -160,7 +152,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -303,54 +295,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerInGame
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!195 &2037063624853234832
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7713104738643049935}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.85
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!65 &5359517480184019620
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7713104738643049935}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.019034, y: 1, z: 6.458494}
-  m_Center: {x: -0.17985338, y: 0, z: -0.21913052}
---- !u!114 &3056631576208674323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7713104738643049935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08c283b6609f7af4f8eb601ed541c847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Camera: {fileID: 4882397940868798045}
 --- !u!1001 &8365869000211145802
 PrefabInstance:
   m_ObjectHideFlags: 0
