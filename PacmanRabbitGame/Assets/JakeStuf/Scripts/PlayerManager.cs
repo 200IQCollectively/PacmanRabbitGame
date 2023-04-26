@@ -19,11 +19,13 @@ public class PlayerManager : MonoBehaviour
         playerInputManager = FindObjectOfType<PlayerInputManager>();
         playerInputManager.playerPrefab = PlayerPrefabs[0];
         players = PlayerConfigManager.Instance.players;
+        SpawnPlayers();
         
         
     }
     public void SpawnPlayers()
     {
+        
         List<GameObject> playerObjects = new List<GameObject>();
         print(startingPoints.Count);
         foreach (PlayerInput player in players)
