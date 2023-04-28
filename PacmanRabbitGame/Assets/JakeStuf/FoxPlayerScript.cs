@@ -25,7 +25,6 @@ public class FoxPlayerScript : MonoBehaviour
     //Sound
     private AudioSource source;
     public AudioClip jump;
-    public AudioClip eatCarrot;
 
     //New input stuff
 
@@ -55,6 +54,7 @@ public class FoxPlayerScript : MonoBehaviour
         INP_look = playerInputMap.FindAction("Look");
         INP_jump = playerInputMap.FindAction("Jump");
         INP_teleport = playerInputMap.FindAction("Teleport");
+        game = FindObjectOfType<GameHandler>();
 
         playerInput.camera = GetComponentInChildren<Camera>();
         GetComponents();
@@ -173,7 +173,6 @@ public class FoxPlayerScript : MonoBehaviour
         {
             playerVelocity.y = 0;
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -181,6 +180,7 @@ public class FoxPlayerScript : MonoBehaviour
         if (other.tag == "Player")
         {
             game.PlayerCaught();
+            
         }
     }
 

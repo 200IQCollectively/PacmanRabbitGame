@@ -58,6 +58,7 @@ public class GameHandler : MonoBehaviour
         }
         else
         {
+            print("resettinggggg");
             playerManager.ResetPlayers();
             livesRemaning--;
         }

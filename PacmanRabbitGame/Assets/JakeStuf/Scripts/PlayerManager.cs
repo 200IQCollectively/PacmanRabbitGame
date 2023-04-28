@@ -34,7 +34,6 @@ public class PlayerManager : MonoBehaviour
             GameObject playerObject = new GameObject();
             Transform playerParent = players[player.playerIndex].transform;
 
-
             print(player.playerIndex);
 
             if (player.playerIndex == 0)
@@ -134,11 +133,12 @@ public class PlayerManager : MonoBehaviour
 
             if (player.playerIndex == 0)
             {
-                player.transform.position = startingPoints[0].position;
+                player.transform.parent.position = startingPoints[0].position;
             }
             else
             {
-                player.transform.position = startingPoints[1].position;
+                player.transform.parent.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 2);
+
             }
         }
     }
@@ -175,6 +175,7 @@ public class PlayerManager : MonoBehaviour
         Transform playerParent = player.transform;
         playerParent.position = startingPoints[players.Count - 1].position;
         playerInputManager.playerPrefab = PlayerPrefabs[players.Count-1];
+        
     }
 
     public void AddSpawnPosition(Transform position)
