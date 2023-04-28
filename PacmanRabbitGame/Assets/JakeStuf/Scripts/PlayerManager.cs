@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour
         playerInputManager = FindObjectOfType<PlayerInputManager>();
         playerInputManager.playerPrefab = PlayerPrefabs[0];
         players = PlayerConfigManager.Instance.players;
-        SpawnPlayers();
+        
         
         
     }
@@ -47,6 +47,7 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 playerParent.position = startingPoints[1].position;
+                playerParent.position = new Vector3(playerParent.position.x, playerParent.position.y + 1, playerParent.position.z);
                 playerObject = Instantiate(PlayerPrefabs[1], playerParent.position, Quaternion.identity);
 
             }
@@ -126,6 +127,36 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void ResetPlayers()
+    {
+        foreach (PlayerInput player in players)
+        {
+
+            if (player.playerIndex == 0)
+            {
+                player.transform.position = startingPoints[0].position;
+            }
+            else
+            {
+                player.transform.position = startingPoints[1].position;
+            }
+        }
+    }
+
+    public void ReleaseFoxs()
+    {
+        foreach (PlayerInput player in players)
+        {
+
+            if (player.playerIndex != 0)
+            {
+               
+                player.transform.parent.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 2);
+               // player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 2);
+            }
+            
+        }
+    }
     private void OnEnable()
     {
         playerInputManager.onPlayerJoined += addPlayer;
@@ -149,6 +180,11 @@ public class PlayerManager : MonoBehaviour
     public void AddSpawnPosition(Transform position)
     {
         startingPoints.Add(position);
+    }
+
+    public int GetPlayerCount()
+    {
+        return players.Count;
     }
 
     public IEnumerator DelaySpawning()

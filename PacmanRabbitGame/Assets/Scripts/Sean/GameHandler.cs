@@ -12,19 +12,29 @@ public class GameHandler : MonoBehaviour
 
     public PlayerScript player;
 
+    private int livesRemaning = 3;
+
+    PlayerManager playerManager;
+
+    public bool isMultiplayer = false;
+
     // Start is called before the first frame update
     void Start()
     {
         maze = GameObject.Find("MazePlane").GetComponent<PacmanMazeGen>();
-
+        playerManager = FindObjectOfType<PlayerManager>();
         StartCoroutine(maze.DelayMazeGen());
+        if (playerManager.GetPlayerCount() > 1)
+        {
+            isMultiplayer = true;
+        }
     }
 
     public void SetCarrotAmount(int amount)
     {
         amountOfCarrots += amount;
 
-        if(amountOfCarrots <= 0)
+        if (amountOfCarrots <= 0)
         {
             StartCoroutine(NextLevel());
         }
@@ -38,6 +48,25 @@ public class GameHandler : MonoBehaviour
     public void SetPlayer(PlayerScript play)
     {
         player = play;
+    }
+
+    public void PlayerCaught()
+    {
+        if (livesRemaning == 0)
+        {
+            print("Game Over");
+        }
+        else
+        {
+            playerManager.ResetPlayers();
+            livesRemaning--;
+        }
+    }
+
+    public void ReleaseFoxPlayers()
+    {
+        print("releassing");
+        playerManager.ReleaseFoxs();
     }
 
     IEnumerator NextLevel()
