@@ -43,6 +43,8 @@ public class PlayerScript : MonoBehaviour
 
     private bool canMove = true;
     public bool canJump = false;
+    private bool teleportable = false;
+    private Vector3 teleportPos;
 
     // Start is called before the first frame update
     void Start()
@@ -176,17 +178,38 @@ public class PlayerScript : MonoBehaviour
 
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Collectible")
         {
-            //score.SetScore(10);
-            
-            //source.PlayOneShot(eatCarrot);
+            score.SetScore(5);
+
+            source.PlayOneShot(eatCarrot);
 
             game.SetCarrotAmount(-1);
 
             Destroy(other.gameObject);
+        }
+
+        if (other.tag == "Hole")
+        {
+            teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
+
+            teleportable = true;
+
+            popup.text = "Press 'E' to Enter";
+        }
+    }
+    
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Hole")
+        {
+            teleportable = false;
+
+            popup.text = "";
         }
     }
 
