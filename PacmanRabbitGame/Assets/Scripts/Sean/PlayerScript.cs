@@ -41,6 +41,7 @@ public class PlayerScript : MonoBehaviour
 
     private GameHandler game;
 
+    public TextMeshProUGUI popup;
     private bool canMove = true;
     public bool canJump = false;
     private bool teleportable = false;
