@@ -140,6 +140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c79999c2cd83ff4c96462285ebe2e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dustCloud: {fileID: 0}
+  material:
+  - {fileID: 2100000, guid: 47486cc35530d4147affcf8c995b71be, type: 2}
+  - {fileID: 2100000, guid: 8e2590189f1a27044a044613e6c1af41, type: 2}
   parental: {fileID: 190630328255907645}
   converter: {fileID: 1023419624188444347, guid: 00d2b01afeae936449172893eb29fc4a, type: 3}
   controller: {fileID: 0}
@@ -438,7 +442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4502180468059360382, guid: fb47085aaf91f9e498313758a6980036, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb47085aaf91f9e498313758a6980036, type: 3}

@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 public class PlayerScript : MonoBehaviour
 {
     //Movement
+     //Movement
+     [SerializeField] GameObject dustCloud;
+       public Material[] material;
     private Animator anim;
     public parent parental;
     public convert converter;
@@ -288,7 +291,7 @@ public class PlayerScript : MonoBehaviour
             parental.rabbitonly(false);
             parental.explosioneffect(true);
            parental.whitewolfonly(true);
-          
+          inter();
 
           
             Invoke("backtodefaults", 5.0f);
@@ -317,7 +320,17 @@ public class PlayerScript : MonoBehaviour
         //engage.controller.enabled = true;
     }
 
+public void inter ()
+{
+  GameObject[] enemies = GameObject.FindGameObjectsWithTag("foxbody");
 
+// Loop through each enemy and change its material
+foreach (GameObject enemy in enemies)
+{
+    Renderer renderer = enemy.GetComponent<Renderer>();
+    renderer.material=material[0];
+}
+}
 
 
 
