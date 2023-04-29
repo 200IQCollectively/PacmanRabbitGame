@@ -15,6 +15,9 @@ public class PacmanMazeGen : MonoBehaviour
     private int width = 28;
     private int height = 31;
 
+    public MeshFilter floorMF;
+    public MeshCollider floorMC;
+
     //Must be public/ private serializefield or it doesn't work and no one knows why
     public int[,] maze;
 
@@ -56,14 +59,14 @@ public class PacmanMazeGen : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        floor = gameObject.transform.Find("Plane").GetComponent<NavMeshSurface>();
+        floor = gameObject.transform.Find("Floor").GetComponent<NavMeshSurface>();
         minimap = GameObject.Find("MinimapCamera").GetComponent<Camera>();
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 
     private void GenerateMazeLayout()
     {
-        switch(level)
+        switch (level)
         {
             case 0:
                 break;
@@ -113,9 +116,11 @@ public class PacmanMazeGen : MonoBehaviour
 
         maze = new int[width, height];
 
+        CreateFloor(maze);
+
         for (int x = 0; x < maze.GetLength(0) + 1; x++)
         {
-            for(int z = 0; z < maze.GetLength(1) + 1; z++)
+            for (int z = 0; z < maze.GetLength(1) + 1; z++)
             {
 
                 //Check if bottom or top of maze and instantiate walls scaled to size for performance
@@ -128,7 +133,7 @@ public class PacmanMazeGen : MonoBehaviour
                     wallObj.transform.SetParent(walls.transform);
                 }
 
-                else if(x == 0 && z == maze.GetLength(1) / 2 || x == maze.GetLength(0) && z == maze.GetLength(1) / 2)
+                else if (x == 0 && z == maze.GetLength(1) / 2 || x == maze.GetLength(0) && z == maze.GetLength(1) / 2)
                 {
                     zScale = new Vector3(1, 1, 100);
                     var wallObj = Instantiate(wall, new Vector3(x, 0, z), Quaternion.identity);
@@ -139,7 +144,7 @@ public class PacmanMazeGen : MonoBehaviour
 
                 //Spawn Holes, Spawner, and Player
 
-                if(x == 1 && z == maze.GetLength(1) / 2)
+                if (x == 1 && z == maze.GetLength(1) / 2)
                 {
                     var holeObj = Instantiate(hole, new Vector3(x - 1, 2.5f, z), Quaternion.Euler(0, 0, -90));
                     holeObj.name = "LeftHole";
@@ -184,6 +189,40 @@ public class PacmanMazeGen : MonoBehaviour
         }
 
         StartCoroutine(delayMazeGen());
+    }
+
+    private void CreateFloor(int[,] maze)
+    {
+        List<Vector3> floorVertices = new List<Vector3>();
+        List<int> floorTriangles = new List<int>();
+        Mesh floorMesh = new Mesh();
+
+        floorVertices.Clear();
+        floorTriangles.Clear();
+        floorMesh.Clear();
+
+        int startIndex = floorVertices.Count;
+        floorVertices.Add(new Vector3(0f, 0f, 0f));
+        floorVertices.Add(new Vector3(maze.GetLength(0), 0f, 0f));
+        floorVertices.Add(new Vector3(0f, 0f, maze.GetLength(1)));
+        floorVertices.Add(new Vector3(maze.GetLength(0), 0f, maze.GetLength(1)));
+
+        floorTriangles.Add(startIndex + 0);
+        floorTriangles.Add(startIndex + 2);
+        floorTriangles.Add(startIndex + 1);
+
+        floorTriangles.Add(startIndex + 1);
+        floorTriangles.Add(startIndex + 2);
+        floorTriangles.Add(startIndex + 3);
+
+        floorMesh.vertices = floorVertices.ToArray();
+        floorMesh.triangles = floorTriangles.ToArray();
+
+        floorMesh.RecalculateNormals();
+
+        floorMF.mesh = floorMesh;
+
+        floorMC.sharedMesh = floorMF.mesh;
     }
 
     private void ClearMaze()
