@@ -98,13 +98,10 @@ GameObject:
   - component: {fileID: 6025181278291983639}
   - component: {fileID: 6155858939954041034}
   - component: {fileID: -2437249490677481652}
-<<<<<<< HEAD
-=======
   - component: {fileID: 2037063624853234832}
   - component: {fileID: 5359517480184019620}
   - component: {fileID: 3056631576208674323}
   - component: {fileID: 190630328255907645}
->>>>>>> main
   m_Layer: 0
   m_Name: TestPlayer
   m_TagString: Player
@@ -148,9 +145,15 @@ MonoBehaviour:
   controller: {fileID: 0}
   playerSpeed: 5
   jumpHeight: 2.5
-  jump: {fileID: 8300000, guid: 356bde826dd9e904fa3be5e75ed9ba16, type: 3}
-  eatCarrot: {fileID: 8300000, guid: 8ba2278544d0bce4484867a788dc35da, type: 3}
+  jump: {fileID: 8300000, guid: f609baffd2b96824298a7a0785a25423, type: 3}
+  eatCarrot: {fileID: 8300000, guid: 18d84a88dedc50e41aac0df2b3a0b503, type: 3}
+  INP_movement: {fileID: -1221012143096282376, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
+  INP_look: {fileID: 3792282978716876253, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
+  INP_jump: {fileID: 9156035156302276046, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
+  INP_teleport: {fileID: 7647784609420064309, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
+  INP_pause: {fileID: -1574291830964216878, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
   canJump: 0
+  popup: {fileID: 0}
 --- !u!82 &5062994567464887743
 AudioSource:
   m_ObjectHideFlags: 0
@@ -163,7 +166,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -306,9 +309,6 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerInGame
   m_SplitScreenIndex: -1
-<<<<<<< HEAD
-  m_Camera: {fileID: 4882397940868798045}
-=======
   m_Camera: {fileID: 0}
 --- !u!195 &2037063624853234832
 NavMeshAgent:
@@ -573,7 +573,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
->>>>>>> main
 --- !u!1001 &8365869000211145802
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -17,12 +17,12 @@ public class PlayerScript : MonoBehaviour
     private float gravity = -9.81f;
 
     //Camera Movement
-    private float mouseSensitivity = 3f;
+    private float mouseSensitivity = 0.8f;
     private Transform playerCamera;
     private float xRotationCamera = 0f;
 
     //Score 
-    private ScoreScript score = new ScoreScript();
+    private ScoreScript score;
 
     //Sound
     private AudioSource source;
@@ -31,21 +31,16 @@ public class PlayerScript : MonoBehaviour
 
     //New input stuff
 
-    //[SerializeField]
-    //private InputActionReference INP_movement,INP_look,INP_jump,INP_teleport;
+    [SerializeField]
+    private InputActionReference INP_movement,INP_look,INP_jump,INP_teleport, INP_pause;
     private Gamepad gamepad = Gamepad.current;
     private Keyboard keyboard = Keyboard.current;
     private Mouse mouse = Mouse.current;
-    private InputActionAsset inputAsset;
-    private InputActionMap playerInputMap;
-    private InputAction INP_movement, INP_look, INP_jump, INP_teleport;
-    private PlayerInput playerInput;
 
+    //Game Stuff
     private GameHandler game;
-
     private bool canMove = true;
     public bool canJump = false;
-    private bool teleportable = false;
     private int lives = 3;
     private Transform spawn;
     private bool inMenu = false;
@@ -54,20 +49,15 @@ public class PlayerScript : MonoBehaviour
     //Teleport Stuff
     public TextMeshProUGUI popup;
     private Vector3 teleportPos;
+    private bool teleportable;
+
+    //Minimap
+    private GameObject minimap;
+    private bool isInside = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        //input setup
-        playerInput = GetComponentInChildren<PlayerInput>();
-        inputAsset = playerInput.actions;
-        playerInputMap = inputAsset.FindActionMap("PlayerInGame");
-        INP_movement = playerInputMap.FindAction("Movement");
-        INP_look = playerInputMap.FindAction("Look");
-        INP_jump = playerInputMap.FindAction("Jump");
-        INP_teleport = playerInputMap.FindAction("Teleport");
-
-        playerInput.camera = GetComponentInChildren<Camera>();
         GetComponents();
 
         anim = GetComponentInChildren<Animator>();
@@ -98,7 +88,9 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(canMove)
+        OpenMenu();
+
+        if (canMove)
         {
             MouseLook();
             Movement();
@@ -106,21 +98,32 @@ public class PlayerScript : MonoBehaviour
             if(canJump)
             {
                 Jump();
-            }  
+            }
+
+            if (INP_teleport.action.WasPerformedThisFrame() && teleportable)
+            {
+                transform.position = new Vector3(teleportPos.x, teleportPos.y + 1, teleportPos.z);
+
+                teleportable = false;
+
+                canJump = !canJump;
+
+                isInside = !isInside;
+
+                minimap.SetActive(isInside);
+            }
         }
     }
 
     private void OpenMenu()
     {
-        /* if menu opening button is pressed
-        if()
+        //if menu opening button is pressed
+        if (INP_pause.action.WasPerformedThisFrame())
         {
             inMenu = !inMenu;
         }
-        
-        */
 
-        if(inMenu)
+        if (inMenu)
         {
             Menu.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
@@ -150,22 +153,20 @@ public class PlayerScript : MonoBehaviour
         //}
         
         
-        look = INP_look.ReadValue<Vector2>();
-        look = look * mouseSensitivity;
+        look = INP_look.action.ReadValue<Vector2>();
+        
+        xRotationCamera -= look.y;
+        xRotationCamera = Mathf.Clamp(xRotationCamera, -10f, 25f);
 
-        xRotationCamera -= look.x;
-        xRotationCamera = Mathf.Clamp(xRotationCamera, -30f, 0f);
-
-        //playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
+        playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
         gameObject.transform.Rotate(Vector3.up * look.x);
     }
 
     private void Movement()
     {
-        Vector2 movement = new Vector2();
         //float x = Input.GetAxis("Horizontal");
         //float z = Input.GetAxis("Vertical");
-        movement = INP_movement.ReadValue<Vector2>();
+        Vector2 movement = INP_movement.action.ReadValue<Vector2>();
         Vector3 move = transform.right * movement.x + transform.forward * movement.y;
         if(movement==new Vector2(0,0))
         {
@@ -176,12 +177,7 @@ public class PlayerScript : MonoBehaviour
         {
             anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
         }
-        
-        controller.Move(move * Time.deltaTime * playerSpeed);
-    }
 
-    private void Jump()
-    {
         if (controller.isGrounded && playerVelocity.y <= 0)
         {
             playerVelocity.y = -2f;
@@ -190,6 +186,11 @@ public class PlayerScript : MonoBehaviour
         playerVelocity.y += gravity * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
+        controller.Move(move * Time.deltaTime * playerSpeed);
+    }
+
+    private void Jump()
+    {
         if (controller.isGrounded)
         {
             /*if (Input.GetKeyDown(KeyCode.Space))
@@ -197,7 +198,7 @@ public class PlayerScript : MonoBehaviour
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 source.PlayOneShot(jump);
             */
-            if (INP_jump.WasPerformedThisFrame())
+            if (INP_jump.action.WasPerformedThisFrame())
             {
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 source.PlayOneShot(jump);
@@ -211,21 +212,19 @@ public class PlayerScript : MonoBehaviour
 
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Collectible")
         {
             score.SetScore(5);
+            
+            source.PlayOneShot(eatCarrot);
 
-            //source.PlayOneShot(eatCarrot);
-
-            //game.SetCarrotAmount(-1);
+            game.SetCarrotAmount(-1);
 
             Destroy(other.gameObject);
         }
 
-        
         if (other.tag == "powerupcollectible")
         {
             UpdatePlayer();
@@ -248,11 +247,10 @@ public class PlayerScript : MonoBehaviour
             popup.text = "Press 'E' to Enter";
         }
     }
-    
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Hole")
+        if(other.tag == "Hole")
         {
             teleportable = false;
 
@@ -270,6 +268,33 @@ public class PlayerScript : MonoBehaviour
         canJump = value;
     }
 
+    public ScoreScript GetScoreScript()
+    {
+        return score;
+    }
+
+    public Transform SetSpawn(Transform _spawn)
+    {
+        return spawn = _spawn;
+    }
+
+    public void PlayerDied()
+    {
+        canMove = false;
+        lives -= 1;
+
+        if(lives <= 0)
+        {
+            game.EndGame();
+        }
+
+        else
+        {
+            transform.position = spawn.position;
+            canMove = true;
+        }
+    }
+
     private void GetComponents()
     {
         controller = GetComponent<CharacterController>();
@@ -277,6 +302,11 @@ public class PlayerScript : MonoBehaviour
         source = GetComponent<AudioSource>();
         score = GetComponent<ScoreScript>();
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+        popup = GameObject.Find("MainCanvas").transform.Find("PopupText").GetComponent<TextMeshProUGUI>();
+
+        minimap = GameObject.Find("MainCanvas").transform.Find("Minimap").gameObject;
+
+        Menu = GameObject.Find("MainCanvas").transform.Find("Menu").gameObject;
     }
 
  public void UpdatePlayer()
@@ -315,10 +345,7 @@ public class PlayerScript : MonoBehaviour
         //engage.controller.enabled = true;
     }
 
-    public Transform SetSpawn(Transform _spawn)
-    {
-        return spawn = _spawn;
-    }
+
 
 
 
