@@ -62,6 +62,7 @@ public class PlayerScript : MonoBehaviour
         GetComponents();
 
         anim = GetComponentInChildren<Animator>();
+         
 
         if (gamepad != null)
         {
@@ -223,6 +224,11 @@ public class PlayerScript : MonoBehaviour
 
             popup.text = "Press 'E' to Enter";
         }
+
+        if(other.tag == "AI")
+        {
+            deathofrabbit();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -291,10 +297,11 @@ public class PlayerScript : MonoBehaviour
             parental.rabbitonly(false);
             parental.explosioneffect(true);
            parental.whitewolfonly(true);
-          inter();
+           playerSpeed = 20.0f;
+          changewolfcolortoblue();
 
           
-            Invoke("backtodefaults", 5.0f);
+            Invoke("backtodefaults", 10.0f);
         
     }
 
@@ -309,6 +316,8 @@ public class PlayerScript : MonoBehaviour
        // Invoke("restdone", 0.1f);
        // engage.speed = 60;
         parental.explosioneffect(true);
+        playerSpeed = 5.0f;
+        changewolfcolorbacktooriginal ();
         
     }
     public void rest()
@@ -320,7 +329,7 @@ public class PlayerScript : MonoBehaviour
         //engage.controller.enabled = true;
     }
 
-public void inter ()
+public void changewolfcolortoblue ()
 {
   GameObject[] enemies = GameObject.FindGameObjectsWithTag("foxbody");
 
@@ -331,6 +340,30 @@ foreach (GameObject enemy in enemies)
     renderer.material=material[0];
 }
 }
+
+public void changewolfcolorbacktooriginal ()
+{
+  GameObject[] enemies = GameObject.FindGameObjectsWithTag("foxbody");
+
+// Loop through each enemy and change its material
+foreach (GameObject enemy in enemies)
+{
+    Renderer renderer = enemy.GetComponent<Renderer>();
+    renderer.material=material[1];
+}
+}
+
+  public void deathofrabbit()
+    {
+        
+        anim.SetTrigger("falldownanddie");
+      //  this.enabled = false;
+      // controller.enabled = false;
+       
+      
+        
+      // FindObjectOfType<GameManager>().Endgame();
+    }
 
 
 

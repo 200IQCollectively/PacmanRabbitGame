@@ -5423,7 +5423,6 @@ GameObject:
   - component: {fileID: 7063487024889249737}
   - component: {fileID: -6020381030736418171}
   - component: {fileID: 3811910962570028467}
-  - component: {fileID: 2998199826714544926}
   - component: {fileID: 481474578593585822}
   - component: {fileID: 8300634030241807701}
   - component: {fileID: -6433052396317478195}
@@ -5486,21 +5485,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2998199826714544926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7587822836306863475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec7e56f4f0e68304ab05995cdf8882ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wolfparent: {fileID: 7587822836306863475}
-  navMeshAgents: {fileID: 481474578593585822}
-  rabbitplay: {fileID: 0}
 --- !u!195 &481474578593585822
 NavMeshAgent:
   m_ObjectHideFlags: 0
