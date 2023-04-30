@@ -151,6 +151,7 @@ MonoBehaviour:
   INP_look: {fileID: 3792282978716876253, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
   INP_jump: {fileID: 9156035156302276046, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
   INP_teleport: {fileID: 7647784609420064309, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
+  INP_pause: {fileID: -1574291830964216878, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
   canJump: 0
   popup: {fileID: 0}
 --- !u!82 &5062994567464887743

@@ -32,7 +32,7 @@ public class PlayerScript : MonoBehaviour
     //New input stuff
 
     [SerializeField]
-    private InputActionReference INP_movement,INP_look,INP_jump,INP_teleport;
+    private InputActionReference INP_movement,INP_look,INP_jump,INP_teleport, INP_pause;
     private Gamepad gamepad = Gamepad.current;
     private Keyboard keyboard = Keyboard.current;
     private Mouse mouse = Mouse.current;
@@ -88,7 +88,9 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(canMove)
+        OpenMenu();
+
+        if (canMove)
         {
             MouseLook();
             Movement();
@@ -115,15 +117,13 @@ public class PlayerScript : MonoBehaviour
 
     private void OpenMenu()
     {
-        /* if menu opening button is pressed
-        if()
+        //if menu opening button is pressed
+        if (INP_pause.action.WasPerformedThisFrame())
         {
             inMenu = !inMenu;
         }
-        
-        */
 
-        if(inMenu)
+        if (inMenu)
         {
             Menu.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
@@ -153,7 +153,7 @@ public class PlayerScript : MonoBehaviour
         //}
         
         
-             look = INP_look.action.ReadValue<Vector2>();
+        look = INP_look.action.ReadValue<Vector2>();
         
         xRotationCamera -= look.y;
         xRotationCamera = Mathf.Clamp(xRotationCamera, -10f, 25f);
