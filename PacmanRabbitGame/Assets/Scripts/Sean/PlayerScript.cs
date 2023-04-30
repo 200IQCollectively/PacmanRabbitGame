@@ -43,6 +43,8 @@ public class PlayerScript : MonoBehaviour
     public bool canJump = false;
     private int lives = 3;
     private Transform spawn;
+    private bool inMenu = false;
+    private GameObject Menu;
 
     //Teleport Stuff
     public TextMeshProUGUI popup;
@@ -108,6 +110,30 @@ public class PlayerScript : MonoBehaviour
 
                 minimap.SetActive(isInside);
             }
+        }
+    }
+
+    private void OpenMenu()
+    {
+        /* if menu opening button is pressed
+        if()
+        {
+            inMenu = !inMenu;
+        }
+        
+        */
+
+        if(inMenu)
+        {
+            Menu.SetActive(true);
+            Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Menu.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
         }
     }
 
