@@ -15,7 +15,11 @@ TagManager:
   - enemies
   - Hole
   - AI
+<<<<<<< HEAD
   - FoxPlayer
+=======
+  - powerupcollectible
+>>>>>>> main
   layers:
   - Default
   - TransparentFX

@@ -8,6 +8,8 @@ public class PlayerScript : MonoBehaviour
 {
     //Movement
     private Animator anim;
+    public parent parental;
+    public convert converter;
     public CharacterController controller;
     private Vector3 playerVelocity;
     public float playerSpeed = 5.0f;
@@ -44,7 +46,17 @@ public class PlayerScript : MonoBehaviour
     public TextMeshProUGUI popup;
     private bool canMove = true;
     public bool canJump = false;
+<<<<<<< HEAD
     private bool teleportable = false;
+=======
+    private int lives = 3;
+    private Transform spawn;
+    private bool inMenu = false;
+    private GameObject Menu;
+
+    //Teleport Stuff
+    public TextMeshProUGUI popup;
+>>>>>>> main
     private Vector3 teleportPos;
 
     // Start is called before the first frame update
@@ -99,6 +111,30 @@ public class PlayerScript : MonoBehaviour
             {
                 Jump();
             }  
+        }
+    }
+
+    private void OpenMenu()
+    {
+        /* if menu opening button is pressed
+        if()
+        {
+            inMenu = !inMenu;
+        }
+        
+        */
+
+        if(inMenu)
+        {
+            Menu.SetActive(true);
+            Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Menu.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
         }
     }
 
@@ -193,7 +229,24 @@ public class PlayerScript : MonoBehaviour
             Destroy(other.gameObject);
         }
 
+<<<<<<< HEAD
         if (other.tag == "Hole")
+=======
+        if (other.tag == "powerupcollectible")
+        {
+            UpdatePlayer();
+           converter.UpdatePlayer();
+            score.SetScore(5);
+            
+            source.PlayOneShot(eatCarrot);
+
+            game.SetCarrotAmount(-1);
+
+            Destroy(other.gameObject);
+        }
+
+        if(other.tag == "Hole")
+>>>>>>> main
         {
             teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
 
@@ -232,4 +285,45 @@ public class PlayerScript : MonoBehaviour
         score = GetComponent<ScoreScript>();
         game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
+
+ public void UpdatePlayer()
+   {
+            //gameObject.SetActive(false);
+            parental.explosioneffect(false);
+            parental.rabbitonly(false);
+            parental.explosioneffect(true);
+           parental.whitewolfonly(true);
+          
+
+          
+            Invoke("backtodefaults", 5.0f);
+        
+    }
+
+
+    public void backtodefaults()
+    {
+
+        //Invoke("rest", 0.1f);
+        parental.whitewolfonly(false);
+        parental.explosioneffect(false);
+        parental.rabbitonly(true);
+       // Invoke("restdone", 0.1f);
+       // engage.speed = 60;
+        parental.explosioneffect(true);
+        
+    }
+    public void rest()
+    {
+       // engage.controller.enabled = false;
+    }
+    public void restdone()
+    {
+        //engage.controller.enabled = true;
+    }
+
+
+
+
+
 }
