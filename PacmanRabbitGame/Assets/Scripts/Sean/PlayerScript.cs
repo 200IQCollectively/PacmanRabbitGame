@@ -159,8 +159,8 @@ public class PlayerScript : MonoBehaviour
         look = INP_look.ReadValue<Vector2>();
         look = look * mouseSensitivity;
 
-        xRotationCamera -= look.x;
-        xRotationCamera = Mathf.Clamp(xRotationCamera, -30f, 0f);
+        xRotationCamera -= look.y;
+        xRotationCamera = Mathf.Clamp(xRotationCamera, -10f, 25f);
 
         playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
         gameObject.transform.Rotate(Vector3.up * look.x);
@@ -319,6 +319,7 @@ public class PlayerScript : MonoBehaviour
         INP_look = playerInputMap.FindAction("Look");
         INP_jump = playerInputMap.FindAction("Jump");
         INP_teleport = playerInputMap.FindAction("Teleport");
+        INP_pause = playerInputMap.FindAction("Pause");
 
         playerInput.camera = GetComponentInChildren<Camera>();
     }
