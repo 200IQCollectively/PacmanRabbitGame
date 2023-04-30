@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class rabbitplayer : MonoBehaviour
 {
     [SerializeField] GameObject dustCloud;
-
+    [SerializeField]
+    private float jumpButtonGracePeriod;
+    [SerializeField]
+    private Transform currentpoint;
     public foxcollider foxy;
     private Vector3 movedirection;
     private Vector3 velocity;
@@ -14,23 +18,52 @@ public class rabbitplayer : MonoBehaviour
     private Animator anim;
     private float verticalvelocity;
     private float jumpforce=10.0f;
-    [SerializeField] private bool isGrounded;
+    private Vector3 playerVelocity;
+    private float playerSpeed = 5.0f;
+    private float jumpHeight = 1f;
+    //private float gravity = -9.81f;
+    //[SerializeField] private bool isGrounded;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float gravity;
-    
+    //private float jumpHeight = 1f;
+    [SerializeField]
+    private float jumpSpeed;
+	 private float ySpeed;
+	 private float originalStepOffset;
+    private float? lastGroundedTime;
+    private float? jumpButtonPressedTime;
+    private bool isJumping;
+    private bool isGrounded;
+private GameObject[] coins;
+//private ScoreScript scorer;
     public Transform cam;
     public float speed = 70f;
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
-
-    [SerializeField]
-    private InputActionReference Movement;
+    public PlayerManager age;
+   // public GameObject advancer;
+    //  public GameUI invest;
+   
+ //   public LevelUnlockSystem.GameUI invest=new LevelUnlockSystem.GameUI();
+//private GameManager arranger;
+int i;
+ int scener;
+  
 
     void Start()
     {
+           Time.timeScale = 1;
         controller = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
+       //scorer = GetComponent<ScoreScript>();
+        originalStepOffset=controller.stepOffset;
+        Cursor.visible = true;
+        Screen.lockCursor = false;
+       // cam=age.player.transform;
+     
+
+
     }
 
 
@@ -38,43 +71,105 @@ public class rabbitplayer : MonoBehaviour
     void Update()
     {
         Move();
+       
+        coins=GameObject.FindGameObjectsWithTag("Collectible");
+    int coiner=coins.Length;
+    scener = SceneManager.GetActiveScene ().buildIndex;
+    if(coiner == 0 )
+    {
+        if(scener<8)
+        {
+          foxy.setfoxesoff();
+       age.Advancement();
+        }
+           // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            //  invest.GameOver(3);
+            //  GameUI.Instancer.GameOver(3);
+            
+           
+           
+           // advancer.SetActive(true);
+             //Time.timeScale = 0;
+              
+              //Time.timeScale = 1;
+            if(scener==8)
+            {
+                foxy.setfoxesoff();
+             age.Gamecompleted();
+            }
+           // LevelUnlockSystem.LevelSystemManager.Instance.LevelComplete(3);
     }
+    
+      
+
+    }
+
+    public void Respawn()
+    {
+        controller.enabled = true;
+        anim.ResetTrigger("hasfallen");
+    }
+   public void firstdeath()
+    {
+        anim.SetBool("IsRisen", true);
+    }
+    
+
     public void death()
     {
-        anim.SetTrigger("hasfallen");
+        
+        anim.SetTrigger("falldownanddie");
         this.enabled = false;
         controller.enabled = false;
         foxy.killrabbitanimation();
+       
+        
+      // FindObjectOfType<GameManager>().Endgame();
+    }
+
+    public void dead()
+    {
+        
+        this.enabled = false;
+        controller.enabled = false;
+        anim.SetTrigger("falldownanddie");
+        //this.enabled = false;
+        //controller.enabled = false;
+        
+    }
+    public void notdead()
+    {
+        
+        anim.SetTrigger("riseupandlive");
+        this.enabled = true;
+        controller.enabled = true;
+        
+    }
+      public void deathstopped()
+    {
+        
+        anim.ResetTrigger("hasfallen");
+        this.enabled = true;
+        controller.enabled = true;
+        //foxy.killrabbitanimation();
+       
+        
+      // FindObjectOfType<GameManager>().Endgame();
     }
 
     private void Move()
     {
-        isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance, groundMask);
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-        //float horizontal = Input.GetAxisRaw("Horizontal");
-        //float vertical = Input.GetAxisRaw("Vertical");
-        //Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-        Vector3 direction = Movement.action.ReadValue<Vector3>();
+       
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (isGrounded)
-        {
-            //verticalvelocity = -gravity * Time.deltaTime;
-            anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+        
 
             if (direction.magnitude >= 0.1f)
             {
 
-                if (Input.GetKey(KeyCode.Space))
-                {
-                   
-                    // anim.SetTrigger("jumping");
-                    verticalvelocity = jumpforce;
-                    Vector3 movevector = new Vector3(0, verticalvelocity, 0);
-                    controller.Move(movevector * Time.deltaTime);
-                }
+                
 
                 Run();
                 Instantiate(dustCloud, transform.position, dustCloud.transform.rotation);
@@ -89,21 +184,80 @@ public class rabbitplayer : MonoBehaviour
 
                 Idle();
             }
+
+        ySpeed += Physics.gravity.y * Time.deltaTime;
+        if (controller.isGrounded)
+        {
+            lastGroundedTime = Time.time;
         }
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpButtonPressedTime = Time.time;
+        }
+
+        if (Time.time - lastGroundedTime <= jumpButtonGracePeriod)
+        {
+            controller.stepOffset = originalStepOffset;
+            ySpeed = -0.5f;
+            anim.SetBool("IsGrounded", true);
+            isGrounded = true;
+            anim.SetBool("IsJumping", false);
+            isJumping = false;
+            anim.SetBool("IsFalling", false);
+
+            if (Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod)
+            {
+                
+                ySpeed = jumpSpeed;
+                anim.SetBool("IsJumping", true);
+                isJumping = true;
+                jumpButtonPressedTime = null;
+                lastGroundedTime = null;
+            }
+        }
+        else
+        {
+          // controller.stepOffset = 0;
+            anim.SetBool("IsGrounded", false);
+            isGrounded = false;
+
+            if ((isJumping && ySpeed < 0) || ySpeed < -2)
+            {
+                anim.SetBool("IsFalling", true);
+            }
+        }
+        if (direction.magnitude >= 0.1f)
+        {
+            anim.SetBool("IsMoving", true);
+
+        }
+        else
+        {
+            anim.SetBool("IsMoving", false);
+        }
+
+        
+            velocity.y = ySpeed;
+            controller.Move(velocity * Time.deltaTime);
+      
     }
 
-    private void Idle()
+    public void Idle()
     {
         anim.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+      //  GameObject.FindGameObjectWithTag("cameraon").SetActive(true);
+       // GameObject.FindGameObjectWithTag("magiccamera").SetActive(false);
         anim.SetFloat("Wolfmotion", 0, 0.1f, Time.deltaTime);
     }
 
-    private void Run()
+  
+
+    public void Run()
     {
-        
-        anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+       // GameObject.FindGameObjectWithTag("magiccamera").SetActive(true);
+    //   GameObject.FindGameObjectWithTag("cameraon").SetActive(false);
+     
+        anim.SetFloat("Speed", 0.25f, 0.1f, Time.deltaTime);
         anim.SetFloat("Wolfmotion", 0.5f, 0.1f, Time.deltaTime);
     }
     public void Eat()
@@ -111,6 +265,24 @@ public class rabbitplayer : MonoBehaviour
         anim.SetTrigger("Eat");
     }
 
+    public void diealittle()
+    {
+         anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+    }
+/*
+  public void OnTriggerEnter(Collider other)
+    {
+       
+        if (other.gameObject.tag == "Collectible")
+        {
+            scorer.SetScore();
+        Destroy(other.gameObject);
+       
+       
+        }
+    }
+    */
+  
     public void ResetState()
     {
         //enabled = true;
