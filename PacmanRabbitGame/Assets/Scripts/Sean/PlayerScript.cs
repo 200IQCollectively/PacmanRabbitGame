@@ -20,7 +20,7 @@ public class PlayerScript : MonoBehaviour
     private float xRotationCamera = 0f;
 
     //Score 
-    private ScoreScript score;
+    private ScoreScript score = new ScoreScript();
 
     //Sound
     private AudioSource source;
@@ -186,9 +186,9 @@ public class PlayerScript : MonoBehaviour
         {
             score.SetScore(5);
 
-            source.PlayOneShot(eatCarrot);
+            //source.PlayOneShot(eatCarrot);
 
-            game.SetCarrotAmount(-1);
+            //game.SetCarrotAmount(-1);
 
             Destroy(other.gameObject);
         }
@@ -228,8 +228,8 @@ public class PlayerScript : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         playerCamera = GameObject.Find("Camera").transform;
-        //source = GetComponent<AudioSource>();
+        source = GetComponent<AudioSource>();
         score = GetComponent<ScoreScript>();
-        //game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+        game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 }
