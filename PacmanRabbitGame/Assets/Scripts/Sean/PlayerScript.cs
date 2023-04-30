@@ -43,12 +43,9 @@ public class PlayerScript : MonoBehaviour
 
     private GameHandler game;
 
-    public TextMeshProUGUI popup;
     private bool canMove = true;
     public bool canJump = false;
-<<<<<<< HEAD
     private bool teleportable = false;
-=======
     private int lives = 3;
     private Transform spawn;
     private bool inMenu = false;
@@ -56,7 +53,6 @@ public class PlayerScript : MonoBehaviour
 
     //Teleport Stuff
     public TextMeshProUGUI popup;
->>>>>>> main
     private Vector3 teleportPos;
 
     // Start is called before the first frame update
@@ -229,9 +225,7 @@ public class PlayerScript : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-<<<<<<< HEAD
-        if (other.tag == "Hole")
-=======
+        
         if (other.tag == "powerupcollectible")
         {
             UpdatePlayer();
@@ -246,7 +240,6 @@ public class PlayerScript : MonoBehaviour
         }
 
         if(other.tag == "Hole")
->>>>>>> main
         {
             teleportPos = other.GetComponent<TeleportPlayer>().teleportTarget.transform.position;
 
@@ -322,7 +315,10 @@ public class PlayerScript : MonoBehaviour
         //engage.controller.enabled = true;
     }
 
-
+    public Transform SetSpawn(Transform _spawn)
+    {
+        return spawn = _spawn;
+    }
 
 
 

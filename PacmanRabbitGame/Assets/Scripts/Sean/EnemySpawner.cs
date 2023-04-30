@@ -18,8 +18,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
-
+        //game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+        game = FindObjectOfType<GameHandler>();
         teleportPoint = transform.Find("EnemyTeleportPoint").gameObject.transform;
     }
 

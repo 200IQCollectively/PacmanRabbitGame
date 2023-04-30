@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager_JM : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> PlayerPrefabs = new List<GameObject>();

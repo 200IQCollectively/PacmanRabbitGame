@@ -61,7 +61,8 @@ public class PacmanMazeGen : MonoBehaviour
     {
         floor = gameObject.transform.Find("Floor").GetComponent<NavMeshSurface>();
         minimap = GameObject.Find("MinimapCamera").GetComponent<Camera>();
-        game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+        //game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+        game = FindObjectOfType<GameHandler>();
     }
 
     private void GenerateMazeLayout()

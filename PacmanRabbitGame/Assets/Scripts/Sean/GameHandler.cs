@@ -14,7 +14,7 @@ public class GameHandler : MonoBehaviour
 
     private int livesRemaning = 3;
 
-    PlayerManager playerManager;
+    PlayerManager_JM playerManager;
 
     public bool isMultiplayer = false;
 
@@ -22,7 +22,7 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         maze = GameObject.Find("MazePlane").GetComponent<PacmanMazeGen>();
-        playerManager = FindObjectOfType<PlayerManager>();
+        playerManager = FindObjectOfType<PlayerManager_JM>();
         StartCoroutine(maze.DelayMazeGen());
         if (playerManager.GetPlayerCount() > 1)
         {
