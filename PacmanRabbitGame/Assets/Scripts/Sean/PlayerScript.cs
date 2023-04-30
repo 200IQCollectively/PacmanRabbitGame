@@ -305,6 +305,8 @@ public class PlayerScript : MonoBehaviour
         popup = GameObject.Find("MainCanvas").transform.Find("PopupText").GetComponent<TextMeshProUGUI>();
 
         minimap = GameObject.Find("MainCanvas").transform.Find("Minimap").gameObject;
+
+        Menu = GameObject.Find("MainCanvas").transform.Find("Menu").gameObject;
     }
 
  public void UpdatePlayer()

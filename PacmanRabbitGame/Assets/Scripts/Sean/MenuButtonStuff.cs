@@ -8,10 +8,12 @@ public class MenuButtonStuff : MonoBehaviour
     public void ReturnToMenu()
     {
         SceneManager.LoadScene(0);
+        Debug.Log("Load");
     }
 
     public void QuitGame()
     {
         Application.Quit();
+        Debug.Log("QUit");
     }
 }
