@@ -8,31 +8,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 96f168308b6baec4082f60ca6fffdc66
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ProceduralUndergroundMaze.unity
     guid: 15c8756f6c227dc4997d06b4100143b2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/LukeHodgetts/Maps/LH_MainMenu.unity
     guid: fca6456dbc05abe43b321b6d94e2b9c2
-  - enabled: 1
+  - enabled: 0
     path: Assets/LukeHodgetts/Maps/NewLevel1.unity
     guid: 2f259ff7ec143aa469b9b6ccc8865293
-  - enabled: 1
+  - enabled: 0
     path: Assets/LukeHodgetts/Maps/MissionSelectScreen.unity
     guid: dc63bf3dacbdf7e4784f089b786d777a
-  - enabled: 1
+  - enabled: 0
     path: Assets/LukeHodgetts/Maps/Extras.unity
     guid: 31bd47c0afc0952429f955bc34b0661a
-  - enabled: 1
+  - enabled: 0
     path: Assets/LukeHodgetts/Maps/NewLevel2.unity
     guid: 834131112d501a746866e0c4939ea088
-  - enabled: 1
+  - enabled: 0
     path: Assets/LukeHodgetts/Maps/NewLevel3.unity
     guid: a897364d2a80eaf4bb3941aa90f58a40
-  - enabled: 1
+  - enabled: 0
     path: Assets/LukeHodgetts/Maps/Minigames/EndlessRunner.unity
     guid: ace6db55fc433924fb0776a3bbfdad47
   - enabled: 1
