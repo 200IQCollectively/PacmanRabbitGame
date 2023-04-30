@@ -15,6 +15,7 @@ TagManager:
   - enemies
   - Hole
   - AI
+  - powerupcollectible
   layers:
   - Default
   - TransparentFX

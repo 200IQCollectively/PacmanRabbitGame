@@ -6,7 +6,7 @@ public class teleporter1 : MonoBehaviour
 {
 
     [SerializeField] Transform tp;
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject[] player;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,15 +15,18 @@ public class teleporter1 : MonoBehaviour
 
     IEnumerator Teleport()
     {
-       player.SetActive(false);
+       //player[i].SetActive(false);
         yield return new WaitForSeconds(0.001f);
-        player.transform.position = new Vector3(
+        for(int i=0;i<player.Length;i++)
+        {
+        player[i].transform.position = new Vector3(
             tp.transform.position.x,
             tp.transform.position.y,
             tp.transform.position.z
         );
+        }
         yield return new WaitForSeconds(0.001f);
-        player.SetActive(true);
+        //player.SetActive(true);
     }
 }
 
