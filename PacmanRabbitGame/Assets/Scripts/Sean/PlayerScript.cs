@@ -95,7 +95,11 @@ public class PlayerScript : MonoBehaviour
 
         if (canMove)
         {
-            MouseLook();
+            if(!inMenu)
+            {
+                MouseLook();
+            }
+            
             Movement();
 
             if(canJump)
@@ -232,7 +236,7 @@ public class PlayerScript : MonoBehaviour
         if (other.tag == "powerupcollectible")
         {
             UpdatePlayer();
-           converter.UpdatePlayer();
+            converter.UpdatePlayer();
             score.SetScore(5);
             
             source.PlayOneShot(eatCarrot);

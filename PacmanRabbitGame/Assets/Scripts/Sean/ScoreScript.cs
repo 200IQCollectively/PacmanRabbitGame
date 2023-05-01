@@ -26,9 +26,8 @@ public class ScoreScript : MonoBehaviour
     public void SetScore(int increase)
     {
         score += increase;
-        print("set score it is " + score);
 
-        //scoreText.text = "Score: " + score;
+        scoreText.text = "Score: " + score;
     }
 
     private void GetComponents()
