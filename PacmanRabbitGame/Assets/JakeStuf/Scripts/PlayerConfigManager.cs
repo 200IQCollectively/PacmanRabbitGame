@@ -1,29 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerConfigManager : MonoBehaviour
 {
     private List<PlayerConfiguration> playerConfigs;
     public List<PlayerInput> players = new List<PlayerInput>();
-    //public GameObject foxplayer = new GameObject();
-   
+    
 
     [SerializeField]
     private int MaxPlayers = 4;
 
-    [SerializeField]
-    private GameObject ReadyText1;
-
-    [SerializeField]
-    private GameObject ReadyText2;
-    [SerializeField]
-    private GameObject ReadyText3;
-    [SerializeField]
-    private GameObject ReadyText4;
+    MainMenuController menuController;
 
     public static PlayerConfigManager Instance { get; private set; }
 
@@ -38,15 +27,7 @@ public class PlayerConfigManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(Instance);
             playerConfigs = new List<PlayerConfiguration>();
-        }
-    }
-
-    public void ReadyPlayer(int index)
-    {
-        playerConfigs[index].IsReady = true;
-        if(playerConfigs.Count == MaxPlayers && playerConfigs.TrueForAll(p=>p.IsReady))
-        {
-            SceneManager.LoadScene("SampleScene");
+            menuController = FindObjectOfType<MainMenuController>();
         }
     }
 
@@ -56,25 +37,8 @@ public class PlayerConfigManager : MonoBehaviour
         pi.transform.SetParent(transform);
         playerConfigs.Add(new PlayerConfiguration(pi));
         players.Add(pi);
-
-        switch (pi.playerIndex)
-        {
-            case 0:
-                ReadyText1.GetComponent<Text>().text = "Ready";
-
-                break;
-            case 1:
-                ReadyText2.GetComponent<Text>().text = "Ready";
-                break;
-            case 2:
-                ReadyText3.GetComponent<Text>().text = "Ready";
-                break;
-            case 3:
-                ReadyText4.GetComponent<Text>().text = "Ready";
-                break;
-            default:
-                break;
-        }
+        menuController.SetPlayerReadyText(pi.playerIndex);
+        
     }
 
 }
