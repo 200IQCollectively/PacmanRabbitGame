@@ -17,7 +17,7 @@ public class PlayerScript : MonoBehaviour
     private float gravity = -9.81f;
 
     //Camera Movement
-    private float mouseSensitivity = 0.8f;
+    private float mouseSensitivity = 3f;
     private Transform playerCamera;
     private float xRotationCamera = 0f;
 
@@ -32,10 +32,13 @@ public class PlayerScript : MonoBehaviour
     //New input stuff
 
     [SerializeField]
-    private InputActionReference INP_movement,INP_look,INP_jump,INP_teleport;
+    private InputAction INP_movement,INP_look,INP_jump,INP_teleport, INP_pause;
     private Gamepad gamepad = Gamepad.current;
     private Keyboard keyboard = Keyboard.current;
     private Mouse mouse = Mouse.current;
+    private InputActionAsset inputAsset;
+    private InputActionMap playerInputMap;
+    private PlayerInput playerInput;
 
     //Game Stuff
     private GameHandler game;
@@ -88,7 +91,9 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(canMove)
+        OpenMenu();
+
+        if (canMove)
         {
             MouseLook();
             Movement();
@@ -98,7 +103,7 @@ public class PlayerScript : MonoBehaviour
                 Jump();
             }
 
-            if (INP_teleport.action.WasPerformedThisFrame() && teleportable)
+            if (INP_teleport.WasPerformedThisFrame() && teleportable)
             {
                 transform.position = new Vector3(teleportPos.x, teleportPos.y + 1, teleportPos.z);
 
@@ -113,17 +118,15 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private void OpenMenu()
+    public void OpenMenu()
     {
-        /* if menu opening button is pressed
-        if()
+        //if menu opening button is pressed
+        if (INP_pause.WasPerformedThisFrame())
         {
             inMenu = !inMenu;
         }
-        
-        */
 
-        if(inMenu)
+        if (inMenu)
         {
             Menu.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
@@ -151,10 +154,11 @@ public class PlayerScript : MonoBehaviour
 
         //    playerCamera.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
         //}
-        
-        
-             look = INP_look.action.ReadValue<Vector2>();
-        
+
+
+        look = INP_look.ReadValue<Vector2>();
+        look = look * mouseSensitivity;
+
         xRotationCamera -= look.y;
         xRotationCamera = Mathf.Clamp(xRotationCamera, -10f, 25f);
 
@@ -166,7 +170,7 @@ public class PlayerScript : MonoBehaviour
     {
         //float x = Input.GetAxis("Horizontal");
         //float z = Input.GetAxis("Vertical");
-        Vector2 movement = INP_movement.action.ReadValue<Vector2>();
+        Vector2 movement = INP_movement.ReadValue<Vector2>();
         Vector3 move = transform.right * movement.x + transform.forward * movement.y;
         if(movement==new Vector2(0,0))
         {
@@ -198,7 +202,7 @@ public class PlayerScript : MonoBehaviour
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 source.PlayOneShot(jump);
             */
-            if (INP_jump.action.WasPerformedThisFrame())
+            if (INP_jump.WasPerformedThisFrame())
             {
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 source.PlayOneShot(jump);
@@ -305,6 +309,19 @@ public class PlayerScript : MonoBehaviour
         popup = GameObject.Find("MainCanvas").transform.Find("PopupText").GetComponent<TextMeshProUGUI>();
 
         minimap = GameObject.Find("MainCanvas").transform.Find("Minimap").gameObject;
+
+        Menu = GameObject.Find("MainCanvas").transform.Find("Menu").gameObject;
+
+        playerInput = GetComponentInChildren<PlayerInput>();
+        inputAsset = playerInput.actions;
+        playerInputMap = inputAsset.FindActionMap("PlayerInGame");
+        INP_movement = playerInputMap.FindAction("Movement");
+        INP_look = playerInputMap.FindAction("Look");
+        INP_jump = playerInputMap.FindAction("Jump");
+        INP_teleport = playerInputMap.FindAction("Teleport");
+        INP_pause = playerInputMap.FindAction("Pause");
+
+        playerInput.camera = GetComponentInChildren<Camera>();
     }
 
  public void UpdatePlayer()

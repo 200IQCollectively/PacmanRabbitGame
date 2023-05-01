@@ -145,12 +145,53 @@ MonoBehaviour:
   controller: {fileID: 0}
   playerSpeed: 5
   jumpHeight: 2.5
-  jump: {fileID: 8300000, guid: f609baffd2b96824298a7a0785a25423, type: 3}
-  eatCarrot: {fileID: 8300000, guid: 18d84a88dedc50e41aac0df2b3a0b503, type: 3}
-  INP_movement: {fileID: -1221012143096282376, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
-  INP_look: {fileID: 3792282978716876253, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
-  INP_jump: {fileID: 9156035156302276046, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
-  INP_teleport: {fileID: 7647784609420064309, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
+  jump: {fileID: 8300000, guid: ca84224077754624f874f21e6efab5ec, type: 3}
+  eatCarrot: {fileID: 8300000, guid: 6392e49a9c3173b4ebbde9dc0b712f79, type: 3}
+  INP_movement:
+    m_Name: INP_movement
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1ed6da7e-56bc-4c7f-b289-8bafe882d96f
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  INP_look:
+    m_Name: INP_look
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 6493a096-c4b1-4561-97cd-cca6b2dd570a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  INP_jump:
+    m_Name: INP_jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 79590f17-678b-4df8-837e-60f7089032ce
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  INP_teleport:
+    m_Name: INP_teleport
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3b8fe751-f2f2-45cb-b4f1-2c9e7f7f0483
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  INP_pause:
+    m_Name: INP_pause
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 894e8f7d-9515-4acc-b0d1-218303037bc2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   canJump: 0
   popup: {fileID: 0}
 --- !u!82 &5062994567464887743

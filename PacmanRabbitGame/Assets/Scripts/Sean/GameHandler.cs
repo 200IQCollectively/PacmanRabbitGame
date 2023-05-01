@@ -6,9 +6,18 @@ using TMPro;
 public class GameHandler : MonoBehaviour
 {
     private PacmanMazeGen maze;
+
     private int amountOfCarrots;
+
     public GameObject fadeObj;
+
     public PlayerScript player;
+
+    private int livesRemaning = 3;
+
+    PlayerManager_JM playerManager;
+
+    public bool isMultiplayer = false;
 
     //Leaderboard stuff
     private GameObject leaderboard;
@@ -19,11 +28,17 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         maze = GameObject.Find("MazePlane").GetComponent<PacmanMazeGen>();
+        playerManager = FindObjectOfType<PlayerManager_JM>();
 
         leaderboard = GameObject.Find("MainCanvas").transform.Find("Leaderboard").gameObject;
         leaderboardEntries = leaderboard.transform.Find("LeaderboardEntries").gameObject;
-        
+
         StartCoroutine(maze.DelayMazeGen());
+
+        if (playerManager.GetPlayerCount() > 1)
+        {
+            isMultiplayer = true;
+        }
 
         for (int i = 0; i < 10; i++)
         {
@@ -35,7 +50,7 @@ public class GameHandler : MonoBehaviour
     {
         amountOfCarrots += amount;
 
-        if(amountOfCarrots <= 0)
+        if (amountOfCarrots <= 0)
         {
             StartCoroutine(NextLevel());
         }
@@ -49,6 +64,27 @@ public class GameHandler : MonoBehaviour
     public void SetPlayer(PlayerScript play)
     {
         player = play;
+    }
+
+    public void PlayerCaught()
+    {
+        if (livesRemaning == 0)
+        {
+            print("Game Over");
+            player.OpenMenu();
+        }
+        else
+        {
+            print("resettinggggg");
+            playerManager.ResetPlayers();
+            livesRemaning--;
+        }
+    }
+
+    public void ReleaseFoxPlayers()
+    {
+        print("releassing");
+        playerManager.ReleaseFoxs();
     }
 
     IEnumerator NextLevel()

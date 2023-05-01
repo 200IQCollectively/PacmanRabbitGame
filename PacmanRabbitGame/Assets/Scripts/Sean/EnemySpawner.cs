@@ -14,10 +14,12 @@ public class EnemySpawner : MonoBehaviour
 
     private Transform teleportPoint;
 
+    private bool Released = false;
+
     private void Start()
     {
-        game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
-
+        //game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+        game = FindObjectOfType<GameHandler>();
         teleportPoint = transform.Find("EnemyTeleportPoint").gameObject.transform;
     }
 
@@ -35,15 +37,27 @@ public class EnemySpawner : MonoBehaviour
     private void ReleaseEnemies()
     {
         timer -= 1.0f * Time.deltaTime;
-
-        if (enemies.Count != 4 && timer <= 0)
+        if (game.isMultiplayer)
+        { 
+            if(timer <=0 && !Released)
+            {
+                game.ReleaseFoxPlayers();
+                Released = !Released;
+            }
+        }
+        else
         {
-            var fox = Instantiate(enemy, new Vector3(teleportPoint.position.x, teleportPoint.position.y, teleportPoint.position.z), Quaternion.identity);
+            
 
-            enemies.Add(fox);
+            if (enemies.Count != 4 && timer <= 0)
+            {
+                var fox = Instantiate(enemy, new Vector3(teleportPoint.position.x, teleportPoint.position.y, teleportPoint.position.z), Quaternion.identity);
 
-            timer = 4.0f;
-        } 
+                enemies.Add(fox);
+
+                timer = 4.0f;
+            }
+        }
     }
 
     public void DestroyEnemies()
