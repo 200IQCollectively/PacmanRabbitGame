@@ -93,7 +93,7 @@ public class GameHandler : MonoBehaviour
 
         fadeObj.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Level " + maze.GetLevel() + " Complete!";
 
-        player.SetCanMove(false);
+        //player.SetCanMove(false);
 
         maze.SetLevel();
 
@@ -101,7 +101,7 @@ public class GameHandler : MonoBehaviour
 
         StartCoroutine(maze.DelayMazeGen());
 
-        player.SetCanMove(true);
+        //player.SetCanMove(true);
 
         fadeObj.SetActive(false);
     }
