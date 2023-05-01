@@ -295,7 +295,7 @@ LightingSettings:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   serializedVersion: 4
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -1144,6 +1144,7 @@ MonoBehaviour:
   Player: {fileID: 7713104738643049935, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
   game: {fileID: 303701149}
   PowerUpObj: {fileID: 839915037231723315, guid: 05d90cb35630822479063d832fa75da3, type: 3}
+  playerManager: {fileID: 0}
 --- !u!1 &423453367
 GameObject:
   m_ObjectHideFlags: 0

@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 2093160984584305679}
   - component: {fileID: 6759642666704210}
   - component: {fileID: 1739093152125548211}
+  - component: {fileID: 8836344048747097053}
   m_Layer: 0
   m_Name: JakesTestPlayer
   m_TagString: Player
@@ -497,13 +498,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c79999c2cd83ff4c96462285ebe2e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parental: {fileID: 0}
-  converter: {fileID: 0}
+  parental: {fileID: 8836344048747097053}
+  converter: {fileID: 1023419624188444347, guid: 00d2b01afeae936449172893eb29fc4a, type: 3}
   controller: {fileID: 0}
-  playerSpeed: 10
+  playerSpeed: 5
   jumpHeight: 2.5
-  jump: {fileID: 8300000, guid: 356bde826dd9e904fa3be5e75ed9ba16, type: 3}
-  eatCarrot: {fileID: 8300000, guid: 8ba2278544d0bce4484867a788dc35da, type: 3}
+  jump: {fileID: 8300000, guid: ca84224077754624f874f21e6efab5ec, type: 3}
+  eatCarrot: {fileID: 8300000, guid: 6392e49a9c3173b4ebbde9dc0b712f79, type: 3}
   INP_movement:
     m_Name: INP_movement
     m_Type: 0
@@ -563,7 +564,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -690,6 +691,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26169f7c6cc21a42871e3be2dbb8359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8836344048747097053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2709947912393374935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb47caee30aff54780010c0aa03fc83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parents: {fileID: 2709947912393374935}
 --- !u!1 &2714358178069186804
 GameObject:
   m_ObjectHideFlags: 0
@@ -2320,4 +2334,4 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8851245520192166706}
-  m_Enabled: 0
+  m_Enabled: 1

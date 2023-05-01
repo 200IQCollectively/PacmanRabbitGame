@@ -45,7 +45,7 @@ public class PacmanMazeGen : MonoBehaviour
 
     public GameObject PowerUpObj;
 
-    private PlayerManager_JM playerManager;
+    public PlayerManager_JM playerManager;
 
     //Level Stuff
     private int level = 1;
@@ -63,9 +63,10 @@ public class PacmanMazeGen : MonoBehaviour
     {
         floor = gameObject.transform.Find("Floor").GetComponent<NavMeshSurface>();
         minimap = GameObject.Find("MinimapCamera").GetComponent<Camera>();
-        //game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
-        game = FindObjectOfType<GameHandler>();
-        playerManager = FindObjectOfType<PlayerManager_JM>();
+        game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+        playerManager = GameObject.Find("GameHandler").GetComponent<PlayerManager_JM>();
+        //game = FindObjectOfType<GameHandler>();
+        //playerManager = FindObjectOfType<PlayerManager_JM>();
     }
 
     private void GenerateMazeLayout()
@@ -180,6 +181,7 @@ public class PacmanMazeGen : MonoBehaviour
                     playerManager.SpawnPlayers();
 
                     game.SetPlayer(playerManager.GetPlayer(0));
+
                     //if (GameObject.Find("TestPlayer(Clone)") == null)
                     //{
                     //    var play = Instantiate(Player, new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), Quaternion.identity);
