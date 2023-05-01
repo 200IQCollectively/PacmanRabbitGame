@@ -460,6 +460,7 @@ GameObject:
   - component: {fileID: 635717950574027943}
   - component: {fileID: 2093160984584305679}
   - component: {fileID: 6759642666704210}
+  - component: {fileID: 1739093152125548211}
   m_Layer: 0
   m_Name: JakesTestPlayer
   m_TagString: Player
@@ -496,12 +497,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c79999c2cd83ff4c96462285ebe2e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parental: {fileID: 0}
+  converter: {fileID: 0}
   controller: {fileID: 0}
   playerSpeed: 10
   jumpHeight: 2.5
   jump: {fileID: 8300000, guid: 356bde826dd9e904fa3be5e75ed9ba16, type: 3}
   eatCarrot: {fileID: 8300000, guid: 8ba2278544d0bce4484867a788dc35da, type: 3}
+  INP_movement:
+    m_Name: INP_movement
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e520ab3c-decd-45e3-a864-099e5364569b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  INP_look:
+    m_Name: INP_look
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4b9f78fb-bf46-4a47-9078-44f78057db42
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  INP_jump:
+    m_Name: INP_jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 9071b75b-934f-4766-af63-c04efa99ac12
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  INP_teleport:
+    m_Name: INP_teleport
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c95bc3a3-04a4-48df-a6df-3bdd67c9a789
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  INP_pause:
+    m_Name: INP_pause
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a0944634-1908-431b-ab43-d5f6ac34192d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   canJump: 0
+  popup: {fileID: 0}
 --- !u!82 &635717950574027943
 AudioSource:
   m_ObjectHideFlags: 0
@@ -629,6 +678,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1739093152125548211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2709947912393374935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c26169f7c6cc21a42871e3be2dbb8359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2714358178069186804
 GameObject:
   m_ObjectHideFlags: 0

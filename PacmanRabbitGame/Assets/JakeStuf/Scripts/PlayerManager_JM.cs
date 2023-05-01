@@ -137,8 +137,8 @@ public class PlayerManager_JM : MonoBehaviour
             }
             else
             {
-                player.transform.parent.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 2);
-
+                //player.transform.parent.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 2);
+                
             }
         }
     }
@@ -150,7 +150,7 @@ public class PlayerManager_JM : MonoBehaviour
 
             if (player.playerIndex != 0)
             {
-               
+                
                 player.transform.parent.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 2);
                // player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 2);
             }
@@ -186,6 +186,11 @@ public class PlayerManager_JM : MonoBehaviour
     public int GetPlayerCount()
     {
         return players.Count;
+    }
+
+    public PlayerScript GetPlayer(int playerindex)
+    {
+        return players[playerindex].GetComponent<PlayerScript>();
     }
 
     public IEnumerator DelaySpawning()

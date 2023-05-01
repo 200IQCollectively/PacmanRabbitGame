@@ -118,7 +118,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private void OpenMenu()
+    public void OpenMenu()
     {
         //if menu opening button is pressed
         if (INP_pause.WasPerformedThisFrame())

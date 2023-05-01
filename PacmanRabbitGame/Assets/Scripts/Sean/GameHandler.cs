@@ -71,6 +71,7 @@ public class GameHandler : MonoBehaviour
         if (livesRemaning == 0)
         {
             print("Game Over");
+            player.OpenMenu();
         }
         else
         {

@@ -45,6 +45,8 @@ public class PacmanMazeGen : MonoBehaviour
 
     public GameObject PowerUpObj;
 
+    private PlayerManager_JM playerManager;
+
     //Level Stuff
     private int level = 1;
     private int minWidth = 20;
@@ -63,6 +65,7 @@ public class PacmanMazeGen : MonoBehaviour
         minimap = GameObject.Find("MinimapCamera").GetComponent<Camera>();
         //game = GameObject.Find("GameHandler").GetComponent<GameHandler>();
         game = FindObjectOfType<GameHandler>();
+        playerManager = FindObjectOfType<PlayerManager_JM>();
     }
 
     private void GenerateMazeLayout()
@@ -172,19 +175,23 @@ public class PacmanMazeGen : MonoBehaviour
                     Transform spawnPoint = spawnObj.transform.Find("PlayerSpawnPoint").gameObject.transform;
 
                     minimap.transform.position = new Vector3(x, minimapSize, z);
+                    playerManager.AddSpawnPosition(spawnPoint);
+                    playerManager.AddSpawnPosition(spawnObj.transform);
+                    playerManager.SpawnPlayers();
 
-                    if (GameObject.Find("TestPlayer(Clone)") == null)
-                    {
-                        var play = Instantiate(Player, new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), Quaternion.identity);
+                    game.SetPlayer(playerManager.GetPlayer(0));
+                    //if (GameObject.Find("TestPlayer(Clone)") == null)
+                    //{
+                    //    var play = Instantiate(Player, new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), Quaternion.identity);
 
-                        Player.GetComponent<PlayerScript>().SetSpawn(spawnPoint);
-                        game.SetPlayer(play.GetComponent<PlayerScript>());
-                    }
+                    //    Player.GetComponent<PlayerScript>().SetSpawn(spawnPoint);
+                    //    game.SetPlayer(play.GetComponent<PlayerScript>());
+                    //}
 
-                    else
-                    {
-                        GameObject.Find("TestPlayer(Clone)").gameObject.transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
-                    }
+                    //else
+                    //{
+                    //    GameObject.Find("TestPlayer(Clone)").gameObject.transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
+                    //}
                 }
             }
         }
