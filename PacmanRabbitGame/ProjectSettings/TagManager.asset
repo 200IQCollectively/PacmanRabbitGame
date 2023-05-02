@@ -4,28 +4,26 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Collectible
-  - Ground
-  - foxbody2
-  - enemyeyes
-  - foxbody
-  - bigeyes
-  - whitefox
-  - subplayer
-  - enemies
-  - Hole
   - AI
+  - foxbody2
+  - bigeyes
+  - foxbody
+  - enemyeyes
+  - subplayer
+  - whitefox
+  - Collectible
+  - Hole
+  - FoxPlayer
   - powerupcollectible
   - centerofall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - score
+  - 
   - Water
   - UI
-  - ground
-  - Wall
+  - 
   - Minimap
   - wolf
   - fffff
@@ -35,6 +33,7 @@ TagManager:
   - dddd
   - ffffff
   - ffeerr
+  - 
   - 
   - 
   - 
