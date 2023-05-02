@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerConfigManager : MonoBehaviour
 {
     private List<PlayerConfiguration> playerConfigs;
     public List<PlayerInput> players = new List<PlayerInput>();
     
-
     [SerializeField]
     private int MaxPlayers = 4;
 
