@@ -16,17 +16,17 @@ public class PlayerDetection : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("AI"))
-        {
-            float distance = Vector3.Distance(other.transform.position, player.transform.position);
-            if (distance < distanceThreshold)
-            {
-                navAgent.SetDestination(player.position);
-                Debug.Log("player" + player.position);
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("AI"))
+    //    {
+    //        float distance = Vector3.Distance(other.transform.position, player.transform.position);
+    //        if (distance < distanceThreshold)
+    //        {
+    //            navAgent.SetDestination(player.position);
+    //            Debug.Log("player" + player.position);
 
-            }
-        }
-    }
+    //        }
+    //    }
+    //}
 }

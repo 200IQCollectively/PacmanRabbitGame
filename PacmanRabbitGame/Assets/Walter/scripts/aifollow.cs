@@ -6,25 +6,25 @@ using UnityEngine.AI;
 
 public class aifollow : MonoBehaviour
 {
-    private NavMeshAgent Mob;
-    public GameObject Player;
-    public float mobdistancerun = 4.0f;
+   // private NavMeshAgent Mob;
+   // public GameObject Player;
+   // public float mobdistancerun = 4.0f;
 
-   void Start()
-   {
-       Mob=GetComponent<NavMeshAgent>();
-   }
+   //void Start()
+   //{
+   //    Mob=GetComponent<NavMeshAgent>();
+   //}
 
-    void Update()
-    {
-        float distance = Vector3.Distance(transform.position,Player.transform.position);
+   // void Update()
+   // {
+   //     float distance = Vector3.Distance(transform.position,Player.transform.position);
     
-    if(distance<mobdistancerun)
-    {
-        Vector3 dirToPlayer=transform.position - Player.transform.position;
-        Vector3 newPos=transform.position - dirToPlayer;
-        Mob.SetDestination(newPos);
+   // if(distance<mobdistancerun)
+   // {
+   //     Vector3 dirToPlayer=transform.position - Player.transform.position;
+   //     Vector3 newPos=transform.position - dirToPlayer;
+   //     Mob.SetDestination(newPos);
 
-    }
-}
+   // }
+
 }

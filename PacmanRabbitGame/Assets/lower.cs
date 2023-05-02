@@ -41,8 +41,8 @@ public class lower : MonoBehaviour
         }
 
         // Set the animator's speed based on the agent's velocity
-        float speed = agent.velocity.magnitude;
-        animator.SetFloat("Speed", speed);
+        //float speed = agent.velocity.magnitude;
+        //animator.SetFloat("Speed", speed);
 
         // Add some randomness to the agent's movement by turning slightly
         agent.angularSpeed = Random.Range(80f, 120f);
