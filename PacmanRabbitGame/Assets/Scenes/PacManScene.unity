@@ -1098,6 +1098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wall: {fileID: 5407817152406286739, guid: 7adf0846b8a6b0b4fa8e45d824873153, type: 3}
   walls: {fileID: 869302062}
+  org: {fileID: 7654001485361959723, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
   floor: {fileID: 423453372}
   floorMF: {fileID: 423453371}
   floorMC: {fileID: 423453368}

@@ -9,6 +9,7 @@ public class PacmanMazeGen : MonoBehaviour
 {
     public GameObject wall;
     public GameObject walls;
+    public PlayerScript org;
 
     public NavMeshSurface floor;
 
@@ -174,8 +175,9 @@ public class PacmanMazeGen : MonoBehaviour
 
                     if (GameObject.Find("TestPlayer(Clone)") == null)
                     {
+                        org.playerstate();
                         var play = Instantiate(Player, new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), Quaternion.identity);
-
+                      
                         Player.GetComponent<PlayerScript>().SetSpawn(spawnPoint);
                         game.SetPlayer(play.GetComponent<PlayerScript>());
                     }

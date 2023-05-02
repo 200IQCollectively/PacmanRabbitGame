@@ -59,6 +59,8 @@ public class PlayerScript : MonoBehaviour
     private GameObject minimap;
     private bool isInside = true;
 
+    public float timer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -92,12 +94,16 @@ public class PlayerScript : MonoBehaviour
     
     // Update is called once per frame
     void Update()
-    {
+    {   
         OpenMenu();
-
+        
         if (canMove)
         {
-            MouseLook();
+            if(!inMenu)
+            {
+                MouseLook();
+            }
+            
             Movement();
 
             if(canJump)
@@ -254,6 +260,7 @@ public class PlayerScript : MonoBehaviour
 
         if(other.tag == "AI")
         {
+            PlayerDied();
             deathofrabbit();
         }
     }
@@ -289,16 +296,20 @@ public class PlayerScript : MonoBehaviour
     }
 
     public void PlayerDied()
-    {
+    {      
+        float resetTime = 2.0f;
+
         canMove = false;
         lives -= 1;
+        timer = resetTime;
+        timer -= 1.0f * Time.deltaTime;
 
-        if(lives <= 0)
-        {
-            game.EndGame();
-        }
+        //if (lives <= 0)
+        //{
+        //    game.EndGame();
+        //}
 
-        else
+        if (timer <= 0)
         {
             transform.position = spawn.position;
             canMove = true;
@@ -414,6 +425,14 @@ foreach (GameObject obj in objectsWithTag)
 
 
         
+    }
+
+    public void playerstate()
+    {
+        parental.whitewolfonly(false);
+        parental.explosioneffect(false);
+        parental.rabbitonly(true);
+
     }
     public void rest()
     {
