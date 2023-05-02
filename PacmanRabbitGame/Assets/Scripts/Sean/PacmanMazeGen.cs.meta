@@ -14,7 +14,10 @@ MonoImporter:
   - threeByOne: {fileID: 3378988192004932386, guid: cad80ea78da2034418aee042969677af, type: 3}
   - lWall: {fileID: 7194545272969230920, guid: be7977fcb717c524ebac99a40b2ef043, type: 3}
   - tWall: {fileID: 8638375480508540941, guid: f91f24bbf39bbd148be01de24a0a4110, type: 3}
+  - hole: {instanceID: 0}
   - Player: {fileID: 7713104738643049935, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
+  - game: {instanceID: 0}
+  - PowerUpObj: {fileID: 839915037231723315, guid: 05d90cb35630822479063d832fa75da3, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

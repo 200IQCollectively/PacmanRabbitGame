@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e66c6366d904e98bc83428217d4fd7, type: 3}
+  m_Name: UnjumpVS
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"graph":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":null,"summary":null,"pan":{"x":183.0,"y":109.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{"target":null},"position":{"x":-480.0,"y":-170.0},"guid":"c070c6ea-c966-47dc-8905-ac7d9f2dd57c","$version":"A","$type":"Unity.VisualScripting.OnTriggerEnter"},{"specifyFallback":false,"kind":"Object","defaultValues":{"name":{"$content":"Player","$type":"System.String"},"object":null},"position":{"x":-523.0,"y":133.0},"guid":"51b90116-98af-4185-9138-83444994a1d8","$version":"A","$type":"Unity.VisualScripting.GetVariable","$id":"11"},{"type":"PlayerScript","instance":true,"static":true,"defaultValues":{"target":null},"position":{"x":-260.0,"y":86.0},"guid":"b8795693-1f2b-4af0-8744-fde2877e1ebb","$version":"A","$type":"Unity.VisualScripting.Expose","$id":"13"},{"sourceUnit":{"$ref":"11"},"sourceKey":"value","destinationUnit":{"$ref":"13"},"destinationKey":"target","guid":"a2a5f95c-7111-4447-9427-50245bce140b","$type":"Unity.VisualScripting.ValueConnection"}],"$version":"A"}}'
+    _objectReferences: []

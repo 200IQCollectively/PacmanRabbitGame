@@ -110,6 +110,15 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""e3c5726e-74f5-4a5f-8d2a-72db2c5e6f9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -244,6 +253,28 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                     ""action"": ""Teleport"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a5afeacd-3883-4e0d-aafb-dcf1af129872"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab04e995-1ca6-4d9c-80a5-280126d9702f"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -260,6 +291,7 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         m_PlayerInGame_Look = m_PlayerInGame.FindAction("Look", throwIfNotFound: true);
         m_PlayerInGame_Jump = m_PlayerInGame.FindAction("Jump", throwIfNotFound: true);
         m_PlayerInGame_Teleport = m_PlayerInGame.FindAction("Teleport", throwIfNotFound: true);
+        m_PlayerInGame_Pause = m_PlayerInGame.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -364,6 +396,7 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInGame_Look;
     private readonly InputAction m_PlayerInGame_Jump;
     private readonly InputAction m_PlayerInGame_Teleport;
+    private readonly InputAction m_PlayerInGame_Pause;
     public struct PlayerInGameActions
     {
         private @PlayerControlls m_Wrapper;
@@ -372,6 +405,7 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_PlayerInGame_Look;
         public InputAction @Jump => m_Wrapper.m_PlayerInGame_Jump;
         public InputAction @Teleport => m_Wrapper.m_PlayerInGame_Teleport;
+        public InputAction @Pause => m_Wrapper.m_PlayerInGame_Pause;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -393,6 +427,9 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                 @Teleport.started -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnTeleport;
                 @Teleport.performed -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnTeleport;
                 @Teleport.canceled -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnTeleport;
+                @Pause.started -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerInGameActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerInGameActionsCallbackInterface = instance;
             if (instance != null)
@@ -409,6 +446,9 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                 @Teleport.started += instance.OnTeleport;
                 @Teleport.performed += instance.OnTeleport;
                 @Teleport.canceled += instance.OnTeleport;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -424,5 +464,6 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnTeleport(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

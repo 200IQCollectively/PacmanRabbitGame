@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class over : MonoBehaviour
+{
+
+    [SerializeField] Transform[] tp;
+    [SerializeField] GameObject[] player;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        StartCoroutine(Teleport());
+    }
+
+    IEnumerator Teleport()
+    {
+       //player.SetActive(false);
+        yield return new WaitForSeconds(0.001f);
+        for(int i=0;i<player.Length;i++)
+        {
+        player[i].transform.position = new Vector3(
+            tp[i].transform.position.x,
+            tp[i].transform.position.y,
+            tp[i].transform.position.z
+        );
+        }
+        yield return new WaitForSeconds(0.001f);
+        //player.SetActive(true);
+    }
+}
+
+//private void OnTriggerEnter(Collider other)
+//{
+//    StartCoroutine(Teleport());
+//}
+
+//IEnumerator Teleport()
+//{
+//    player.SetActive(false);
+//    yield return new WaitForSeconds(0.1f);
+//    player.transform.position = new Vector3(
+//        tp.transform.position.x,
+//        tp.transform.position.y,
+//        tp.transform.position.z
+//    );
+//    yield return new WaitForSeconds(0.1f);
+//    player.SetActive(true);
+//}
+//}
