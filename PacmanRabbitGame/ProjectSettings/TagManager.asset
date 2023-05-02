@@ -16,6 +16,7 @@ TagManager:
   - Hole
   - AI
   - powerupcollectible
+  - centerofall
   layers:
   - Default
   - TransparentFX

@@ -11,11 +11,12 @@ public class PlayerScript : MonoBehaviour
      [SerializeField] GameObject dustCloud;
        public Material[] material;
     private Animator anim;
+    public lower wolf;
     public parent parental;
     public convert converter;
     public CharacterController controller;
     private Vector3 playerVelocity;
-    public float playerSpeed = 5.0f;
+    public float playerSpeed = 6.0f;
     [SerializeField] private float jumpHeight = 1f;
     private float gravity = -9.81f;
 
@@ -299,8 +300,39 @@ public class PlayerScript : MonoBehaviour
            parental.whitewolfonly(true);
            playerSpeed = 20.0f;
           changewolfcolortoblue();
-
           
+      /*
+
+
+   GameObject[] objectsWithTags = GameObject.FindGameObjectsWithTag("AI");
+
+// Loop through all the objects and turn off a script attached to them
+foreach (GameObject objs in objectsWithTags)
+{
+    // Get the component you want to turn off
+    lower script = objs.GetComponent<lower>();
+    if (script != null)
+    {
+        // Turn off the script
+        script.enabled = false;
+    }
+}
+
+   GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("AI");
+
+// Loop through all the objects and turn off a script attached to them
+foreach (GameObject obj in objectsWithTag)
+{
+    // Get the component you want to turn off
+    plower script = obj.GetComponent<plower>();
+    if (script != null)
+    {
+        // Turn off the script
+        script.enabled = true;
+    }
+}
+*/
+
             Invoke("backtodefaults", 10.0f);
         
     }
@@ -318,6 +350,41 @@ public class PlayerScript : MonoBehaviour
         parental.explosioneffect(true);
         playerSpeed = 5.0f;
         changewolfcolorbacktooriginal ();
+
+/*
+   GameObject[] objectsWithTags = GameObject.FindGameObjectsWithTag("AI");
+
+// Loop through all the objects and turn off a script attached to them
+foreach (GameObject objs in objectsWithTags)
+{
+    // Get the component you want to turn off
+    lower script = objs.GetComponent<lower>();
+    if (script != null)
+    {
+        // Turn off the script
+        script.enabled = true;
+    }
+}
+
+   GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("AI");
+
+// Loop through all the objects and turn off a script attached to them
+foreach (GameObject obj in objectsWithTag)
+{
+    // Get the component you want to turn off
+    plower script = obj.GetComponent<plower>();
+    if (script != null)
+    {
+        // Turn off the script
+        script.enabled = false;
+    }
+}
+
+*/
+
+
+
+
         
     }
     public void rest()

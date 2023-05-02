@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 481474578593585822, guid: 0fc8f2d5ea7c0ed4e8045e129ffc0461, type: 3}
       propertyPath: m_Speed
-      value: 50
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 481474578593585822, guid: 0fc8f2d5ea7c0ed4e8045e129ffc0461, type: 3}
       propertyPath: m_Height
@@ -151,12 +151,16 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 481474578593585822, guid: 0fc8f2d5ea7c0ed4e8045e129ffc0461, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 481474578593585822, guid: 0fc8f2d5ea7c0ed4e8045e129ffc0461, type: 3}
       propertyPath: m_Acceleration
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 481474578593585822, guid: 0fc8f2d5ea7c0ed4e8045e129ffc0461, type: 3}
       propertyPath: m_AngularSpeed
-      value: 100
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 481474578593585822, guid: 0fc8f2d5ea7c0ed4e8045e129ffc0461, type: 3}
       propertyPath: avoidancePriority
@@ -738,6 +742,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3811910962570028467, guid: 0fc8f2d5ea7c0ed4e8045e129ffc0461, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 25e71fffcb3f8f945ad4f223f408c9c4, type: 2}
     - target: {fileID: 3815495983361820788, guid: 0fc8f2d5ea7c0ed4e8045e129ffc0461, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -1769,7 +1777,65 @@ CapsuleCollider:
   m_Height: 13.09
   m_Direction: 2
   m_Center: {x: 0.88, y: 3.33, z: -1.29}
+--- !u!114 &404066440179827269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6604959558400726567}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e7526e7ad8526499164785fae2bca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5492293463761991260, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
+--- !u!114 &2899897427748273307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6604959558400726567}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4257084c5a9d8a44a9c3ccd3d9363dd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 5492293463761991260, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
+  lineOfSightDistance: 1000
+  forwardSpeed: 5
+  turnSpeed: 90
 --- !u!114 &5490190635834123730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6604959558400726567}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fdbcb69df31b5547823b9d01fed32e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 7713104738643049935, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
+  mobdistancerun: 10000
+--- !u!114 &5530458376972024142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6604959558400726567}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc77b649eda9312458814e36299ef9c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5492293463761991260, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
+  moveSpeed: 20
+  moveDistance: 100
+--- !u!114 &6628880741779150059
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1778,11 +1844,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 6604959558400726567}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fdbcb69df31b5547823b9d01fed32e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 9936beeb4cffa1b4eab01c30f3c41c0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 7713104738643049935, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
-  mobdistancerun: 10000
+  player: {fileID: 5492293463761991260, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
+--- !u!114 &6957285917875382720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6604959558400726567}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f79d671b3e8b76458affc2f2a93b381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5705274581353476746, guid: 9e1c6e09d4604fc46890b7a00ab2d054, type: 3}
 --- !u!114 &7506993868300344791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1797,3 +1875,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rabbitcharacter: {fileID: 7654001485361959723, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
   wolfparent: {fileID: 6604959558400726567}
+--- !u!114 &7718736251880401588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6604959558400726567}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 998df892eddd8084f9594e30ff935f26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5492293463761991260, guid: 90b4f134f210c944d944644237c9c7dd, type: 3}
+  fleeDistance: 100

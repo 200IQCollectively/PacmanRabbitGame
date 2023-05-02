@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class wolfcollision : MonoBehaviour
 {
     public PlayerScript rabbitcharacter;
     public GameObject wolfparent;
+     private NavMeshAgent navMeshAgent;
+
+    private void Awake()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        
+    }
     void Start()
     {
         
@@ -27,6 +35,8 @@ public class wolfcollision : MonoBehaviour
                 {
                     wolfparent.transform.GetChild(i).gameObject.SetActive(false);
                     this.GetComponent<CapsuleCollider>().enabled = false;
+                    navMeshAgent.enabled = false;
+
                    Invoke("backtodefaults", 10f);
                 }
                 if (wolfparent.transform.GetChild(i).tag == "bigeyes" )
