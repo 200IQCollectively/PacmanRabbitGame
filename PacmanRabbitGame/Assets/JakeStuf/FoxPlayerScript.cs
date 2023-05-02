@@ -37,6 +37,7 @@ public class FoxPlayerScript : MonoBehaviour
     private InputActionMap playerInputMap;
     private InputAction INP_movement, INP_look, INP_jump, INP_teleport;
     private PlayerInput playerInput;
+    private float timer;
 
     private GameHandler game;
 
@@ -96,6 +97,11 @@ public class FoxPlayerScript : MonoBehaviour
             {
                 Jump();
             }
+            if (timer < 6)
+            {
+                timer = timer + Time.deltaTime;
+            }
+            
         }
     }
 
@@ -177,10 +183,11 @@ public class FoxPlayerScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        
+        if (other.tag == "Player" && timer > 5.0f)
         {
             game.PlayerCaught();
-            
+            timer = 0;
         }
     }
 

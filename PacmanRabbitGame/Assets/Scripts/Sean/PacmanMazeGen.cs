@@ -67,6 +67,7 @@ public class PacmanMazeGen : MonoBehaviour
         playerManager = GameObject.Find("GameHandler").GetComponent<PlayerManager_JM>();
         //game = FindObjectOfType<GameHandler>();
         //playerManager = FindObjectOfType<PlayerManager_JM>();
+        
     }
 
     private void GenerateMazeLayout()
@@ -181,6 +182,7 @@ public class PacmanMazeGen : MonoBehaviour
                     playerManager.SpawnPlayers();
 
                     game.SetPlayer(playerManager.GetPlayer(0));
+                    
 
                     //if (GameObject.Find("TestPlayer(Clone)") == null)
                     //{

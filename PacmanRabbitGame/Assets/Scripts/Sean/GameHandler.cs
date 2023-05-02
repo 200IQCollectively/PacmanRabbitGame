@@ -16,6 +16,7 @@ public class GameHandler : MonoBehaviour
     private int livesRemaning = 3;
 
     PlayerManager_JM playerManager;
+    public TextMeshProUGUI livestext;
 
     public bool isMultiplayer = false;
 
@@ -44,6 +45,7 @@ public class GameHandler : MonoBehaviour
         {
             AddHighScore(0, "DEEZNUTZ");
         }
+        livestext.text = "Lives remaining : " + livesRemaning;
     }
 
     public void SetCarrotAmount(int amount)
@@ -71,13 +73,15 @@ public class GameHandler : MonoBehaviour
         if (livesRemaning == 0)
         {
             print("Game Over");
-            player.OpenMenu();
+            //player.OpenMenu();
+            livestext.text = "Game Over";
         }
         else
         {
             print("resettinggggg");
             playerManager.ResetPlayers();
             livesRemaning--;
+            livestext.text = "Lives remaining : " + livesRemaning;
         }
     }
 
