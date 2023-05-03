@@ -46,7 +46,7 @@ public class PlayerScript : MonoBehaviour
     private bool canMove = true;
     public bool canJump = false;
     public int lives = 3;
-    private Transform spawn;
+    public Transform spawn;
     private bool inMenu = false;
     private GameObject Menu;
     private GameObject livesText;
@@ -343,6 +343,7 @@ public class PlayerScript : MonoBehaviour
 
     public Transform SetSpawn(Transform _spawn)
     {
+        spawn = null;
         return spawn = _spawn;
     }
 

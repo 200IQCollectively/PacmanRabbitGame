@@ -179,12 +179,14 @@ public class PacmanMazeGen : MonoBehaviour
                         var play = Instantiate(Player, new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), Quaternion.identity);
 
                         play.GetComponent<PlayerScript>().SetSpawn(spawnPoint);
+                        Player = play;
                         game.SetPlayer(play.GetComponent<PlayerScript>());
                     }
 
                     else
                     {
                         GameObject.Find("TestPlayer(Clone)").gameObject.transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
+                        Player.GetComponent<PlayerScript>().SetSpawn(spawnPoint);
                     }
                 }
             }
