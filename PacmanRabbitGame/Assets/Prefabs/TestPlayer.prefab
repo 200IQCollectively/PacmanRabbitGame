@@ -157,7 +157,9 @@ MonoBehaviour:
   INP_teleport: {fileID: 7647784609420064309, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
   INP_pause: {fileID: -1574291830964216878, guid: 279985fd97cd37347bcb15395f97ed5d, type: 3}
   canJump: 0
+  lives: 3
   popup: {fileID: 0}
+  timer: 0
 --- !u!82 &5062994567464887743
 AudioSource:
   m_ObjectHideFlags: 0

@@ -45,10 +45,11 @@ public class PlayerScript : MonoBehaviour
     private GameHandler game;
     private bool canMove = true;
     public bool canJump = false;
-    private int lives = 3;
+    public int lives = 3;
     private Transform spawn;
     private bool inMenu = false;
     private GameObject Menu;
+    private GameObject livesText;
 
     //Teleport Stuff
     public TextMeshProUGUI popup;
@@ -59,7 +60,15 @@ public class PlayerScript : MonoBehaviour
     private GameObject minimap;
     private bool isInside = true;
 
+    //Respawn Stuff
     public float timer;
+    private float resetTime = 4.0f;
+    private bool playerDied;
+    private GameObject deathText;
+    private float deathTimer = 5.0f;
+
+    //PowerUp Stuff - Sean
+    private bool buffed;
 
     // Start is called before the first frame update
     void Start()
@@ -67,7 +76,8 @@ public class PlayerScript : MonoBehaviour
         GetComponents();
 
         anim = GetComponentInChildren<Animator>();
-         
+
+        livesText.GetComponent<TextMeshProUGUI>().text = "Lives: " + lives;
 
         if (gamepad != null)
         {
@@ -97,6 +107,21 @@ public class PlayerScript : MonoBehaviour
     {   
         OpenMenu();
         
+        if(playerDied && lives > 0)
+        {
+            RespawnTimer(); 
+        }
+
+        else
+        {
+            deathText.GetComponent<TextMeshProUGUI>().text = "";
+        }
+
+        if (lives <= 0)
+        {
+            DeathTimer();
+        }
+
         if (canMove)
         {
             if(!inMenu)
@@ -260,8 +285,16 @@ public class PlayerScript : MonoBehaviour
 
         if(other.tag == "AI")
         {
-            PlayerDied();
-            deathofrabbit();
+            if(!playerDied && !buffed)
+            {
+                PlayerDied();
+                deathofrabbit();
+            } 
+
+            else
+            {
+                score.SetScore(50);
+            }
         }
     }
 
@@ -297,22 +330,49 @@ public class PlayerScript : MonoBehaviour
 
     public void PlayerDied()
     {      
-        float resetTime = 2.0f;
-
         canMove = false;
+        playerDied = true;
         lives -= 1;
-        timer = resetTime;
-        timer -= 1.0f * Time.deltaTime;
 
-        //if (lives <= 0)
-        //{
-        //    game.EndGame();
-        //}
+        if(lives <= 0)
+        {
+            timer = deathTimer;
+        }
+
+        else
+        {
+            timer = resetTime;
+        }
+        
+        livesText.GetComponent<TextMeshProUGUI>().text = "Lives: " + lives;
+    }
+
+    private void RespawnTimer()
+    {
+        deathText.GetComponent<TextMeshProUGUI>().text = "Respawning in " + (int)timer;
+
+        timer -= 1.0f * Time.deltaTime;
 
         if (timer <= 0)
         {
             transform.position = spawn.position;
+
+            anim.SetTrigger("riseupandlive");
+
             canMove = true;
+            playerDied = false;
+        }
+    }
+
+    private void DeathTimer()
+    {
+        deathText.GetComponent<TextMeshProUGUI>().text = "Game Over! Ending in " + (int)timer;
+
+        timer -= 1.0f * Time.deltaTime;
+
+        if (timer <= 0)
+        {
+            game.EndGame();
         }
     }
 
@@ -328,6 +388,9 @@ public class PlayerScript : MonoBehaviour
         minimap = GameObject.Find("MainCanvas").transform.Find("Minimap").gameObject;
 
         Menu = GameObject.Find("MainCanvas").transform.Find("Menu").gameObject;
+
+        livesText = GameObject.Find("MainCanvas").transform.Find("LivesText").gameObject;
+        deathText = GameObject.Find("MainCanvas").transform.Find("DeathText").gameObject;
     }
 
  public void UpdatePlayer()
@@ -337,9 +400,9 @@ public class PlayerScript : MonoBehaviour
             parental.rabbitonly(false);
             parental.explosioneffect(true);
            parental.whitewolfonly(true);
-           playerSpeed = 20.0f;
           changewolfcolortoblue();
-          
+        buffed = true;
+
       /*
 
 
@@ -384,10 +447,10 @@ foreach (GameObject obj in objectsWithTag)
         parental.whitewolfonly(false);
         parental.explosioneffect(false);
         parental.rabbitonly(true);
+        buffed = false;
        // Invoke("restdone", 0.1f);
        // engage.speed = 60;
         parental.explosioneffect(true);
-        playerSpeed = 5.0f;
         changewolfcolorbacktooriginal ();
 
 /*
