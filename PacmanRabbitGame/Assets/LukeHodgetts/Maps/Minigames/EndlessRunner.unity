@@ -12217,12 +12217,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 684846078911770099, guid: 6147516e0be84d545b7c7251c27cfe8f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2762419582372553698, guid: 6147516e0be84d545b7c7251c27cfe8f, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6859223418894121121, guid: 6147516e0be84d545b7c7251c27cfe8f, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418249848373113991, guid: 6147516e0be84d545b7c7251c27cfe8f, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7969997238836868997, guid: 6147516e0be84d545b7c7251c27cfe8f, type: 3}
