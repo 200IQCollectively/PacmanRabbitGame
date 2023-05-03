@@ -253,10 +253,16 @@ public class PlayerScript : MonoBehaviour
         if (other.tag == "Collectible")
         {
             score.SetScore(5);
-            
+
             source.PlayOneShot(eatCarrot);
 
             game.SetCarrotAmount(-1);
+
+            if (score.GetScore() == 10000)
+            {
+                lives += 1;
+                livesText.GetComponent<TextMeshProUGUI>().text = "Lives: " + lives;
+            }
 
             Destroy(other.gameObject);
         }
@@ -266,10 +272,16 @@ public class PlayerScript : MonoBehaviour
             UpdatePlayer();
            converter.UpdatePlayer();
             score.SetScore(5);
-            
+
             source.PlayOneShot(eatCarrot);
 
             game.SetCarrotAmount(-1);
+
+            if (score.GetScore() == 10000)
+            {
+                lives += 1;
+                livesText.GetComponent<TextMeshProUGUI>().text = "Lives: " + lives;
+            }
 
             Destroy(other.gameObject);
         }
@@ -294,6 +306,12 @@ public class PlayerScript : MonoBehaviour
             else
             {
                 score.SetScore(50);
+
+                if (score.GetScore() == 10000)
+                {
+                    lives += 1;
+                    livesText.GetComponent<TextMeshProUGUI>().text = "Lives: " + lives;
+                }
             }
         }
     }
